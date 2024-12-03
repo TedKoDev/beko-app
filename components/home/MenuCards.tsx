@@ -11,20 +11,20 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-na
 
 const menuItems = [
   {
-    title: 'Korean Schools Info',
-    korTitle: '한국어 학당 리스트 보러가기',
-    color: '#4A90E2', // 버튼 기본 색상
-    pressedColor: '#357ABD', // 버튼 눌렸을 때 색상
-    icon: <MaterialIcons name="event-note" size={24} color="white" />,
-    route: '/(stack)/koreanschools',
+    title: 'Study Korean Game',
+    korTitle: '한국어 게임 하러가기',
+    color: '#FF9F40',
+    pressedColor: '#E6842A',
+    icon: <FontAwesome5 name="gamepad" size={24} color="white" />,
+    route: '/game',
   },
   {
-    title: 'Study Korean',
-    korTitle: '한국어 공부 하러가기',
-    color: '#50E3C2',
-    pressedColor: '#3BBE9E',
-    icon: <FontAwesome5 name="book-reader" size={24} color="white" />,
-    route: '/study',
+    title: 'Korean Community',
+    korTitle: '커뮤니티 보러가기',
+    color: '#4A90E2', // 버튼 기본 색상
+    pressedColor: '#357ABD', // 버튼 눌렸을 때 색상
+    icon: <MaterialIcons name="forum" size={24} color="white" />,
+    route: '/(tabs)/feed',
   },
   {
     title: 'Ask Bera Questions 1:1',

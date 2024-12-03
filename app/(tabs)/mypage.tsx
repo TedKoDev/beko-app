@@ -33,7 +33,7 @@ export default function MyPage() {
   const userInfo = useAuthStore((state) => state.userInfo);
   const updateProfileMutation = useUpdateProfile();
 
-  console.log('userInfo from store', userInfo);
+  console.log('userInfo from store', JSON.stringify(userInfo, null, 2));
 
   const [modalVisible, setModalVisible] = useState(false);
   const [editedProfile, setEditedProfile] = useState({
