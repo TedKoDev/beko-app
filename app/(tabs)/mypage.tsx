@@ -27,6 +27,7 @@ import Animated, {
 import { useUpdateProfile } from '~/queries/hooks/auth/useUpdateProfile';
 import { getPresignedUrlApi, uploadFileToS3 } from '~/services/s3Service';
 import { useAuthStore } from '~/store/authStore';
+import { LevelProgressBar } from '~/components/level/LevelProgressBar';
 
 export default function MyPage() {
   const { logout } = useAuthStore();
@@ -171,7 +172,7 @@ export default function MyPage() {
       <ScrollView
         style={styles.container}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}>
+        contentContainerStyle={{ paddingBottom: 20 }}>
         <View style={styles.contentContainer}>
           {/* Profile Section */}
           <View style={styles.profileSection}>
@@ -184,15 +185,18 @@ export default function MyPage() {
             <View style={styles.userInfo}>
               <Text style={styles.userName}>{userInfo?.username || 'Student'}</Text>
               <View className="flex flex-row items-center">
-                <Text className="country">{userInfo?.country?.flag_icon || 'Global'}</Text>
-                <Text className="rankText ml-2 color-red-400">Lv {userInfo?.level || 1}</Text>
+                <Text className="country">{userInfo?.country?.flag_icon || '🌏'}</Text>
               </View>
-
               <Text style={styles.userEmail}>{userInfo?.email}</Text>
             </View>
             <TouchableOpacity style={styles.editProfileButton} onPress={handleModalOpen}>
               <Text style={styles.editProfileText}>Edit Profile</Text>
             </TouchableOpacity>
+          </View>
+
+          {/* Level Progress Section */}
+          <View className="mb-4">
+            <LevelProgressBar />
           </View>
 
           {/* Points Section */}
