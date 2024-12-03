@@ -11,12 +11,12 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-na
 
 const menuItems = [
   {
-    title: 'Check Academic Calendar',
-    korTitle: '한국 대학 학사일정 보러가기',
+    title: 'Korean Schools Info',
+    korTitle: '한국어 학당 리스트 보러가기',
     color: '#4A90E2', // 버튼 기본 색상
     pressedColor: '#357ABD', // 버튼 눌렸을 때 색상
     icon: <MaterialIcons name="event-note" size={24} color="white" />,
-    route: '/calendar',
+    route: '/(stack)/koreanschools',
   },
   {
     title: 'Study Korean',

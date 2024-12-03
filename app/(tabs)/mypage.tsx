@@ -196,7 +196,9 @@ export default function MyPage() {
           </View>
 
           {/* Points Section */}
-          <TouchableOpacity style={styles.pointsSection}>
+          <TouchableOpacity
+            style={styles.pointsSection}
+            onPress={() => router.push('/(stack)/pointhistory')}>
             <Text style={styles.pointsText}>🎯 Learning Points</Text>
             <Text style={styles.pointsCount}>{userInfo?.points || 0} pts</Text>
           </TouchableOpacity>
@@ -211,14 +213,14 @@ export default function MyPage() {
               <Text style={styles.activityNumber}>{userInfo?.stats?.commentCount || 0}</Text>
               <Text style={styles.activityLabel}>Comments</Text>
             </View>
-            <View style={styles.activityItem}>
+            {/* <View style={styles.activityItem}>
               <Text style={styles.activityNumber}>{userInfo?.stats?.followersCount || 0}</Text>
               <Text style={styles.activityLabel}>Followers</Text>
             </View>
             <View style={styles.activityItem}>
               <Text style={styles.activityNumber}>{userInfo?.followingCount || 0}</Text>
               <Text style={styles.activityLabel}>Following</Text>
-            </View>
+            </View> */}
           </View>
 
           {/* Learning Section */}

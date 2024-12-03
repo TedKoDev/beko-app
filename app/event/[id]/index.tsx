@@ -137,6 +137,16 @@ export default function EventPage() {
                     <Feather name="eye" size={16} color="#666666" />
                     <Text className="ml-1 text-sm text-gray-500">{post.views}</Text>
                   </View>
+
+                  {post.type === 'QUESTION' && (
+                    <View className="flex-row items-center">
+                      <FontAwesome name="diamond" size={16} color="orange" />
+                      <Text className="ml-1 text-sm text-orange-500">
+                        p.
+                        {post.post_content.points || 0}
+                      </Text>
+                    </View>
+                  )}
                 </View>
 
                 {/* Comments Section */}
