@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { gameService } from '../../../services/gameService';
+import { gameService } from '~/services/gameService';
 
 import { GameType, GameProgress, SubmitAnswerDto } from '~/types/game';
 
@@ -19,7 +19,18 @@ export const useGameProgress = (gameTypeId: number) => {
   });
 };
 
+export const useAllGameProgress = () => {
+  return useQuery<GameProgress[]>({
+    queryKey: ['allGameProgress'],
+    queryFn: () => gameService.getAllGameProgress(),
+  });
+};
+
 export const useGameQuestions = (gameTypeId: number, level?: number, limit?: number) => {
+  console.log('gameTypeId', gameTypeId);
+  console.log('level', level);
+  console.log('limit', limit);
+
   return useQuery({
     queryKey: ['gameQuestions', gameTypeId, level],
     queryFn: () => gameService.getQuestions(gameTypeId, level, limit),

@@ -1,26 +1,29 @@
-export interface GameType {
-  id: number;
+export interface BaseGame {
+  id: number | string;
   name: string;
   description: string;
   imageUrl: string;
-  type: GameCategory;
-  currentLevel?: number;
+  type: string;
 }
 
+export interface GameType extends BaseGame {
+  id: number;
+  level?: number;
+}
+
+export interface ComingSoonGame extends BaseGame {
+  id: string;
+  isComingSoon: true;
+}
+
+export type GameCardType = GameType | ComingSoonGame;
+
 export interface GameProgress {
+  gameTypeId: number;
   currentLevel: number;
   totalScore: number;
   completedQuestions: number;
-  gameTypeId: number;
-}
-
-export enum GameCategory {
-  VOCABULARY = 'vocabulary',
-  GRAMMAR = 'grammar',
-  LISTENING = 'listening',
-  SPEAKING = 'speaking',
-  READING = 'reading',
-  WRITING = 'writing',
+  experience: number;
 }
 
 export interface Question {
@@ -28,10 +31,23 @@ export interface Question {
   content: string;
   options: string[];
   level: number;
-  type: GameCategory;
+  type: string;
 }
 
 export interface SubmitAnswerDto {
   questionId: number;
   answer: string;
+}
+
+export interface LeaderboardEntry {
+  userId: number;
+  username: string;
+  score: number;
+  rank: number;
+}
+
+export interface GameTypeResponse {
+  game_type_id: number;
+  name: string;
+  description: string;
 }
