@@ -1,14 +1,17 @@
 import { create } from 'zustand';
-import { UserLevelInfo } from '~/types/level';
+
+import { LevelThreshold, UserLevelInfo } from '~/types/level';
 
 interface LevelStore {
-  userLevelInfo: UserLevelInfo | null;
-  setUserLevelInfo: (info: UserLevelInfo) => void;
-  clearUserLevelInfo: () => void;
+  levelInfo: UserLevelInfo | null;
+  thresholds: LevelThreshold[] | null;
+  setLevelInfo: (info: UserLevelInfo) => void;
+  setThresholds: (thresholds: LevelThreshold[]) => void;
 }
 
 export const useLevelStore = create<LevelStore>((set) => ({
-  userLevelInfo: null,
-  setUserLevelInfo: (info) => set({ userLevelInfo: info }),
-  clearUserLevelInfo: () => set({ userLevelInfo: null }),
+  levelInfo: null,
+  thresholds: null,
+  setLevelInfo: (info) => set({ levelInfo: info }),
+  setThresholds: (thresholds) => set({ thresholds }),
 }));

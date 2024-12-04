@@ -3,7 +3,6 @@ import { useAuthStore } from '../store/authStore';
 import { LevelThreshold, UserLevelInfo } from '~/types/level';
 
 export const levelService = {
-  // 모든 레벨 기준 조회
   getAllThresholds: async () => {
     const token = useAuthStore.getState().userToken;
     const response = await api.get<LevelThreshold[]>('/level', {

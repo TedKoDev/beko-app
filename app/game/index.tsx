@@ -1,33 +1,46 @@
 import { router } from 'expo-router';
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import { Text, Surface } from 'react-native-paper';
-import { useAuthStore } from '~/store/authStore';
-import { useAllGameProgress, useGameTypes } from '~/queries/hooks/games/useGameService';
-import { UserLevelProgressBar } from '~/components/level/UserLevelProgressBar';
+import { Text, Surface, ActivityIndicator } from 'react-native-paper';
+
 import { GameCard } from '~/components/game/GameCard';
+import { UserLevelProgressBar } from '~/components/level/UserLevelProgressBar';
+import { useAllGameProgress, useGameTypes } from '~/queries/hooks/games/useGameService';
 
 export default function GameHome() {
-  const { data: gameTypes, isLoading } = useGameTypes();
-  const { data: allGameProgress } = useAllGameProgress();
+  const { data: gameTypes, isLoading: gameTypesLoading } = useGameTypes();
+  const { data: allGameProgress, isLoading: gameProgressLoading } = useAllGameProgress();
 
-  console.log('gameTypes', gameTypes);
-  console.log('allGameProgress', allGameProgress);
+  const isLoading = gameTypesLoading || gameProgressLoading;
 
   const handleGameSelect = (gameTypeId: number) => {
-    console.log('gameTypeIddddd', gameTypeId);
+    console.log('gameTypeId', gameTypeId);
     router.push(`/game/detail/${gameTypeId}`);
   };
 
   const allGames = React.useMemo(() => {
-    const realGames = (gameTypes || []).map((game) => ({
-      id: game.game_type_id,
-      name: game.name,
-      description: game.description,
-      imageUrl: 'https://via.placeholder.com/100',
-      type: 'game',
-      isComingSoon: false as const,
-    }));
+    const realGames = (gameTypes || []).map((game) => {
+      const progress = allGameProgress?.find((p) => p.game_type_id === game.game_type_id);
+
+      return {
+        id: game.game_type_id,
+        name: game.name,
+        description: game.description,
+        imageUrl: 'https://via.placeholder.com/100',
+        type: 'game',
+        isComingSoon: false as const,
+        progress: progress
+          ? {
+              accuracy: progress.progress.accuracy,
+              currentLevel: progress.progress.current_level,
+              maxLevel: progress.progress.max_level,
+              totalAttempts: progress.progress.total_attempts,
+              totalCorrect: progress.progress.total_correct,
+              lastPlayedAt: progress.progress.last_played_at,
+            }
+          : null,
+      };
+    });
 
     const totalNeeded = 4;
     const comingSoonCount = Math.max(0, totalNeeded - realGames.length);
@@ -37,19 +50,21 @@ export default function GameHome() {
       .map((_, index) => ({
         id: `coming-soon-${index}`,
         name: `Coming Soon ${index + 1}`,
-        description: '새로운 게임이 곧 추가됩니다!',
+        description: 'New game is coming soon!',
         imageUrl: 'https://via.placeholder.com/100',
         type: 'coming-soon',
         isComingSoon: true as const,
+        progress: null,
       }));
 
     return [...realGames, ...comingSoonGames];
-  }, [gameTypes]);
+  }, [gameTypes, allGameProgress]);
 
   if (isLoading) {
     return (
-      <View className="flex-1 items-center justify-center">
-        <Text>Loading...</Text>
+      <View className="flex-1 items-center justify-center bg-white">
+        <ActivityIndicator animating={true} size="large" color="#6200ea" />
+        <Text className="mt-4 text-gray-500">Loading...</Text>
       </View>
     );
   }
@@ -65,14 +80,13 @@ export default function GameHome() {
         </Surface>
 
         {/* Games Grid */}
-        <View className="px-4">
-          <Text className="mb-4 text-xl font-bold text-gray-900">학습 게임</Text>
+        <View className="bg-white px-4">
+          <Text className="my-4 text-xl font-bold text-gray-900">학습 게임</Text>
           <View className="flex-row flex-wrap justify-between">
             {allGames.map((game) => (
               <GameCard
                 key={`game-${game.id}`}
                 game={game}
-                progress={allGameProgress?.find((p) => p.gameTypeId === Number(game.id))}
                 onPress={() => !game.isComingSoon && handleGameSelect(Number(game.id))}
               />
             ))}

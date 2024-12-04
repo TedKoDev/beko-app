@@ -57,3 +57,11 @@ export const useLeaderboard = (gameTypeId: number) => {
     enabled: !!gameTypeId,
   });
 };
+
+export const useGameLevelInfo = (gameTypeId: number) => {
+  return useQuery({
+    queryKey: ['gameLevelInfo', gameTypeId],
+    queryFn: () => gameService.getGameLevelInfo(gameTypeId),
+    enabled: !!gameTypeId,
+  });
+};

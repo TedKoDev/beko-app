@@ -5,7 +5,5 @@ export interface LevelThreshold {
 
 export interface UserLevelInfo {
   currentLevel: number;
-  currentExp: number;
-  nextLevelExp: number;
-  progress: number;
+  currentXP: number;
 }

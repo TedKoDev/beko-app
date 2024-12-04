@@ -3,17 +3,34 @@ import React from 'react';
 import { View, Image, Pressable } from 'react-native';
 import { Text, Surface } from 'react-native-paper';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-import { GameProgress, GameCardType } from '~/types/game';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
+interface GameProgress {
+  accuracy: number;
+  currentLevel: number;
+  maxLevel: number;
+  totalAttempts: number;
+  totalCorrect: number;
+  lastPlayedAt: string | null;
+}
+
+interface GameCardType {
+  id: number | string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  type: 'game' | 'coming-soon';
+  isComingSoon: boolean;
+  progress: GameProgress | null;
+}
+
 interface GameCardProps {
   game: GameCardType;
-  progress?: GameProgress;
   onPress: () => void;
 }
 
-export const GameCard = ({ game, progress, onPress }: GameCardProps) => {
+export const GameCard = ({ game, onPress }: GameCardProps) => {
   const scale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -36,10 +53,10 @@ export const GameCard = ({ game, progress, onPress }: GameCardProps) => {
       style={[animatedStyle]}
       className="mb-4 w-[48%]"
       disabled={game.isComingSoon}>
-      <Surface className="overflow-hidden rounded-2xl bg-white shadow-sm">
-        <View className="h-32 bg-gray-100">
+      <Surface className="overflow-hidden rounded-2xl shadow-lg">
+        <View className="h-32 bg-purple-400">
           {game.isComingSoon ? (
-            <View className="flex-1 items-center justify-center bg-gray-100">
+            <View className="flex-1 items-center justify-center">
               <MaterialCommunityIcons name="gamepad-variant" size={40} color="#9CA3AF" />
             </View>
           ) : (
@@ -47,7 +64,7 @@ export const GameCard = ({ game, progress, onPress }: GameCardProps) => {
           )}
           {!game.isComingSoon && (
             <View className="absolute bottom-0 left-0 right-0 bg-black/30 p-2">
-              <Text className="text-center text-sm font-medium text-white">시작하기</Text>
+              <Text className="text-center text-sm font-medium text-white">Start</Text>
             </View>
           )}
         </View>
@@ -58,22 +75,22 @@ export const GameCard = ({ game, progress, onPress }: GameCardProps) => {
           <Text className="mb-2 text-xs text-gray-500" numberOfLines={2}>
             {game.description}
           </Text>
-          {!game.isComingSoon && progress && (
+          {!game.isComingSoon && game.progress && (
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center">
-                <MaterialCommunityIcons name="star" size={16} color="#FFD700" />
+                <MaterialCommunityIcons name="progress-star" size={16} color="#FFD700" />
                 <Text className="ml-1 text-xs text-gray-500">
-                  레벨 {progress?.currentLevel || 1}
+                  Stage {game.progress.currentLevel}
                 </Text>
               </View>
-              <View className="h-1.5 w-16 overflow-hidden rounded-full bg-gray-200">
+              {/* <View className="h-1.5 w-16 overflow-hidden rounded-full bg-gray-200">
                 <View
-                  className="h-full bg-[#6C47FF]"
+                  className="h-full bg-violet-500"
                   style={{
-                    width: `${(progress?.experience || 0) / 100}%`,
+                    width: `${(game.progress.currentLevel / game.progress.maxLevel) * 100}%`,
                   }}
                 />
-              </View>
+              </View> */}
             </View>
           )}
           {game.isComingSoon && (

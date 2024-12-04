@@ -1,15 +1,26 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text, Image } from 'react-native';
-import { Surface } from 'react-native-paper';
+import { Surface, ActivityIndicator } from 'react-native-paper';
 
 import { useUserInfo } from '~/queries/hooks/auth/useUserinfo';
 import { useLevelThresholds, useUserLevelInfo } from '~/queries/hooks/level/useLevel';
 
 export const UserLevelProgressBar = () => {
-  const { data: levelInfo } = useUserLevelInfo();
-  const { data: thresholds } = useLevelThresholds();
-  const { data: userInfo } = useUserInfo();
+  const { data: levelInfo, isLoading: isLevelInfoLoading } = useUserLevelInfo();
+  const { data: thresholds, isLoading: isThresholdsLoading } = useLevelThresholds();
+  const { data: userInfo, isLoading: isUserInfoLoading } = useUserInfo();
+
+  const isLoading = isLevelInfoLoading || isThresholdsLoading || isUserInfoLoading;
+
+  if (isLoading) {
+    return (
+      <Surface className="flex-row items-center justify-center rounded-xl bg-white p-4">
+        <ActivityIndicator animating={true} size="small" color="#6C47FF" />
+        <Text className="ml-2 text-gray-500">Loading user level...</Text>
+      </Surface>
+    );
+  }
 
   if (!levelInfo || !thresholds || !userInfo) return null;
 
@@ -38,11 +49,10 @@ export const UserLevelProgressBar = () => {
         <View className="flex-row items-center">
           <View className="ml-3">
             <Text className="text-lg font-bold">{userInfo.username || 'Student'}</Text>
-
             <Text className="text-sm text-gray-500">{userInfo.email}</Text>
           </View>
-          <View className="ml-3 flex-row  items-center border-l border-gray-400  pl-3">
-            <Text className=" ml-11 text-4xl">{userInfo.country?.flag_icon || '🌏'}</Text>
+          <View className="ml-3 flex-row items-center border-l border-gray-400 pl-3">
+            <Text className="ml-11 text-4xl">{userInfo.country?.flag_icon || '🌏'}</Text>
           </View>
         </View>
       </View>

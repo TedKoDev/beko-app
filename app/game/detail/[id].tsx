@@ -1,27 +1,88 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useLocalSearchParams, Stack } from 'expo-router';
+import { useLocalSearchParams, Stack, useRouter } from 'expo-router';
 import React from 'react';
 import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { Text, Surface, Button } from 'react-native-paper';
-import {
-  useGameProgress,
-  useGameQuestions,
-  useGameTypes,
-} from '~/queries/hooks/games/useGameService';
+import { Text, Surface } from 'react-native-paper';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  runOnJS,
+} from 'react-native-reanimated';
+
+import { useGameLevelInfo, useGameProgress } from '~/queries/hooks/games/useGameService';
+
+interface LevelCardProps {
+  level: number;
+  isLocked: boolean;
+  onPress: () => void;
+}
+
+const LevelCard = ({ level, isLocked, onPress }: LevelCardProps) => {
+  const rotation = useSharedValue(0);
+  const isFlipped = useSharedValue(false);
+
+  const frontAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotateY: `${rotation.value}deg` }],
+    backfaceVisibility: 'hidden',
+  }));
+
+  const backAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotateY: `${rotation.value + 180}deg` }],
+    backfaceVisibility: 'hidden',
+  }));
+
+  const handlePress = () => {
+    if (isLocked) return;
+
+    const newRotation = isFlipped.value ? 0 : 180;
+    rotation.value = withTiming(newRotation, { duration: 500 }, () => {
+      runOnJS(onPress)();
+    });
+    isFlipped.value = !isFlipped.value;
+  };
+
+  return (
+    <TouchableOpacity
+      onPress={handlePress}
+      className="mb-6 h-[180px] w-[150px] rounded-2xl shadow-sm"
+      style={{ opacity: isLocked ? 0.5 : 1 }}>
+      <View className="relative h-full w-full">
+        <Animated.View
+          className="absolute h-full w-full items-center justify-center overflow-hidden rounded-2xl"
+          style={frontAnimatedStyle}>
+          <View className="h-[95%] w-[95%] items-center justify-center rounded-xl border-2 border-violet-500 bg-white">
+            <Text className="mb-2 text-2xl font-bold text-gray-800">Lv {level}</Text>
+            {isLocked && <MaterialCommunityIcons name="lock" size={32} color="#9CA3AF" />}
+          </View>
+        </Animated.View>
+        <Animated.View
+          className="absolute h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-violet-100"
+          style={backAnimatedStyle}>
+          <View className="h-[95%] w-[95%] items-center justify-center rounded-xl border-2 border-violet-500 bg-white">
+            <Text className="text-2xl font-bold text-violet-500">Start</Text>
+          </View>
+        </Animated.View>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 export default function GameDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
 
-  console.log('id from params:', id);
-
-  const { data: gameTypes } = useGameTypes();
+  const { data: gameLevelInfo } = useGameLevelInfo(Number(id));
   const { data: gameProgress } = useGameProgress(Number(id));
-  const { data: gameQuestions } = useGameQuestions(Number(id));
-  console.log('gameQuestions', gameQuestions);
 
-  const currentGame = gameTypes?.find((game) => game.id === Number(id));
+  const currentLevel = gameProgress?.currentLevel || 1;
 
-  if (!id || !currentGame) {
+  const handleLevelSelect = (level: number) => {
+    // TODO: 게임 시작 로직
+    console.log('Selected level:', level);
+  };
+
+  if (!gameLevelInfo) {
     return (
       <View className="flex-1 items-center justify-center">
         <Text>Loading...</Text>
@@ -30,94 +91,30 @@ export default function GameDetail() {
   }
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-gray-50">
       <Stack.Screen
         options={{
-          title: currentGame.name,
-          headerShadowVisible: false,
+          title: gameLevelInfo.game_name,
+          headerTitleAlign: 'center',
         }}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Game Banner */}
-        <View className="aspect-[16/9] w-full">
-          <Image
-            source={{ uri: currentGame.imageUrl }}
-            className="h-full w-full"
-            resizeMode="cover"
+
+      <ScrollView
+        contentContainerStyle={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'space-evenly',
+          padding: 20,
+          gap: 10,
+        }}>
+        {Array.from({ length: gameLevelInfo.level_info.max_level }, (_, index) => (
+          <LevelCard
+            key={index}
+            level={index + 1}
+            isLocked={index + 1 > currentLevel}
+            onPress={() => handleLevelSelect(index + 1)}
           />
-          <View className="absolute bottom-0 left-0 right-0 bg-black/50 p-4">
-            <Text className="text-2xl font-bold text-white">{currentGame.name}</Text>
-            <Text className="mt-1 text-sm text-white/80">{currentGame.description}</Text>
-          </View>
-        </View>
-
-        {/* Level Info */}
-        <Surface className="mx-4 -mt-6 overflow-hidden rounded-2xl bg-white">
-          <View className="flex-row items-center justify-between border-b border-gray-100 p-4">
-            <View className="flex-row items-center">
-              <MaterialCommunityIcons name="star" size={24} color="#FFD700" />
-              <Text className="ml-2 text-lg font-bold">
-                Level {gameProgress?.currentLevel || 1}
-              </Text>
-            </View>
-            <View className="flex-row items-center">
-              <MaterialCommunityIcons name="trophy" size={20} color="#6C47FF" />
-              <Text className="ml-1 text-sm text-gray-600">
-                Score: {gameProgress?.totalScore || 0}
-              </Text>
-            </View>
-          </View>
-
-          {/* Progress */}
-          <View className="p-4">
-            <View className="mb-2 flex-row items-center justify-between">
-              <Text className="text-sm text-gray-600">진행률</Text>
-              <Text className="text-sm font-medium text-gray-900">
-                {Math.round((gameProgress?.experience || 0) / 10)}%
-              </Text>
-            </View>
-            <View className="h-2 overflow-hidden rounded-full bg-gray-100">
-              <View
-                className="h-full bg-[#6C47FF]"
-                style={{
-                  width: `${(gameProgress?.experience || 0) / 10}%`,
-                }}
-              />
-            </View>
-          </View>
-        </Surface>
-
-        {/* Game Info */}
-        <View className="mt-6 px-4">
-          <Text className="mb-4 text-lg font-bold">게임 설명</Text>
-          <Surface className="rounded-2xl p-4">
-            <View className="flex-row items-center space-x-4">
-              <View className="flex-1">
-                <View className="mb-4 flex-row items-center">
-                  <MaterialCommunityIcons name="gamepad-variant" size={20} color="#6C47FF" />
-                  <Text className="ml-2 text-base font-medium">게임 방식</Text>
-                </View>
-                <Text className="text-sm text-gray-600">
-                  이미지를 보고 알맞은 단어를 선택하는 게임입니다. 레벨이 올라갈수록 더 어려운
-                  단어가 출제됩니다.
-                </Text>
-              </View>
-            </View>
-          </Surface>
-        </View>
-
-        {/* Start Button */}
-        <View className="mt-8 px-4 pb-8">
-          <Button
-            mode="contained"
-            onPress={() => {
-              // TODO: 게임 시작 로직
-            }}
-            contentStyle={{ paddingVertical: 8 }}
-            className="rounded-xl bg-[#6C47FF]">
-            <Text className="text-lg font-bold text-white">게임 시작하기</Text>
-          </Button>
-        </View>
+        ))}
       </ScrollView>
     </View>
   );

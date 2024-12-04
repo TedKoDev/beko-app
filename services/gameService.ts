@@ -66,4 +66,21 @@ export const gameService = {
     });
     return response.data;
   },
+
+  // 게임 레벨 정보 조회
+  //   @Get('types/:gameTypeId/levels')
+  // @ApiOperation({ summary: '게임 레벨 정보 조회' })
+  // @Auth(['ANY'])
+  // async getGameLevelInfo(@Param('gameTypeId') gameTypeId: number) {
+  //   return this.gamesService.getGameLevelInfo(gameTypeId);
+  // }
+  getGameLevelInfo: async (gameTypeId: number) => {
+    const token = useAuthStore.getState().userToken;
+    if (!token) throw new Error('No token found');
+
+    const response = await api.get(`/games/types/${gameTypeId}/levels`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  },
 };
