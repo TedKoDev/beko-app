@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Surface } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLevelThresholds, useUserLevelInfo } from '~/queries/hooks/level/useLevel';
 
@@ -28,7 +27,7 @@ export const LevelProgressBar = ({ compact = false }: LevelProgressBarProps) => 
 
   if (compact) {
     return (
-      <Surface className="flex-row items-center rounded-xl bg-white p-2">
+      <View className="flex-row items-center rounded-xl bg-white p-2 shadow-sm">
         <MaterialCommunityIcons name="star" size={16} color="#FFD700" />
         <Text className="ml-1 text-sm font-medium">Lv.{currentLevel}</Text>
         <View className="ml-2 h-1.5 flex-1 overflow-hidden rounded-full bg-gray-200">
@@ -37,12 +36,12 @@ export const LevelProgressBar = ({ compact = false }: LevelProgressBarProps) => 
             style={{ width: `${progressPercentage}%` }}
           />
         </View>
-      </Surface>
+      </View>
     );
   }
 
   return (
-    <Surface className="rounded-xl bg-white p-4">
+    <View className="rounded-xl bg-white p-4 shadow-sm">
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center">
           <MaterialCommunityIcons name="star" size={24} color="#FFD700" />
@@ -82,6 +81,6 @@ export const LevelProgressBar = ({ compact = false }: LevelProgressBarProps) => 
           </Text>
         </View>
       </View>
-    </Surface>
+    </View>
   );
 };

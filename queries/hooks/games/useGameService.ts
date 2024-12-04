@@ -27,9 +27,9 @@ export const useAllGameProgress = () => {
 };
 
 export const useGameQuestions = (gameTypeId: number, level?: number, limit?: number) => {
-  console.log('gameTypeId', gameTypeId);
-  console.log('level', level);
-  console.log('limit', limit);
+  // console.log('gameTypeId', gameTypeId);
+  // console.log('level', level);
+  // console.log('limit', limit);
 
   return useQuery({
     queryKey: ['gameQuestions', gameTypeId, level],
@@ -46,7 +46,13 @@ export const useSubmitAnswer = () => {
     }: {
       gameTypeId: number;
       submitAnswerDto: SubmitAnswerDto;
-    }) => gameService.submitAnswer(gameTypeId, submitAnswerDto),
+    }) => {
+      console.log('Mutation function called with:', { gameTypeId, submitAnswerDto });
+      return gameService.submitAnswer(gameTypeId, submitAnswerDto);
+    },
+    onError: (error) => {
+      console.error('Mutation error:', error);
+    },
   });
 };
 

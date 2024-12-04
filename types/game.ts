@@ -37,6 +37,7 @@ export interface Question {
 export interface SubmitAnswerDto {
   questionId: number;
   answer: string;
+  sessionId: string;
 }
 
 export interface LeaderboardEntry {
@@ -50,4 +51,19 @@ export interface GameTypeResponse {
   game_type_id: number;
   name: string;
   description: string;
+}
+
+export interface GameState {
+  score: number;
+  correctAnswers: number;
+  totalQuestions: number;
+  lastAnswerCorrect: boolean | null;
+}
+
+export interface GameResult {
+  score: number;
+  correctAnswers: number;
+  totalQuestions: number;
+  timeSpent: number;
+  experience: number;
 }

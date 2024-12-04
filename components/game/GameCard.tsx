@@ -1,7 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Image, Pressable } from 'react-native';
-import { Text, Surface } from 'react-native-paper';
+import { View, Image, Pressable, Text } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -53,7 +52,7 @@ export const GameCard = ({ game, onPress }: GameCardProps) => {
       style={[animatedStyle]}
       className="mb-4 w-[48%]"
       disabled={game.isComingSoon}>
-      <Surface className="overflow-hidden rounded-2xl shadow-lg">
+      <View className="overflow-hidden rounded-2xl bg-white shadow-md">
         <View className="h-32 bg-purple-400">
           {game.isComingSoon ? (
             <View className="flex-1 items-center justify-center">
@@ -83,14 +82,6 @@ export const GameCard = ({ game, onPress }: GameCardProps) => {
                   Stage {game.progress.currentLevel}
                 </Text>
               </View>
-              {/* <View className="h-1.5 w-16 overflow-hidden rounded-full bg-gray-200">
-                <View
-                  className="h-full bg-violet-500"
-                  style={{
-                    width: `${(game.progress.currentLevel / game.progress.maxLevel) * 100}%`,
-                  }}
-                />
-              </View> */}
             </View>
           )}
           {game.isComingSoon && (
@@ -100,7 +91,7 @@ export const GameCard = ({ game, onPress }: GameCardProps) => {
             </View>
           )}
         </View>
-      </Surface>
+      </View>
     </AnimatedPressable>
   );
 };

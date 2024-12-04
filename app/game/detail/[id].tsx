@@ -10,7 +10,11 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 
-import { useGameLevelInfo, useGameProgress } from '~/queries/hooks/games/useGameService';
+import {
+  useGameLevelInfo,
+  useGameProgress,
+  useGameQuestions,
+} from '~/queries/hooks/games/useGameService';
 
 interface LevelCardProps {
   level: number;
@@ -76,10 +80,12 @@ export default function GameDetail() {
   const { data: gameProgress } = useGameProgress(Number(id));
 
   const currentLevel = gameProgress?.currentLevel || 1;
+  console.log('gameProgress', gameProgress);
 
   const handleLevelSelect = (level: number) => {
-    // TODO: 게임 시작 로직
-    console.log('Selected level:', level);
+    console.log('level', level);
+
+    router.replace(`/game/play/${id}?level=${level}`);
   };
 
   if (!gameLevelInfo) {
@@ -111,7 +117,7 @@ export default function GameDetail() {
           <LevelCard
             key={index}
             level={index + 1}
-            isLocked={index + 1 > currentLevel}
+            isLocked={index + 1 > (gameProgress?.progress.current_level || 0)}
             onPress={() => handleLevelSelect(index + 1)}
           />
         ))}

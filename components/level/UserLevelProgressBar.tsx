@@ -1,7 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, Image } from 'react-native';
-import { Surface, ActivityIndicator } from 'react-native-paper';
+import { View, Text, Image, ActivityIndicator } from 'react-native';
 
 import { useUserInfo } from '~/queries/hooks/auth/useUserinfo';
 import { useLevelThresholds, useUserLevelInfo } from '~/queries/hooks/level/useLevel';
@@ -12,15 +11,6 @@ export const UserLevelProgressBar = () => {
   const { data: userInfo, isLoading: isUserInfoLoading } = useUserInfo();
 
   const isLoading = isLevelInfoLoading || isThresholdsLoading || isUserInfoLoading;
-
-  if (isLoading) {
-    return (
-      <Surface className="flex-row items-center justify-center rounded-xl bg-white p-4">
-        <ActivityIndicator animating={true} size="small" color="#6C47FF" />
-        <Text className="ml-2 text-gray-500">Loading user level...</Text>
-      </Surface>
-    );
-  }
 
   if (!levelInfo || !thresholds || !userInfo) return null;
 
@@ -37,7 +27,7 @@ export const UserLevelProgressBar = () => {
   const progressPercentage = (xpForCurrentLevel / xpRequiredForNextLevel) * 100;
 
   return (
-    <Surface className="rounded-xl bg-white p-4">
+    <View className="rounded-xl bg-white p-4 shadow-md">
       {/* User Info */}
       <View className="mb-4 flex-row items-center">
         <Image
@@ -97,6 +87,6 @@ export const UserLevelProgressBar = () => {
           </Text>
         </View>
       </View>
-    </Surface>
+    </View>
   );
 };
