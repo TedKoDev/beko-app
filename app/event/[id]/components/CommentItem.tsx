@@ -176,9 +176,7 @@ export default function CommentItem({
                 <Text className="ml-1 text-xs text-red-500">Lv {comment.user?.level}</Text>
                 <Text className="ml-2 text-xs text-gray-500">
                   {dayjs(comment.created_at).fromNow()}
-                  {comment.content}
                 </Text>
-                <Text>{comment.comment_id}</Text>
               </View>
 
               <View className="mt-2 flex-row items-center space-x-4">

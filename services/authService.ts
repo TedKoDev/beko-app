@@ -1,5 +1,7 @@
 import { api } from './api';
 
+import { useAuthStore } from '../store/authStore';
+
 interface CheckResponse {
   available: boolean;
   message: string;
@@ -145,6 +147,31 @@ export const updateUserProfileApi = async (token: string, updateData: any) => {
   }
 };
 
+export const deactivateUserApi = async (userId: number, password: string) => {
+  console.log('deactivateUserApi4', userId, password);
+  const token = useAuthStore.getState().userToken;
+  console.log('deactivateUserApi5', token);
+  if (!token) {
+    throw new Error('No token found');
+  }
+  try {
+    const response = await api.post(
+      `/users/deactivate`,
+      { password }, // 비밀번호가 올바르게 전달되는지 확인
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // 유효한 토큰인지 확인
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error('Deactivate user API error:', error);
+    throw new Error('Failed to deactivate user');
+  }
+};
+
 export const authService = {
   checkEmail,
   checkName,
@@ -152,4 +179,5 @@ export const authService = {
   registerApi,
   getUserInfoApi,
   updateUserProfileApi,
+  deactivateUserApi,
 };

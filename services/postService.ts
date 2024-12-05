@@ -58,6 +58,9 @@ export const getPostApi = async ({
 }: GetPostsParams) => {
   try {
     const token = useAuthStore.getState().userToken;
+    if (!token) {
+      throw new Error('No token found');
+    }
 
     const params = {
       page,

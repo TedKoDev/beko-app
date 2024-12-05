@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Text, Surface, ActivityIndicator } from 'react-native-paper';
@@ -71,6 +71,12 @@ export default function GameHome() {
 
   return (
     <View className="flex-1">
+      <Stack.Screen
+        options={{
+          title: 'Game List',
+          headerTitleAlign: 'center',
+        }}
+      />
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Profile and Level Section */}
         <Surface className="mb-4 bg-white px-4 pb-4 pt-4">
@@ -81,7 +87,7 @@ export default function GameHome() {
 
         {/* Games Grid */}
         <View className="bg-white px-4">
-          <Text className="my-4 text-xl font-bold text-gray-900">학습 게임</Text>
+          <Text className="my-4 text-xl font-bold text-gray-900">Game List</Text>
           <View className="flex-row flex-wrap justify-between">
             {allGames.map((game) => (
               <GameCard
