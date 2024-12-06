@@ -1,4 +1,4 @@
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { router, Stack } from 'expo-router';
 import React, { useState, useEffect } from 'react';
@@ -236,7 +236,7 @@ export default function MyPage() {
             <TouchableOpacity
               className="flex-row items-center py-3"
               onPress={() => router.push('/consultations')}>
-              <FontAwesome5 name="comments" size={24} color="black" />
+              <Feather name="message-square" size={24} color="#9333ea" />
               <Text className="ml-3 text-base">My Consultation History</Text>
             </TouchableOpacity>
             {/* <TouchableOpacity className="flex-row items-center py-3">
@@ -255,29 +255,26 @@ export default function MyPage() {
             <TouchableOpacity
               className="flex-row items-center py-3"
               onPress={() => router.push('/board/notice')}>
-              <FontAwesome5 name="bullhorn" size={24} color="black" />
+              <Feather name="bell" size={24} color="#9333ea" />
               <Text className="ml-3 text-base">Announcements</Text>
             </TouchableOpacity>
             <TouchableOpacity
               className="flex-row items-center py-3"
               onPress={() => router.push('/(stack)/support')}>
-              <FontAwesome5 name="headset" size={24} color="black" />
+              <Feather name="help-circle" size={24} color="#9333ea" />
               <Text className="ml-3 text-base">Support</Text>
             </TouchableOpacity>
             <TouchableOpacity
               className="flex-row items-center py-3"
               onPress={() => Alert.alert('Coming Soon', 'This feature is coming soon!')}>
-              <FontAwesome5 name="user-plus" size={24} color="black" />
+              <Feather name="user-plus" size={24} color="#9333ea" />
               <Text className="ml-3 text-base">Become a Teacher</Text>
             </TouchableOpacity>
             <TouchableOpacity className="flex-row items-center py-3" onPress={handleSettings}>
-              <FontAwesome5 name="cog" size={24} color="black" />
+              <Feather name="settings" size={24} color="#9333ea" />
               <Text className="ml-3 text-base">Settings</Text>
             </TouchableOpacity>
           </View>
-
-          {/* Logout Button */}
-          <Button title="Logout" onPress={logout} color="#FF0000" />
         </View>
       </ScrollView>
     </SafeAreaView>
