@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
-import { Stack, useRouter } from 'expo-router';
+import { router, Stack, useRouter } from 'expo-router';
+import { tap } from 'lodash';
 import React from 'react';
 import {
   View,
@@ -11,6 +12,7 @@ import {
   SafeAreaView,
   Button,
 } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 import EventListingItem from '~/components/EventListingItem';
 import { usePosts } from '~/queries/hooks/posts/usePosts';
@@ -32,9 +34,44 @@ export default function FeedList() {
   });
 
   const allPosts = postsData?.pages?.flatMap((page) => page.data) ?? [];
+  const handlePress = () => {
+    console.log('write button pressed');
+    router.push('/write/with-words');
+  };
 
+  const tap = Gesture.Tap()
+    .runOnJS(true)
+    .onEnd(() => {
+      handlePress();
+    });
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <Stack.Screen
+        options={{
+          headerTitle: 'Feed',
+          headerRight: () => (
+            <View
+              style={{
+                position: 'absolute',
+                right: 0,
+                paddingRight: 16,
+                flexDirection: 'row',
+                alignItems: 'center',
+                zIndex: 999,
+                elevation: 2,
+              }}>
+              <GestureDetector gesture={tap}>
+                <View
+                  style={{
+                    padding: 8,
+                  }}>
+                  <Feather name="edit" size={24} color="#B227D4" />
+                </View>
+              </GestureDetector>
+            </View>
+          ),
+        }}
+      />
       <FlatList
         data={allPosts}
         renderItem={({ item }) => <EventListingItem event={item} />}

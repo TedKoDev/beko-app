@@ -46,7 +46,7 @@ export default function SearchResultsScreen() {
           <TouchableOpacity
             key={item.post_id}
             className="mb-4 border-b border-gray-100 p-4"
-            onPress={() => router.push(`/event/${item.post_id}`)}>
+            onPress={() => router.push(`/event/${item.post_id}/index`)}>
             <Text className="mb-2 text-lg">{item.post_content.title}</Text>
             <View className="flex-row space-x-4">
               <Text className="text-gray-500">좋아요 {item.likes}</Text>
@@ -90,7 +90,12 @@ export default function SearchResultsScreen() {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <Stack.Screen options={{ headerTitle: 'Search Results' }} />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Search Results',
+          headerRight: () => null,
+        }}
+      />
       <View className="p-4">
         <Text className="mb-4 text-lg">
           <Text className="font-bold">{q}</Text>에 대한 검색결과
