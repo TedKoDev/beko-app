@@ -1,6 +1,6 @@
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import { Stack, useRouter } from 'expo-router';
+import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import {
   TouchableOpacity,
@@ -91,6 +91,9 @@ export default function ListLayout({
   const HeaderRight = () => {
     return (
       <View className="flex-row items-center">
+        <Link href="/search" asChild className="mr-4">
+          <Feather name="search" size={24} color="#B227D4" />
+        </Link>
         {showWriteButton && (
           <TouchableOpacity
             onPress={() => {

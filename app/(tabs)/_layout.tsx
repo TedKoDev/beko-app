@@ -6,6 +6,7 @@ import { HeaderButton } from '../../components/HeaderButton';
 import { TabBarIcon } from '../../components/TabBarIcon';
 
 import { useAuthStore } from '~/store/authStore';
+import { Feather } from '@expo/vector-icons';
 
 export default function TabLayout() {
   const userInfo = useAuthStore((state) => state.userInfo);
@@ -34,11 +35,14 @@ export default function TabLayout() {
             </View>
           ),
           headerRight: () => (
-            <>
+            <View className="mr-2 flex-row items-center gap-4">
+              <Link href="/search" asChild>
+                <Feather name="search" size={24} color="#D812DC" />
+              </Link>
               <Link href="/modal" asChild>
                 <HeaderButton />
               </Link>
-            </>
+            </View>
           ),
         }}
       />
