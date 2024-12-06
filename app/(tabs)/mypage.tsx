@@ -177,7 +177,16 @@ export default function MyPage() {
               </View>
               <Text className="text-xs text-gray-500">{userInfo?.email}</Text>
             </View>
-            <TouchableOpacity className="rounded-lg bg-gray-200 p-2" onPress={handleEditProfile}>
+            <TouchableOpacity
+              className="rounded-lg bg-gray-200 p-2 "
+              style={{
+                shadowColor: '#000', // 그림자 색상
+                shadowOffset: { width: 2, height: 2 }, // x, y 값으로 그림자 방향 설정
+                shadowOpacity: 0.3, // 그림자 투명도
+                shadowRadius: 1, // 그림자 퍼짐 정도
+                elevation: 5, // Android에서의 그림자 강도
+              }}
+              onPress={handleEditProfile}>
               <Text className="text-xs text-blue-500">Edit Profile</Text>
             </TouchableOpacity>
           </View>
@@ -190,13 +199,28 @@ export default function MyPage() {
           {/* Points Section */}
           <TouchableOpacity
             className="mb-4 flex-row justify-between rounded-xl bg-blue-100 p-4"
+            style={{
+              shadowColor: '#000', // 그림자 색상
+              shadowOffset: { width: 2, height: 2 }, // x, y 값으로 그림자 방향 설정
+              shadowOpacity: 0.3, // 그림자 투명도
+              shadowRadius: 1, // 그림자 퍼짐 정도
+              elevation: 5, // Android에서의 그림자 강도
+            }}
             onPress={() => router.push('/(stack)/pointhistory')}>
             <Text className="text-base">🎯 Learning Points</Text>
             <Text className="text-base font-bold">{userInfo?.points || 0} pts</Text>
           </TouchableOpacity>
 
           {/* Activity Section */}
-          <View className="mb-4 flex-row justify-around rounded-xl bg-gray-100 p-4">
+          <View
+            className="mb-4 flex-row justify-around rounded-xl bg-gray-100 p-4"
+            style={{
+              shadowColor: '#000', // 그림자 색상
+              shadowOffset: { width: 2, height: 2 }, // x, y 값으로 그림자 방향 설정
+              shadowOpacity: 0.3, // 그림자 투명도
+              shadowRadius: 1, // 그림자 퍼짐 정도
+              elevation: 5, // Android에서의 그림자 강도
+            }}>
             <View className="items-center">
               <Text className="mb-1 text-lg font-bold">{userInfo?.stats?.postCount || 0}</Text>
               <Text className="text-xs text-gray-500">Posts</Text>
@@ -213,9 +237,9 @@ export default function MyPage() {
               className="flex-row items-center py-3"
               onPress={() => router.push('/consultations')}>
               <FontAwesome5 name="comments" size={24} color="black" />
-              <Text className="ml-3 text-base">상담 내역</Text>
+              <Text className="ml-3 text-base">My Consultation History</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex-row items-center py-3">
+            {/* <TouchableOpacity className="flex-row items-center py-3">
               <FontAwesome5 name="book" size={24} color="black" />
               <Text className="ml-3 text-base">My Courses</Text>
             </TouchableOpacity>
@@ -226,20 +250,23 @@ export default function MyPage() {
             <TouchableOpacity className="flex-row items-center py-3">
               <FontAwesome5 name="bookmark" size={24} color="black" />
               <Text className="ml-3 text-base">Bookmarks</Text>
-            </TouchableOpacity>
-          </View>
+            </TouchableOpacity> */}
 
-          {/* Other Section */}
-          <View className="mb-4">
-            <TouchableOpacity className="flex-row items-center py-3">
+            <TouchableOpacity
+              className="flex-row items-center py-3"
+              onPress={() => router.push('/board/notice')}>
               <FontAwesome5 name="bullhorn" size={24} color="black" />
               <Text className="ml-3 text-base">Announcements</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex-row items-center py-3">
+            <TouchableOpacity
+              className="flex-row items-center py-3"
+              onPress={() => router.push('/(stack)/support')}>
               <FontAwesome5 name="headset" size={24} color="black" />
               <Text className="ml-3 text-base">Support</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex-row items-center py-3">
+            <TouchableOpacity
+              className="flex-row items-center py-3"
+              onPress={() => Alert.alert('Coming Soon', 'This feature is coming soon!')}>
               <FontAwesome5 name="user-plus" size={24} color="black" />
               <Text className="ml-3 text-base">Become a Teacher</Text>
             </TouchableOpacity>

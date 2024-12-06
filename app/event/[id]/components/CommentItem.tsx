@@ -17,6 +17,7 @@ import { GestureHandlerRootView, Pressable } from 'react-native-gesture-handler'
 import EditCommentModal from './EditCommentModal';
 
 import { useAuthStore } from '~/store/authStore';
+import { useReport } from '~/queries/hooks/report/useReport';
 
 dayjs.extend(relativeTime);
 
@@ -63,6 +64,7 @@ export default function CommentItem({
   const isMyComment = currentUser?.user_id === comment.user_id;
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
+  const { createReport } = useReport();
 
   const handleOpenMenu = useCallback(() => {
     setModalVisible(true);
@@ -148,7 +150,12 @@ export default function CommentItem({
         {
           text: 'Report',
           onPress: () => {
-            Alert.alert('Success', 'Comment has been reported');
+            createReport({
+              targetType: 'COMMENT',
+              targetId: comment.comment_id,
+              reportedUserId: comment.user_id,
+              reason: 'spam',
+            });
           },
         },
       ],

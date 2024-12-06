@@ -33,7 +33,7 @@ export default function WriteWithWordsScreen() {
         content: sentence,
         type: 'SENTENCE',
         categoryId: 2,
-        title: `3단어 글쓰기 + ${userInfo?.username} + ${new Date().toLocaleDateString()}`,
+        title: `3 Words Writing + ${userInfo?.username} + ${new Date().toLocaleDateString()}`,
       },
       {
         onSuccess: async () => {
@@ -68,7 +68,7 @@ export default function WriteWithWordsScreen() {
         <View style={{ flex: 1 }}>
           <Stack.Screen
             options={{
-              headerTitle: '3단어 글쓰기',
+              headerTitle: '3 Words Writing',
               headerTitleAlign: 'center',
               headerTintColor: '#D812DC',
               headerStyle: {

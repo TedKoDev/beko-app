@@ -52,7 +52,7 @@ export const GameCard = ({ game, onPress }: GameCardProps) => {
       style={[animatedStyle]}
       className="mb-4 w-[48%]"
       disabled={game.isComingSoon}>
-      <View className="overflow-hidden rounded-2xl bg-white shadow-md">
+      <View className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md">
         <View className="h-32 bg-purple-400">
           {game.isComingSoon ? (
             <View className="flex-1 items-center justify-center">

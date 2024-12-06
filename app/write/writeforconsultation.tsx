@@ -162,7 +162,7 @@ export default function WriteForConsultationScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          headerTitle: '1:1 상담 글쓰기',
+          headerTitle: '1:1 Consultation',
           headerShadowVisible: true,
           headerTitleAlign: 'center',
           headerBackVisible: true,
@@ -175,7 +175,7 @@ export default function WriteForConsultationScreen() {
       <ScrollView className="flex-1 bg-white p-4">
         {/* 상담 유형 선택 */}
         <View className="mb-4">
-          <Text className="mb-2 text-gray-600">상담 유형</Text>
+          <Text className="mb-2 text-gray-600">Consultation Type</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View className="flex-row gap-2">
               {consultationCategories.map((category) => (
@@ -201,11 +201,11 @@ export default function WriteForConsultationScreen() {
         {selectedCategory && (
           <View className="mb-4 rounded-lg bg-gray-100 p-4">
             <View className="mb-2 flex-row items-center justify-between">
-              <Text className="text-gray-600">상담 비용</Text>
+              <Text className="text-gray-600">Consultation Cost</Text>
               <Text className="text-lg font-bold text-purple-500">{selectedCategoryPrice} P</Text>
             </View>
             <View className="flex-row items-center justify-between">
-              <Text className="text-gray-600">보유 포인트</Text>
+              <Text className="text-gray-600">Points</Text>
               <Text
                 className={`text-lg font-bold ${hasEnoughPoints ? 'text-green-500' : 'text-red-500'}`}>
                 {userInfo?.points || 0} P
@@ -213,7 +213,7 @@ export default function WriteForConsultationScreen() {
             </View>
             {!hasEnoughPoints && (
               <Text className="mt-2 text-sm text-red-500">
-                포인트가 부족합니다. 충전 후 이용해주세요.
+                Not enough points. Please charge and use it.
               </Text>
             )}
           </View>
@@ -222,7 +222,7 @@ export default function WriteForConsultationScreen() {
         {/* 제목 입력 */}
         <TextInput
           className="mb-4 rounded-lg border border-gray-300 p-3"
-          placeholder="제목을 입력하세요"
+          placeholder="Enter the title"
           value={title}
           onChangeText={setTitle}
         />
@@ -230,7 +230,7 @@ export default function WriteForConsultationScreen() {
         {/* 내용 입력 */}
         <TextInput
           className="mb-4 h-40 rounded-lg border border-gray-300 p-3"
-          placeholder="상담 내용을 자세히 작성해주세요"
+          placeholder="Enter the content"
           multiline
           textAlignVertical="top"
           value={content}
@@ -249,7 +249,7 @@ export default function WriteForConsultationScreen() {
               ) : (
                 <Ionicons name="image-outline" size={24} color="#666" />
               )}
-              <Text className="ml-2">{isImageLoading ? '이미지 로딩중...' : '이미지 추가'}</Text>
+              <Text className="ml-2">{isImageLoading ? 'Loading...' : 'Add image'}</Text>
             </TouchableOpacity>
             <Text className="text-sm text-gray-600">
               {selectedImages.length}/{MAX_IMAGES}
@@ -286,7 +286,7 @@ export default function WriteForConsultationScreen() {
           className="rounded-lg bg-purple-500 p-4"
           disabled={addPost.isPending}>
           <Text className="text-center font-bold text-white">
-            {addPost.isPending ? '작성 중...' : '상담 글 작성'}
+            {addPost.isPending ? 'Writing...' : 'Write consultation'}
           </Text>
         </TouchableOpacity>
       </ScrollView>

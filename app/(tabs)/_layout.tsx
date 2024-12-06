@@ -52,8 +52,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="ad"
         options={{
-          title: 'AD',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Teacher',
+          tabBarIcon: ({ color }) => <TabBarIcon name="meetup" color={color} />,
         }}
       />
 

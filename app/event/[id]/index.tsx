@@ -51,7 +51,7 @@ export default function EventPage() {
           <View className="flex-1 bg-white">
             <Stack.Screen
               options={{
-                headerTitle: '상세보기',
+                headerTitle: 'Detail',
                 headerBackTitle: '',
                 headerBackVisible: true,
                 headerTintColor: '#D812DC',

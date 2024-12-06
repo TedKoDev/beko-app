@@ -8,13 +8,13 @@ export enum ConsultationStatus {
 export const getStatusText = (status: ConsultationStatus) => {
   switch (status) {
     case ConsultationStatus.PENDING:
-      return '대기중';
+      return 'Pending';
     case ConsultationStatus.IN_PROGRESS:
-      return '상담중';
+      return 'In Progress';
     case ConsultationStatus.COMPLETED:
-      return '완료됨';
+      return 'Completed';
     case ConsultationStatus.CANCELLED:
-      return '취소됨';
+      return 'Cancelled';
     default:
       return status;
   }

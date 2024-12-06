@@ -91,7 +91,7 @@ export default function LessonCard({ onMorePress, participationCount = 0, points
         <View className="ml-4 flex-1 flex-row justify-between">
           <View className="mr-5">
             <Text className="text-base font-bold text-gray-800">
-              참여 횟수: {userData?.today_task_count || 0}회
+              Attempts: {userData?.today_task_count || 0} times
             </Text>
             <TouchableOpacity
               onPress={() => router.push('/(tabs)/mypage')}
@@ -163,7 +163,7 @@ export default function LessonCard({ onMorePress, participationCount = 0, points
         <TouchableOpacity
           className="items-center justify-center rounded-md bg-white py-3"
           onPress={onMorePress}>
-          <Text className="text-lg font-bold text-[#B227D4]">참여하기</Text>
+          <Text className="text-lg font-bold text-[#B227D4]">Let's go</Text>
         </TouchableOpacity>
       </View>
     </View>

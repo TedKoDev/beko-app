@@ -11,14 +11,6 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-na
 
 const menuItems = [
   {
-    title: 'Study Korean Game',
-    korTitle: '한국어 게임 하러가기',
-    color: '#FF9F40',
-    pressedColor: '#E6842A',
-    icon: <FontAwesome5 name="gamepad" size={24} color="white" />,
-    route: '/game',
-  },
-  {
     title: 'Korean Community',
     korTitle: '커뮤니티 보러가기',
     color: '#4A90E2', // 버튼 기본 색상
@@ -32,7 +24,15 @@ const menuItems = [
     color: '#9013FE',
     pressedColor: '#7310C8',
     icon: <Ionicons name="school" size={24} color="white" />,
-    route: '/questions',
+    route: '/consultations',
+  },
+  {
+    title: 'Study Korean Game',
+    korTitle: '한국어 게임 하러가기',
+    color: '#FF9F40',
+    pressedColor: '#E6842A',
+    icon: <FontAwesome5 name="gamepad" size={24} color="white" />,
+    route: '/game',
   },
 ];
 

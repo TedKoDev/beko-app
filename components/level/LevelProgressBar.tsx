@@ -41,7 +41,15 @@ export const LevelProgressBar = ({ compact = false }: LevelProgressBarProps) => 
   }
 
   return (
-    <View className="rounded-xl bg-white p-4 shadow-sm">
+    <View
+      className="rounded-xl border border-gray-200 bg-white p-4 shadow-lg"
+      style={{
+        shadowColor: '#000', // 그림자 색상
+        shadowOffset: { width: 2, height: 2 }, // x, y 값으로 그림자 방향 설정
+        shadowOpacity: 0.3, // 그림자 투명도
+        shadowRadius: 1, // 그림자 퍼짐 정도
+        elevation: 5, // Android에서의 그림자 강도
+      }}>
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center">
           <MaterialCommunityIcons name="star" size={24} color="#FFD700" />
@@ -69,13 +77,13 @@ export const LevelProgressBar = ({ compact = false }: LevelProgressBarProps) => 
 
       <View className="mt-2 flex-row justify-between">
         <View>
-          <Text className="text-xs font-medium text-gray-700">현재 레벨 {currentLevel}</Text>
+          <Text className="text-xs font-medium text-gray-700">Current Lv {currentLevel}</Text>
           <Text className="text-xs text-gray-500">
             {currentLevelThreshold.min_experience.toLocaleString()} XP
           </Text>
         </View>
         <View className="items-end">
-          <Text className="text-xs font-medium text-gray-700">다음 레벨 {currentLevel + 1}</Text>
+          <Text className="text-xs font-medium text-gray-700">Next Lv {currentLevel + 1}</Text>
           <Text className="text-xs text-gray-500">
             {nextLevelThreshold.min_experience.toLocaleString()} XP
           </Text>

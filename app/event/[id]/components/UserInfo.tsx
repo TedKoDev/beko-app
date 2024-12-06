@@ -5,6 +5,7 @@ import { View, Text, Image, Alert, Animated, Modal, TouchableOpacity } from 'rea
 import { GestureHandlerRootView, Pressable } from 'react-native-gesture-handler';
 
 import { useDeletePost } from '~/queries/hooks/posts/usePosts';
+import { useReport } from '~/queries/hooks/report/useReport';
 import { useAuthStore } from '~/store/authStore';
 
 interface UserInfoProps {
@@ -34,6 +35,7 @@ export default function UserInfo({
   const currentUser = useAuthStore((state) => state.userInfo);
   const isMyPost = currentUser?.user_id === user_id;
   const deletePost = useDeletePost();
+  const { createReport } = useReport();
 
   const handleOpenMenu = useCallback(() => {
     setModalVisible(true);
@@ -113,7 +115,12 @@ export default function UserInfo({
         {
           text: 'Report',
           onPress: () => {
-            Alert.alert('Success', 'Post has been reported');
+            createReport({
+              targetType: 'POST',
+              targetId: post_id,
+              reportedUserId: user_id,
+              reason: 'spam',
+            });
           },
         },
       ],

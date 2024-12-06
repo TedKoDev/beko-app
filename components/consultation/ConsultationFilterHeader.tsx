@@ -34,10 +34,10 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
   const consultationCategories = topicsData?.find((topic) => topic.topic_id === 1)?.category ?? [];
 
   return (
-    <View className="bg-white">
+    <View className="bg-white ">
       {/* 상담 상태 필터 */}
       <View className="bg-white py-4">
-        <Text className="mb-2 pl-4 text-gray-600">상담 상태</Text>
+        <Text className="mb-2 pl-4 text-gray-600">Consultation Status</Text>
         <ScrollView className="pl-4" horizontal showsHorizontalScrollIndicator={false}>
           <View className="flex-row gap-2">
             <TouchableOpacity
@@ -46,7 +46,7 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
                 selectedStatus === undefined ? 'bg-purple-500' : 'bg-gray-200'
               }`}>
               <Text className={selectedStatus === undefined ? 'text-white' : 'text-gray-700'}>
-                전체
+                All
               </Text>
             </TouchableOpacity>
             {Object.values(ConsultationStatus).map((status) => (
@@ -67,7 +67,7 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
 
       {/* 카테고리 필터 */}
       <View className="mt-4">
-        <Text className="mb-2 pl-4 text-gray-600">상담 유형</Text>
+        <Text className="mb-2 pl-4 text-gray-600">Consultation Type</Text>
         <ScrollView className="pl-4" horizontal showsHorizontalScrollIndicator={false}>
           <View className="flex-row gap-2">
             <TouchableOpacity
@@ -76,7 +76,7 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
                 selectedCategoryId === undefined ? 'bg-purple-500' : 'bg-gray-200'
               }`}>
               <Text className={selectedCategoryId === undefined ? 'text-white' : 'text-gray-700'}>
-                전체
+                All
               </Text>
             </TouchableOpacity>
             {consultationCategories.map((category) => (
@@ -100,13 +100,11 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
 
       {/* 정렬 옵션 */}
       <View className="flex-row justify-end">
-        <View className="mx-4 mb-2">
+        <View className="mx-4 mb-2 mt-4">
           <TouchableOpacity
             onPress={() => setShowSortModal(!showSortModal)}
             className="flex-row items-center justify-between rounded-lg border border-gray-200 px-4 py-2">
-            <Text className="text-gray-700">
-              {selectedSort === 'latest' ? '최신순' : '오래된순'}
-            </Text>
+            <Text className="text-gray-700">{selectedSort === 'latest' ? 'Latest' : 'Oldest'}</Text>
             <Ionicons name="chevron-down" size={20} color="#666" />
           </TouchableOpacity>
         </View>
@@ -115,26 +113,3 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
     </View>
   );
 };
-
-// 필터 섹션 컴포넌트
-const FilterSection = ({ title, selectedValue, onSelect, options }) => (
-  <View className="p-4">
-    <Text className="mb-2 text-gray-600">{title}</Text>
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      <View className="flex-row gap-2">
-        {options.map((option) => (
-          <TouchableOpacity
-            key={option.value ?? 'all'}
-            onPress={() => onSelect(option.value)}
-            className={`rounded-full px-4 py-2 ${
-              selectedValue === option.value ? 'bg-purple-500' : 'bg-gray-200'
-            }`}>
-            <Text className={`${selectedValue === option.value ? 'text-white' : 'text-gray-700'}`}>
-              {option.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </ScrollView>
-  </View>
-);

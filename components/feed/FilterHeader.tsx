@@ -37,7 +37,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
     <View className="bg-white py-4">
       {/* Topics */}
       <View className="">
-        <Text className="mb-2 pl-4 text-gray-600">토픽</Text>
+        <Text className="mb-2 pl-4 text-gray-600">Topic</Text>
         <ScrollView className="pl-4" horizontal showsHorizontalScrollIndicator={false}>
           <View className="flex-row gap-2">
             <TouchableOpacity
@@ -49,7 +49,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
                 selectedTopicId === undefined ? 'bg-purple-500' : 'bg-gray-200'
               }`}>
               <Text className={selectedTopicId === undefined ? 'text-white' : 'text-gray-700'}>
-                전체
+                All
               </Text>
             </TouchableOpacity>
             {topicsData?.map((topic) => {
@@ -78,7 +78,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
       {/* Categories */}
       {selectedTopic && (
         <View className="mt-4">
-          <Text className="mb-2 pl-4 text-gray-600">카테고리</Text>
+          <Text className="mb-2 pl-4 text-gray-600">Category</Text>
           <ScrollView className="pl-4" horizontal showsHorizontalScrollIndicator={false}>
             <View className="flex-row gap-2">
               <TouchableOpacity
@@ -87,7 +87,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
                   selectedCategoryId === undefined ? 'bg-purple-500' : 'bg-gray-200'
                 }`}>
                 <Text className={selectedCategoryId === undefined ? 'text-white' : 'text-gray-700'}>
-                  전체
+                  All
                 </Text>
               </TouchableOpacity>
               {selectedTopic.category.map((category) => (
@@ -122,9 +122,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
           size={20}
           color={showQuestionsOnly ? '#9333ea' : '#666'}
         />
-        <Text className="ml-2 text-gray-700">
-          {showQuestionsOnly ? '전체 보기' : '질문만 보기'}
-        </Text>
+        <Text className="ml-2 text-gray-700">{showQuestionsOnly ? 'All' : 'Questions only'}</Text>
       </TouchableOpacity>
 
       {/* Sort Options Button */}

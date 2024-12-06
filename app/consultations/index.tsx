@@ -44,7 +44,7 @@ export default function ConsultationsScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ headerTitle: '상담 목록' }} />
+      <Stack.Screen options={{ headerTitle: 'Consultation List' }} />
       <ListLayout
         data={flattenedData}
         isLoading={isLoading}
@@ -69,7 +69,7 @@ export default function ConsultationsScreen() {
         renderItem={({ item }) => <ConsultationListItem consultation={item} />}
         ListEmptyComponent={
           <View className="flex-1 items-center justify-center p-4">
-            <Text className="text-gray-500">상담 내역이 없습니다.</Text>
+            <Text className="text-gray-500">No consultation history.</Text>
           </View>
         }
       />

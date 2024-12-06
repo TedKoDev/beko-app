@@ -60,7 +60,7 @@ export default function Feed() {
   return (
     <View className="flex-1 bg-white">
       <ListLayout
-        headerTitle="커뮤니티"
+        headerTitle="Community"
         data={allPosts}
         showViewToggle
         showWriteButton
@@ -80,7 +80,7 @@ export default function Feed() {
             topicsData={topicsData}
             selectedTopic={selectedTopic ?? undefined}
             showSortModal={showSortModal}
-            selectedSortLabel={selectedSortLabel ?? '최신순'}
+            selectedSortLabel={selectedSortLabel ?? 'Latest'}
             setSelectedTopicId={setSelectedTopicId}
             setSelectedCategoryId={setSelectedCategoryId}
             setShowSortModal={setShowSortModal}

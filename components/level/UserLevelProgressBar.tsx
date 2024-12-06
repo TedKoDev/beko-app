@@ -75,13 +75,13 @@ export const UserLevelProgressBar = () => {
 
       <View className="mt-2 flex-row justify-between">
         <View>
-          <Text className="text-xs font-medium text-gray-700">현재 레벨 {currentLevel}</Text>
+          <Text className="text-xs font-medium text-gray-700">Current Lv {currentLevel}</Text>
           <Text className="text-xs text-gray-500">
             {currentLevelThreshold.min_experience.toLocaleString()} XP
           </Text>
         </View>
         <View className="items-end">
-          <Text className="text-xs font-medium text-gray-700">다음 레벨 {currentLevel + 1}</Text>
+          <Text className="text-xs font-medium text-gray-700">Next Lv {currentLevel + 1}</Text>
           <Text className="text-xs text-gray-500">
             {nextLevelThreshold.min_experience.toLocaleString()} XP
           </Text>
