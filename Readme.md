@@ -44,4 +44,6 @@ expo-image와 같은 특수 컴포넌트들은 네이티브 구현에 더 가깝
 이러한 컴포넌트들은 className을 통한 스타일링을 완전히 지원하지 않을 수 있음
 따라서 expo-image에서는 style 속성을 사용하는 것이 더 안정적이고 성능이 좋습니다. 일반적인 React Native 컴포넌트에서는 className을 사용해도 문제없지만, 특수한 네이티브 기능을 사용하는 컴포넌트의 경우 style 속성을 사용하는 것이 좋습니다.
 
-ㅇ
+### expo notification push notification을 위한 것 expo SDK 52버전까지 사용이 가능하고 53버전 부터는 사용불가함 이후에 추가로 푸쉬 노티피케이션 사용 방법 검토해서 수정필요함.
+
+expo install expo-notifications
