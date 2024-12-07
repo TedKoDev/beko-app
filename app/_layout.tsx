@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, ActivityIndicator, Animated, Image } from 'react-native';
+import { View, ActivityIndicator, Animated, Image, Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   useSharedValue,
@@ -12,6 +12,7 @@ import {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import * as Notifications from 'expo-notifications';
 
 import { useAuthStore } from '../store/authStore';
 
@@ -23,6 +24,15 @@ configureReanimatedLogger({
   strict: false, // Reanimated runs in strict mode by default
 });
 
+// 앱 최상단에 알림 핸들러 설정 -----------------------------
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+// -----------------------------
 export default function RootLayout() {
   const { isAuthenticated, checkAuth } = useAuthStore();
   const router = useRouter();
@@ -47,13 +57,12 @@ export default function RootLayout() {
 
   useEffect(() => {
     const checkAuthentication = async () => {
-      await checkAuth(); // 인증 상태 확인
-      setLoading(false); // 인증 상태 확인 후 로딩 종료
+      await checkAuth();
+      setLoading(false);
     };
 
     checkAuthentication();
 
-    // 애니메이션 수정
     logoScale.value = withSpring(1, {
       duration: 1000,
     });
@@ -66,6 +75,25 @@ export default function RootLayout() {
       router.replace('/login'); // /auth/login이 아니라 /login으로
     }
   }, [isAuthenticated, loading]);
+
+  // expo-notifications 설정 -----------------------------
+  useEffect(() => {
+    // 알� 수신 리스너 설정
+    const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
+      console.log('Notification received:', notification);
+    });
+
+    // 알림 응답 리스너 설정 (사용자가 알림을 탭했을 때)
+    const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
+      console.log('Notification response:', response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
+    };
+  }, []);
+  // -----------------------------
 
   if (loading || isAuthenticated === null) {
     return (

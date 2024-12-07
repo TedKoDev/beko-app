@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "alpha",
-    "slug": "alpha",
+    "slug": "beko",
     "version": "1.0.0",
     "scheme": "alpha",
     "web": {
@@ -12,7 +12,17 @@
     "plugins": [
       "expo-router",
       "expo-asset",
-      "expo-video"
+      "expo-video",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./assets/notification-sound.wav"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
@@ -37,6 +47,15 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "fd62690b-c7b1-4850-a014-8fd3746a89ea"
+      }
+    },
+    "owner": "ordihong"
   }
 }
