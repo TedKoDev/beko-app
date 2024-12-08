@@ -7,6 +7,15 @@ interface CheckResponse {
   message: string;
 }
 
+interface SocialLoginResponse {
+  access_token: string;
+  user: {
+    user_id: number;
+    username: string;
+    email: string;
+  };
+}
+
 export const getCountryListApi = async () => {
   try {
     const response = await api.get('/country/list'); // 또는 '/country'
@@ -172,6 +181,26 @@ export const deactivateUserApi = async (userId: number, password: string) => {
   }
 };
 
+export const socialLoginApi = async (
+  provider: 'APPLE' | 'GOOGLE',
+  providerUserId: string,
+  email?: string,
+  name?: string
+): Promise<SocialLoginResponse> => {
+  try {
+    const response = await api.post('/auth/social-login', {
+      provider,
+      providerUserId,
+      email,
+      name,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Social login API failed:', error);
+    throw error;
+  }
+};
+
 export const authService = {
   checkEmail,
   checkName,
@@ -180,4 +209,5 @@ export const authService = {
   getUserInfoApi,
   updateUserProfileApi,
   deactivateUserApi,
+  socialLoginApi,
 };

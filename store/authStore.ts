@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 
-import { getUserInfoApi, loginApi, registerApi } from '../services/authService';
+import { getUserInfoApi, loginApi, registerApi, authService } from '../services/authService';
 
 interface UserInfo {
   account_status: string;
@@ -36,11 +36,18 @@ interface AuthState {
   userInfo?: UserInfo;
   userToken?: string;
   login: (email: string, password: string) => Promise<void>;
+
   register: (name: string, email: string, password: string, country_id: number) => Promise<void>;
   logout: () => void;
   checkAuth: () => Promise<void>;
   setUserInfo: (info: any) => void;
   updateUserInfo: (newData: any) => void;
+  socialLogin: (
+    provider: 'APPLE' | 'GOOGLE',
+    providerUserId: string,
+    email?: string,
+    name?: string
+  ) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -63,7 +70,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       set({
         isAuthenticated: true,
-        userInfo: userInfo,
+        userInfo,
         userToken: data.access_token,
       });
     }
@@ -111,4 +118,26 @@ export const useAuthStore = create<AuthState>((set) => ({
           }
         : undefined,
     })),
+
+  socialLogin: async (provider, providerUserId, email, name) => {
+    try {
+      const response = await authService.socialLoginApi(provider, providerUserId, email, name);
+
+      if (response.access_token) {
+        await AsyncStorage.setItem('userToken', response.access_token);
+
+        const userInfo = await authService.getUserInfoApi(response.access_token);
+        await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+        set({
+          isAuthenticated: true,
+          userInfo,
+          userToken: response.access_token,
+        });
+      }
+    } catch (error) {
+      console.error('Social login failed:', error);
+      throw error;
+    }
+  },
 }));

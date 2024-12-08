@@ -18,9 +18,7 @@
         {
           "icon": "./assets/notification-icon.png",
           "color": "#ffffff",
-          "sounds": [
-            "./assets/notification-sound.wav"
-          ]
+          "sounds": ["./assets/notification-sound.wav"]
         }
       ]
     ],
@@ -36,11 +34,10 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "usesAppleSignIn": true
     },
     "android": {
       "adaptiveIcon": {
