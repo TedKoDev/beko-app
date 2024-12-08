@@ -60,7 +60,7 @@ export default function CommentListPage() {
       <View className="flex-1 bg-white">
         <Stack.Screen
           options={{
-            headerTitle: '댓글',
+            headerTitle: 'Comments',
             headerBackTitle: '',
             headerTintColor: '#D812DC',
           }}

@@ -45,7 +45,7 @@ export default function HotList() {
           return event ? (
             <EventSmallListItem key={event.post_id} event={event} />
           ) : (
-            <View key={index} className="h-[72px] animate-pulse bg-white" />
+            <View key={`skeleton-${index}`} className="h-[72px] animate-pulse bg-white" />
           );
         })}
       </View>

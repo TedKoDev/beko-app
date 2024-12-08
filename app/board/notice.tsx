@@ -43,8 +43,6 @@ export default function NoticeScreen() {
       <Stack.Screen
         options={{
           headerTitle: 'Notice',
-          headerTitleAlign: 'center',
-          headerTintColor: '#D812DC',
         }}
       />
 
@@ -61,10 +59,9 @@ export default function NoticeScreen() {
         onLoadMore={handleLoadMore}
         onRefresh={refetch}
         isRefreshing={isRefetching}
-        showViewToggle={true}
-        hideButton={true}
+        showViewToggle={false}
+        hideButton
         showWriteButton={false}
-        hideHeader={true}
       />
     </View>
   );

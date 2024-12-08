@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { Stack } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
@@ -64,6 +65,7 @@ export default function Feed() {
         data={allPosts}
         showViewToggle
         showWriteButton
+        showSearchButton
         hideButton
         isLoading={isFetchingNextPage}
         onLoadMore={() => {

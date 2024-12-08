@@ -56,7 +56,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="feed"
         options={{
-          title: 'Feed',
+          title: 'Community',
+          headerTitleAlign: 'center',
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
         }}
       />
@@ -64,6 +65,7 @@ export default function TabLayout() {
         name="ad"
         options={{
           title: 'Teacher',
+          headerTitleAlign: 'center',
           tabBarIcon: ({ color }) => <TabBarIcon name="meetup" color={color} />,
         }}
       />
@@ -72,6 +74,7 @@ export default function TabLayout() {
         name="mypage"
         options={{
           title: 'My Page',
+          headerTitleAlign: 'center',
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />

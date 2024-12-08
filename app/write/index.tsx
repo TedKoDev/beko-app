@@ -185,16 +185,7 @@ export default function WriteScreen() {
     <>
       <Stack.Screen
         options={{
-          headerShown: true,
           headerTitle: 'Add Post',
-          headerShadowVisible: true,
-          headerTitleAlign: 'center',
-
-          headerBackVisible: true,
-          headerTintColor: '#D812DC',
-          headerStyle: {
-            backgroundColor: 'white',
-          },
         }}
       />
       <ScrollView className="flex-1 bg-white p-4">

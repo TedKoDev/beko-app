@@ -3,21 +3,21 @@ import { Image } from 'expo-image';
 import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import {
-  TouchableOpacity,
   View,
   FlatList,
   RefreshControl,
   ActivityIndicator,
-  Pressable,
   StyleProp,
   ViewStyle,
 } from 'react-native';
+import { Pressable } from 'react-native-gesture-handler';
 
 import EventListingItem from '~/components/EventListingItem';
 import InstagramStyleItem from '~/components/InstagramStyleItem';
 
 interface ListLayoutProps {
   headerTitle: string;
+  showSearchButton?: boolean;
   data: any[];
   showViewToggle?: boolean;
   showWriteButton?: boolean;
@@ -42,9 +42,10 @@ export default function ListLayout({
   onRefresh,
   isRefreshing = false,
   hideButton = false,
+  showSearchButton = false,
   showWriteButton = false,
   writeRoute = '/write',
-  hideHeader = false,
+
   onScroll,
   ListHeaderComponent,
   ListEmptyComponent,
@@ -90,24 +91,25 @@ export default function ListLayout({
 
   const HeaderRight = () => {
     return (
-      <View className="flex-row items-center">
-        <Link href="/search" asChild className="mr-4">
-          <Feather name="search" size={24} color="#B227D4" />
-        </Link>
+      <View className="mr-4 flex-row items-center gap-4">
+        {showSearchButton && (
+          <Link href="/search" asChild>
+            <Feather name="search" size={24} color="#B227D4" />
+          </Link>
+        )}
         {showWriteButton && (
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               console.log('write button pressed');
               router.push(writeRoute as any);
-            }}
-            className="mr-4">
+            }}>
             <Feather name="edit" size={24} color="#B227D4" />
-          </TouchableOpacity>
+          </Pressable>
         )}
         {showViewToggle && (
-          <TouchableOpacity onPress={toggleViewMode} className="mr-4">
+          <Pressable onPress={toggleViewMode}>
             <Feather name={viewMode === 'list' ? 'grid' : 'list'} size={24} color="#B227D4" />
-          </TouchableOpacity>
+          </Pressable>
         )}
       </View>
     );

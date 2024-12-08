@@ -200,7 +200,7 @@ export default function CommentItem({
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={handleOpenMenu}
-                  style={{ zIndex: 10, pointerEvents: 'auto' }}>
+                  style={{ zIndex: 10, pointerEvents: 'auto', marginLeft: 10 }}>
                   <Feather name="more-horizontal" size={20} color="#666666" />
                 </TouchableOpacity>
               </View>
@@ -301,7 +301,7 @@ export default function CommentItem({
                   </TouchableOpacity>
                 </>
               ) : (
-                <TouchableOpacity onPress={handleReport} className="flex-row items-center py-4">
+                <TouchableOpacity onPress={handleReport} className=" flex-row items-center py-4">
                   <Feather name="flag" size={20} color="#666666" />
                   <Text className="ml-3 text-base">Report Comment</Text>
                 </TouchableOpacity>

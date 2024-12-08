@@ -12,8 +12,9 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Platform,
+  SafeAreaView,
 } from 'react-native';
-import { Pressable, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Pressable } from 'react-native-gesture-handler';
 
 import CommentInput from './components/CommentInput';
 import CommentSection from './components/CommentSection';
@@ -42,132 +43,126 @@ export default function EventPage() {
 
   console.log('post', JSON.stringify(post, null, 2));
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <BottomSheetModalProvider>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          style={{ flex: 1 }}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
-          <View className="flex-1 bg-white">
-            <Stack.Screen
-              options={{
-                headerTitle: 'Detail',
-                headerBackTitle: '',
-                headerBackVisible: true,
-                headerTintColor: '#D812DC',
-                headerStyle: { backgroundColor: 'white' },
-              }}
+    <SafeAreaView className="flex-1 bg-white">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
+        <View className="flex-1 bg-white">
+          <Stack.Screen
+            options={{
+              headerTitle: 'Detail',
+            }}
+          />
+
+          <ScrollView
+            className="flex-1"
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="interactive"
+            automaticallyAdjustKeyboardInsets>
+            <UserInfo
+              post_id={post.post_id}
+              user_id={post.user_id}
+              username={post.username}
+              createdAt={dayjs(post.created_at).format('YYYY.MM.DD HH:mm')}
+              user_level={post.user_level}
+              flag_icon={post.country_flag_icon}
+              user_profile_picture_url={post.user_profile_picture_url}
             />
 
-            <ScrollView
-              className="flex-1"
-              keyboardShouldPersistTaps="handled"
-              keyboardDismissMode="interactive"
-              automaticallyAdjustKeyboardInsets>
-              <UserInfo
-                post_id={post.post_id}
-                user_id={post.user_id}
-                username={post.username}
-                createdAt={dayjs(post.created_at).format('YYYY.MM.DD HH:mm')}
-                user_level={post.user_level}
-                flag_icon={post.country_flag_icon}
-                user_profile_picture_url={post.user_profile_picture_url}
-              />
-
-              <View className="py-2">
-                {/* Post Content */}
-                {post.post_content.title && (
-                  <Text className="mb-2 px-2 text-lg font-bold">{post.post_content.title}</Text>
-                )}
-                {post.media && post.media.length > 0 && (
-                  <View>
-                    <FlatList
-                      data={post.media}
-                      horizontal
-                      pagingEnabled
-                      showsHorizontalScrollIndicator={false}
-                      onScroll={handleScroll}
-                      renderItem={({ item }) => (
-                        <Image
-                          contentFit="cover"
-                          source={{ uri: item.media_url }}
-                          style={{ width, height: 300 }}
-                          className="mb-4 rounded-lg"
-                        />
-                      )}
-                      keyExtractor={(item) => item.media_id.toString()}
-                    />
-                    <View className="mt-2 flex-row justify-center">
-                      {post.media.map((_: any, index: any) => (
-                        <View
-                          key={index}
-                          className={`mx-1 h-2 w-2 rounded-full ${
-                            index === activeIndex ? 'bg-purple-500' : 'bg-gray-300'
-                          }`}
-                        />
-                      ))}
-                    </View>
-                  </View>
-                )}
-                {post.post_content.content && (
-                  <Text className="mb-4 px-2 text-base text-gray-800">
-                    {post.post_content.content}
-                  </Text>
-                )}
-
-                {/* Engagement Stats */}
-                <View className="mt-2 flex-row items-center gap-4 border-b border-gray-200 px-4 pb-4">
-                  <Pressable onPress={() => togglePostLikeMutation.mutate(post.post_id)}>
-                    <View className="flex-row items-center">
-                      <FontAwesome
-                        name={post.user_liked ? 'heart' : 'heart-o'}
-                        size={16}
-                        color={post.user_liked ? 'red' : '#666666'}
+            <View className="py-2">
+              {/* Post Content */}
+              {post.post_content.title && (
+                <Text className="mb-2 px-2 text-lg font-bold">{post.post_content.title}</Text>
+              )}
+              {post.media && post.media.length > 0 && (
+                <View>
+                  <FlatList
+                    data={post.media}
+                    horizontal
+                    pagingEnabled
+                    showsHorizontalScrollIndicator={false}
+                    onScroll={handleScroll}
+                    renderItem={({ item }) => (
+                      <Image
+                        contentFit="cover"
+                        source={{ uri: item.media_url }}
+                        style={{ width, height: 300 }}
+                        className="mb-4 rounded-lg"
                       />
-                      <Text className="ml-1 text-sm text-gray-500">{post.likes}</Text>
-                    </View>
-                  </Pressable>
-
-                  <View className="flex-row items-center">
-                    <Feather name="message-square" size={16} color="#666666" />
-                    <Text className="ml-1 text-sm text-gray-500">{post.comment_count || 0}</Text>
-                  </View>
-
-                  <View className="flex-row items-center">
-                    <Feather name="eye" size={16} color="#666666" />
-                    <Text className="ml-1 text-sm text-gray-500">{post.views}</Text>
-                  </View>
-
-                  {post.type === 'QUESTION' && (
-                    <View className="flex-row items-center">
-                      <FontAwesome name="diamond" size={16} color="orange" />
-                      <Text className="ml-1 text-sm text-orange-500">
-                        p.
-                        {post.post_content.points || 0}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-
-                {/* Comments Section */}
-                <View className="px-4">
-                  <CommentSection
-                    postId={post.post_id}
-                    postType={post.type}
-                    post_user_id={post.user_id}
+                    )}
+                    keyExtractor={(item) => item.media_id.toString()}
                   />
+                  <View className="mt-2 flex-row justify-center">
+                    {post.media.map((_: any, index: any) => (
+                      <View
+                        key={index}
+                        className={`mx-1 h-2 w-2 rounded-full ${
+                          index === activeIndex ? 'bg-purple-500' : 'bg-gray-300'
+                        }`}
+                      />
+                    ))}
+                  </View>
                 </View>
-                {/* <View className="h-20" /> */}
-              </View>
-            </ScrollView>
+              )}
+              {post.post_content.content && (
+                <Text className="mb-4 px-2 text-base text-gray-800">
+                  {post.post_content.content}
+                </Text>
+              )}
 
-            <View className="mb-2 border-t border-gray-200">
-              <CommentInput postId={post.post_id} />
-              {Platform.OS === 'android' && <View className="h-14" />}
+              {/* Engagement Stats */}
+              <View className="mt-2 flex-row items-center gap-4 border-b border-gray-200 px-4 pb-4">
+                <Pressable onPress={() => togglePostLikeMutation.mutate(post.post_id)}>
+                  <View className="flex-row items-center">
+                    <FontAwesome
+                      name={post.user_liked ? 'heart' : 'heart-o'}
+                      size={24}
+                      color={post.user_liked ? 'red' : '#666666'}
+                    />
+                    <Text className="ml-1 text-sm text-gray-500">{post.likes}</Text>
+                  </View>
+                </Pressable>
+
+                <View className="flex-row items-center">
+                  <Feather name="message-square" size={24} color="#666666" />
+                  <Text className="ml-1 text-sm text-gray-500">{post.comment_count || 0}</Text>
+                </View>
+
+                <View className="flex-row items-center">
+                  <Feather name="eye" size={24} color="#666666" />
+                  <Text className="ml-1 text-sm text-gray-500">{post.views}</Text>
+                </View>
+
+                {post.type === 'QUESTION' && (
+                  <View className="flex-row items-center">
+                    <FontAwesome name="diamond" size={24} color="orange" />
+                    <Text className="ml-1 text-sm text-orange-500">
+                      p.
+                      {post.post_content.points || 0}
+                    </Text>
+                  </View>
+                )}
+              </View>
+
+              {/* Comments Section */}
+              <View className="px-4">
+                <CommentSection
+                  postId={post.post_id}
+                  postType={post.type}
+                  post_user_id={post.user_id}
+                />
+              </View>
+              {/* <View className="h-20" /> */}
             </View>
+          </ScrollView>
+
+          <View className="mb-2 border-t border-gray-200">
+            <CommentInput postId={post.post_id} />
+            {/* {Platform.OS === 'android' && <View className="h-14" />} */}
           </View>
-        </KeyboardAvoidingView>
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }

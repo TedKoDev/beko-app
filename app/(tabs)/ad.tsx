@@ -121,7 +121,7 @@ export default function AdPage() {
 
   return (
     <>
-      <Stack.Screen options={{ title: 'Teacher' }} />
+      {/* <Stack.Screen options={{ title: 'Teacher' }} /> */}
       <View className="flex-1 bg-white">
         {/* Language Selector */}
         <View className="flex-row justify-center space-x-2 border-b border-gray-100 px-6 py-3">

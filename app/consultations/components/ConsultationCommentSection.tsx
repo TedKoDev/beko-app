@@ -45,13 +45,13 @@ export default function ConsultationCommentSection({
     try {
       await deleteCommentMutation.mutateAsync(commentId);
     } catch (error) {
-      console.error('댓글 삭제 실패:', error);
+      console.error('Delete comment failed:', error);
     }
   };
 
   return (
     <View className="mb-16 mt-4 border-t border-gray-200 p-4">
-      <Text className="mb-4 text-lg font-bold">답변</Text>
+      <Text className="mb-4 text-lg font-bold">Answer</Text>
       {sortedComments && sortedComments.length > 0 ? (
         sortedComments.map((comment: any) => (
           <View
@@ -73,7 +73,7 @@ export default function ConsultationCommentSection({
               </View>
               {comment.isSelected && (
                 <View className="rounded-lg bg-green-100 px-2 py-1">
-                  <Text className="text-green-600">채택된 답변</Text>
+                  <Text className="text-green-600">Selected answer</Text>
                 </View>
               )}
             </View>
@@ -83,12 +83,12 @@ export default function ConsultationCommentSection({
                 <TouchableOpacity
                   onPress={() => onEdit(comment.comment_id, comment.content)}
                   className="mr-2">
-                  <Text className="text-blue-500">수정</Text>
+                  <Text className="text-blue-500">Edit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleCommentDelete(comment.comment_id)}
                   className="mr-2">
-                  <Text className="text-red-500">삭제</Text>
+                  <Text className="text-red-500">Delete</Text>
                 </TouchableOpacity>
                 {isTeacher &&
                   status !== 'COMPLETED' &&
@@ -96,7 +96,7 @@ export default function ConsultationCommentSection({
                     <TouchableOpacity
                       onPress={() => onConfirm?.(comment.comment_id)}
                       className="rounded-lg bg-green-500 px-3 py-1">
-                      <Text className="text-white">답변 확정</Text>
+                      <Text className="text-white">Confirm answer</Text>
                     </TouchableOpacity>
                   )}
               </View>
@@ -105,8 +105,8 @@ export default function ConsultationCommentSection({
         ))
       ) : (
         <View className="items-center justify-center py-8">
-          <Text className="text-gray-500">아직 답변이 없습니다.</Text>
-          <Text className="mt-1 text-sm text-gray-400">선생님의 답변을 기다려주세요!</Text>
+          <Text className="text-gray-500">No answer yet.</Text>
+          <Text className="mt-1 text-sm text-gray-400">Please wait for the teacher's answer!</Text>
         </View>
       )}
     </View>

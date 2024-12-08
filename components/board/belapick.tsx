@@ -42,7 +42,7 @@ export default function BelaPick() {
           <Text className="text-xl font-bold">Bera's Pick</Text>
           <Text className="ml-2 text-xl text-[#B227D4]">✓</Text>
         </View>
-        <Link href="/board/Bera-picks" asChild>
+        <Link href="/board/bella-picks" asChild>
           <TouchableOpacity>
             <Text className="text-sm text-[#FF6B6B]">See all</Text>
           </TouchableOpacity>

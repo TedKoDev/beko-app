@@ -11,7 +11,7 @@ export default function InstagramStyleItem({ event }: any) {
 
   return (
     <Link href={`/event/${event.post_id}`} asChild>
-      <Pressable className="bg-white">
+      <Pressable className="border-b border-gray-200 bg-white">
         <View className="flex-row items-center p-3">
           <View className="flex-row items-center">
             {event.type === 'QUESTION' && <Text className="mr-2 text-lg text-purple-500">Q.</Text>}

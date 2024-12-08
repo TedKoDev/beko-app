@@ -161,15 +161,7 @@ export default function WriteForConsultationScreen() {
     <>
       <Stack.Screen
         options={{
-          headerShown: true,
           headerTitle: '1:1 Consultation',
-          headerShadowVisible: true,
-          headerTitleAlign: 'center',
-          headerBackVisible: true,
-          headerTintColor: '#D812DC',
-          headerStyle: {
-            backgroundColor: 'white',
-          },
         }}
       />
       <ScrollView className="flex-1 bg-white p-4">

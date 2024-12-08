@@ -43,8 +43,6 @@ export default function BeraPicksScreen() {
       <Stack.Screen
         options={{
           headerTitle: "Bera's Pick",
-          headerTitleAlign: 'center',
-          headerTintColor: '#D812DC',
         }}
       />
 
@@ -62,10 +60,10 @@ export default function BeraPicksScreen() {
         onLoadMore={handleLoadMore}
         onRefresh={refetch}
         isRefreshing={isRefetching}
-        showViewToggle={true}
-        hideButton={true}
+        showSearchButton={false}
+        showViewToggle
+        hideButton
         showWriteButton={false}
-        hideHeader={true}
       />
     </View>
   );

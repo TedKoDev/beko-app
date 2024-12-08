@@ -1,7 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import React, { useState, useRef } from 'react';
-import { View, TextInput, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Pressable } from 'react-native-gesture-handler';
+import { View, TextInput, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { TouchableOpacity, Pressable } from 'react-native-gesture-handler';
 
 import { useCreateComment } from '~/queries/hooks/comments/useComments';
 
@@ -41,7 +41,7 @@ export default function CommentInput({
         <View className="mr-2 flex-1">
           <TextInput
             ref={inputRef}
-            className="rounded-full bg-gray-100 px-4 py-2"
+            className="h-11 rounded-full bg-gray-100 px-4 py-2"
             placeholder={placeholder}
             value={content}
             onChangeText={setContent}

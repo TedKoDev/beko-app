@@ -63,14 +63,14 @@ export default function ConsultationDetailScreen() {
   if (!consultation) {
     return (
       <View className="flex-1 items-center justify-center">
-        <Text>상담 정보를 찾을 수 없습니다.</Text>
+        <Text>Consultation information not found.</Text>
       </View>
     );
   }
 
   const handleCommentSubmit = async (comment_id: any, content: any) => {
     if (!newComment.trim()) {
-      Alert.alert('알림', '글을 입해주세요.');
+      Alert.alert('Notification', 'Please enter the comment content.');
       return;
     }
     try {
@@ -80,21 +80,21 @@ export default function ConsultationDetailScreen() {
       });
       setNewComment('');
     } catch (error) {
-      Alert.alert('오류', '댓글 작성에 실패했습니다.');
+      Alert.alert('Error', 'Failed to write comment.');
     }
   };
 
   const handleCommentDelete = async (commentId: number) => {
-    Alert.alert('댓글 삭제', '정말 삭제하시겠습니까?', [
-      { text: '취소', style: 'cancel' },
+    Alert.alert('Delete comment', 'Are you sure you want to delete this comment?', [
+      { text: 'Cancel', style: 'cancel' },
       {
-        text: '삭제',
+        text: 'Delete',
         style: 'destructive',
         onPress: async () => {
           try {
             await deleteCommentMutation.mutateAsync(commentId);
           } catch (error) {
-            Alert.alert('오류', '댓글 삭제에 실패했습니다.');
+            Alert.alert('Error', 'Failed to delete comment.');
           }
         },
       },
@@ -103,7 +103,7 @@ export default function ConsultationDetailScreen() {
 
   const handleEditSubmit = async (newContent: string) => {
     if (!editingCommentId || !newContent.trim()) {
-      Alert.alert('알림', '댓글 내용을 입력해주세요.');
+      Alert.alert('Notification', 'Please enter the comment content.');
       return;
     }
     try {
@@ -114,15 +114,15 @@ export default function ConsultationDetailScreen() {
       setEditingCommentId(null);
       setEditingCommentContent('');
     } catch (error) {
-      Alert.alert('오류', '댓글 수정에 실패했습니다.');
+      Alert.alert('Error', 'Failed to update comment.');
     }
   };
 
   const handlePostDelete = () => {
-    Alert.alert('게시글 제', '정말 삭제하시겠습니까?', [
-      { text: '취소', style: 'cancel' },
+    Alert.alert('Delete post', 'Are you sure you want to delete this post?', [
+      { text: 'Cancel', style: 'cancel' },
       {
-        text: '삭제',
+        text: 'Delete',
         style: 'destructive',
         onPress: async () => {
           try {
@@ -130,7 +130,7 @@ export default function ConsultationDetailScreen() {
             await deletePost.mutateAsync(consultation.post_id);
             router.back();
           } catch (error) {
-            Alert.alert('오류', '게시글 삭제에 실패했습니다.');
+            Alert.alert('Error', 'Failed to delete post.');
           }
         },
       },
@@ -139,12 +139,12 @@ export default function ConsultationDetailScreen() {
 
   const handleConfirmAnswer = async (commentId: number) => {
     Alert.alert(
-      '답변 확정',
-      '이 답변을 확정하시겠습니까?\n확정 후에는 수정이 불가능하며, 상담 포인트가 지급됩니다.',
+      'Confirm answer',
+      'Are you sure you want to confirm this answer?\nAfter confirmation, it cannot be modified and the consultation points will be credited.',
       [
-        { text: '취소', style: 'cancel' },
+        { text: 'Cancel', style: 'cancel' },
         {
-          text: '확정',
+          text: 'Confirm',
           style: 'default',
           onPress: async () => {
             try {
@@ -155,7 +155,7 @@ export default function ConsultationDetailScreen() {
               const comment = data.find((c) => c.comment_id === commentId);
 
               if (!comment) {
-                Alert.alert('오류', '답변을 찾을 수 없습니다.');
+                Alert.alert('Error', 'Failed to find answer.');
                 return;
               }
 
@@ -164,10 +164,10 @@ export default function ConsultationDetailScreen() {
                 content: comment.content,
                 commentId,
               });
-              Alert.alert('알림', '답변이 확정되었습니다.');
+              Alert.alert('Notification', 'Answer confirmed.');
             } catch (error) {
               console.error('Error confirming answer:', error);
-              Alert.alert('오류', '답변 확정에 실패했습니다.');
+              Alert.alert('Error', 'Failed to confirm answer.');
             }
           },
         },

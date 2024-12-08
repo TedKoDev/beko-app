@@ -29,28 +29,29 @@ export default function HotScreen() {
     }
   };
 
-  const renderSortButton = (type: 'latest' | 'oldest' | 'popular', label: string) => (
-    <TouchableOpacity
-      onPress={() => setSort(type)}
-      className={`rounded-full px-3 py-1 ${sort === type ? 'bg-purple-100' : 'bg-gray-100'}`}>
-      <Text className={sort === type ? 'text-purple-600' : 'text-gray-600'}>{label}</Text>
-    </TouchableOpacity>
-  );
+  const sortOptions = [
+    { type: 'latest', label: 'Latest' },
+    { type: 'oldest', label: 'Oldest' },
+    { type: 'popular', label: 'Popular' },
+  ] as const;
 
   return (
     <View className="flex-1 bg-white">
       <Stack.Screen
         options={{
           headerTitle: 'Hot Posts',
-          headerTitleAlign: 'center',
-          headerTintColor: '#D812DC',
         }}
       />
 
       <View className="mb-4 flex-row justify-end gap-2 border-b border-gray-200 px-4 py-4">
-        {renderSortButton('latest', 'Latest')}
-        {renderSortButton('oldest', 'Oldest')}
-        {renderSortButton('popular', 'Popular')}
+        {sortOptions.map(({ type, label }) => (
+          <TouchableOpacity
+            key={type}
+            onPress={() => setSort(type)}
+            className={`rounded-full px-3 py-1 ${sort === type ? 'bg-purple-100' : 'bg-gray-100'}`}>
+            <Text className={sort === type ? 'text-purple-600' : 'text-gray-600'}>{label}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
 
       <ListLayout
@@ -60,10 +61,9 @@ export default function HotScreen() {
         onLoadMore={handleLoadMore}
         onRefresh={refetch}
         isRefreshing={isRefetching}
-        showViewToggle={true}
-        hideButton={true}
+        showViewToggle
+        hideButton
         showWriteButton={false}
-        hideHeader={true}
       />
     </View>
   );
