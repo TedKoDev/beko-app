@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "alpha",
+    "name": "beko",
     "slug": "beko",
     "version": "1.0.0",
-    "scheme": "alpha",
+    "scheme": "beko",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -14,11 +14,16 @@
       "expo-asset",
       "expo-video",
       [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.1036338973947-dpf6mgoahom2r6e9qm2flsbog29c8me0"
+        }
+      ],
+      [
         "expo-notifications",
         {
-          "icon": "./assets/notification-icon.png",
-          "color": "#ffffff",
-          "sounds": ["./assets/notification-sound.wav"]
+          "icon": "./assets/icon.png",
+          "color": "#ffffff"
         }
       ]
     ],
@@ -37,13 +42,33 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "usesAppleSignIn": true
+      "usesAppleSignIn": true,
+      "bundleIdentifier": "com.ordihong.beko",
+      "usesNonExemptEncryption": false,
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.1036338973947-dpfemgoahom2r6e9qm2flsbog29c8me0"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ordihong.beko",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "beko"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "extra": {
       "router": {
