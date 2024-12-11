@@ -1,7 +1,14 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, ActivityIndicator, Animated, Image, Platform } from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  Animated,
+  Image,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   useSharedValue,
@@ -57,15 +64,16 @@ export default function RootLayout() {
 
   useEffect(() => {
     const checkAuthentication = async () => {
-      await checkAuth();
-      setLoading(false);
+      try {
+        await checkAuth();
+      } catch (error) {
+        router.replace('/login');
+      } finally {
+        setLoading(false);
+      }
     };
 
     checkAuthentication();
-
-    logoScale.value = withSpring(1, {
-      duration: 1000,
-    });
   }, []);
 
   // 인증되지 않았을 경우 로그인 페이지로 이동
@@ -116,30 +124,32 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <BottomSheetModalProvider>
-        <QueryClientProvider client={queryClient}>
-          <Stack>
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="(stack)" options={{ headerShown: false }} />
-            <Stack.Screen name="game" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="voca"
-              options={{
-                headerTitle: 'Voca Section',
-                headerShown: false,
-                headerTintColor: '#D812DC',
-              }}
-            />
-            <Stack.Screen name="event" options={{ headerShown: false }} />
-            <Stack.Screen name="write" options={{ headerShown: false }} />
-            <Stack.Screen name="consultations" options={{ headerShown: false }} />
-            <Stack.Screen name="board" options={{ headerShown: false }} />
-            <Stack.Screen name="setting" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-          </Stack>
-        </QueryClientProvider>
-      </BottomSheetModalProvider>
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <BottomSheetModalProvider>
+          <QueryClientProvider client={queryClient}>
+            <Stack>
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="(stack)" options={{ headerShown: false }} />
+              <Stack.Screen name="game" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="voca"
+                options={{
+                  headerTitle: 'Voca Section',
+                  headerShown: false,
+                  headerTintColor: '#D812DC',
+                }}
+              />
+              <Stack.Screen name="event" options={{ headerShown: false }} />
+              <Stack.Screen name="write" options={{ headerShown: false }} />
+              <Stack.Screen name="consultations" options={{ headerShown: false }} />
+              <Stack.Screen name="board" options={{ headerShown: false }} />
+              <Stack.Screen name="setting" options={{ headerShown: false }} />
+              <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+            </Stack>
+          </QueryClientProvider>
+        </BottomSheetModalProvider>
+      </KeyboardAvoidingView>
     </GestureHandlerRootView>
   );
 }

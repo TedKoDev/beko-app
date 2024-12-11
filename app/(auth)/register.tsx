@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { debounce } from 'lodash';
 import React, { useState } from 'react';
-import { View, TextInput, Pressable, Text, StyleSheet, FlatList, Modal } from 'react-native';
+import { View, TextInput, Pressable, Text, FlatList, Modal, Alert } from 'react-native';
 
 import { useCountry } from '~/queries/hooks/utils/useCountry';
 import { authService } from '~/services/authService';
@@ -120,6 +120,21 @@ export default function RegisterScreen() {
       return;
     }
 
+    // 비밀번호 유효성 검사를 위한 정규식
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+      Alert.alert(
+        'Error',
+        'Password must be at least 8 characters long and contain:\n\n' +
+          '• At least one uppercase letter\n' +
+          '• At least one lowercase letter\n' +
+          '• At least one number\n' +
+          '• At least one special character (@$!%*?&)'
+      );
+      return;
+    }
+
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
@@ -225,6 +240,10 @@ export default function RegisterScreen() {
             onChangeText={setPassword}
             secureTextEntry
           />
+          <Text className="-mt-2 mb-4 text-xs text-gray-500">
+            Password must be at least 8 characters long and contain uppercase, lowercase, number,
+            and special character
+          </Text>
 
           <TextInput
             className="mb-4 h-[50px] w-full rounded-lg border border-gray-200 bg-white px-4"

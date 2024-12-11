@@ -23,20 +23,30 @@ export default function ResetPassword() {
         return;
       }
 
-      if (newPassword !== confirmPassword) {
-        Alert.alert('Error', 'New passwords do not match');
+      // 비밀번호 유효성 검사를 위한 정규식
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+      if (!passwordRegex.test(newPassword)) {
+        Alert.alert(
+          'Error',
+          'Password must be at least 8 characters long and contain:\n\n' +
+            '• At least one uppercase letter\n' +
+            '• At least one lowercase letter\n' +
+            '• At least one number\n' +
+            '• At least one special character (@$!%*?&)'
+        );
         return;
       }
 
-      if (newPassword.length < 8) {
-        Alert.alert('Error', 'New password must be at least 8 characters long');
+      if (newPassword !== confirmPassword) {
+        Alert.alert('Error', 'New passwords do not match');
         return;
       }
 
       const response = await updatePasswordApi(currentPassword, newPassword);
 
       // 에러 메시지가 있는 경우 에러로 처리
-      if (response.message && response.message !== 'Password updated successfully') {
+      if (response.message && response.message !== '비밀번호가 성공적으로 변경되었습니다') {
         Alert.alert('Error', response.message);
         return;
       }
@@ -54,7 +64,6 @@ export default function ResetPassword() {
         },
       ]);
     } catch (error: any) {
-      // axios 에러 응답에서 메시지 추출
       const errorMessage =
         error.response?.data?.message || error.message || 'Failed to update password';
       Alert.alert('Error', errorMessage);
@@ -112,6 +121,10 @@ export default function ResetPassword() {
               onChangeText={setNewPassword}
               placeholder="Enter new password"
             />
+            <Text className="mt-1 text-xs text-gray-500">
+              Password must be at least 8 characters long and contain uppercase, lowercase, number,
+              and special character
+            </Text>
           </View>
 
           <View>

@@ -1,6 +1,6 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function AgreementScreen() {
@@ -41,9 +41,9 @@ export default function AgreementScreen() {
         }}
       />
 
-      <View className="flex-1 px-5">
+      <ScrollView className="flex-1 px-5">
         {/* 로고와 환영 메시지 */}
-        <View className="mb-48 mt-8">
+        <View className="mb-36 mt-8">
           <Image source={require('~/assets/icon.png')} className="h-48 w-48" resizeMode="contain" />
           <Text className="mt-4 text-2xl font-bold">BeraKorean에 오신 것을{'\n'}환영합니다!</Text>
         </View>
@@ -110,7 +110,7 @@ export default function AgreementScreen() {
             <AntDesign name="right" size={16} color="#999" />
           </TouchableOpacity>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
 
       {/* 시작하기 버튼 */}
       <View className="p-4">

@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 
 import { getUserInfoApi, loginApi, registerApi, authService } from '../services/authService';
+import { router } from 'expo-router';
 
 interface UserInfo {
   account_status: string;
@@ -19,6 +20,10 @@ interface UserInfo {
   points: number;
   profile_picture_url: string;
   role: string;
+  social_login: {
+    provider: string;
+    provider_user_id: string;
+  }[];
   stats: {
     commentCount: number;
     followersCount: number;
@@ -117,21 +122,55 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ isAuthenticated: false, userInfo: undefined, userToken: undefined });
   },
 
+  // checkAuth: async () => {
+  //   const token = await AsyncStorage.getItem('userToken');
+
+  //   set({
+  //     isAuthenticated: !!token,
+  //     userToken: token || undefined,
+  //   });
+
+  //   if (token) {
+  //     try {
+  //       const userInfo = await getUserInfoApi(token);
+  //       set({ userInfo });
+  //     } catch (error) {
+  //       router.replace('/login');
+  //       console.error('Failed to fetch user info during checkAuth:', error);
+  //     }
+  //   }
+  // },
   checkAuth: async () => {
-    const token = await AsyncStorage.getItem('userToken');
+    try {
+      const token = await AsyncStorage.getItem('userToken');
 
-    set({
-      isAuthenticated: !!token,
-      userToken: token || undefined,
-    });
-
-    if (token) {
-      try {
-        const userInfo = await getUserInfoApi(token);
-        set({ userInfo });
-      } catch (error) {
-        console.error('Failed to fetch user info during checkAuth:', error);
+      if (!token) {
+        set({ isAuthenticated: false, userToken: undefined, userInfo: undefined });
+        return;
       }
+
+      // 토큰이 있는 경우 사용자 정보를 가져와서 유효성 검증
+      const userInfo = await getUserInfoApi(token);
+
+      if (userInfo) {
+        set({
+          isAuthenticated: true,
+          userToken: token,
+          userInfo,
+        });
+      } else {
+        // 사용자 정보를 가져오지 못한 경우
+        await AsyncStorage.removeItem('userToken');
+        await AsyncStorage.removeItem('userInfo');
+        set({ isAuthenticated: false, userToken: undefined, userInfo: undefined });
+        router.replace('/login');
+      }
+    } catch (error) {
+      // 에러 발생 시 로그아웃 처리
+      await AsyncStorage.removeItem('userToken');
+      await AsyncStorage.removeItem('userInfo');
+      set({ isAuthenticated: false, userToken: undefined, userInfo: undefined });
+      router.replace('/login');
     }
   },
 

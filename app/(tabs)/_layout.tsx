@@ -1,4 +1,4 @@
-import { Link, Tabs } from 'expo-router';
+import { Link, Tabs, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 
@@ -12,6 +12,18 @@ import { useNotification } from '../../queries/hooks/notification/useNotificatio
 export default function TabLayout() {
   const userInfo = useAuthStore((state) => state.userInfo);
   const { registerForPushNotifications } = useNotification();
+
+  const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
+
+  useEffect(() => {
+    // 마이크로태스크 큐에 넣어서 마운트 이후에 실행되도록 함
+    setTimeout(() => {
+      if (!isAuthenticated) {
+        router.replace('/login');
+      }
+    }, 0);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     // 탭 레이아웃이 마운트되면(로그인 성공 후) 푸시 토큰 등록

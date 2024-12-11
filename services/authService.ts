@@ -1,6 +1,8 @@
 import { api } from './api';
 
 import { useAuthStore } from '../store/authStore';
+import { router } from 'expo-router';
+import axios from 'axios';
 
 interface CheckResponse {
   available: boolean;
@@ -126,7 +128,9 @@ export const checkName = async (name: string): Promise<boolean> => {
 
 export const getUserInfoApi = async (token: string) => {
   try {
-    console.log('getUserInfoApi token', token);
+    if (!token) {
+      throw new Error('No token provided');
+    }
 
     const response = await api.get('/users/me', {
       headers: {
@@ -134,14 +138,16 @@ export const getUserInfoApi = async (token: string) => {
       },
     });
 
-    console.log('getUserInfoApi response', JSON.stringify(response, null, 2));
     return response.data;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error('getUserInfoApi error details:', (error as any).response?.data);
-      throw error;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 401) {
+        // 토큰이 만료되었거나 유효하지 않은 경우
+        useAuthStore.getState().logout();
+        router.replace('/login');
+      }
     }
-    throw new Error('An unknown error occurred');
+    throw error;
   }
 };
 

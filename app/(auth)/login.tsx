@@ -174,8 +174,7 @@ export default function LoginScreen() {
               <Text style={styles.socialButtonText}>Continue with Apple</Text>
             </Pressable>
           )}
-
-          <Auth />
+          {/* {Platform.OS !== 'ios' && <Auth />} */}
 
           <Pressable style={styles.registerLink} onPress={() => router.push('/agreement')}>
             <Text style={styles.registerLinkText}>Don't have an account? Register</Text>
