@@ -17,7 +17,7 @@ export default function ConsultationLayout() {
             color: '#6C47FF',
           },
           headerTitleAlign: 'center',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
           headerBackVisible: true,
           headerLeft: ({ canGoBack }) =>
             canGoBack ? (

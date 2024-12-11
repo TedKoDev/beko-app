@@ -62,7 +62,7 @@ export default function BeraPicksScreen() {
         isRefreshing={isRefetching}
         showSearchButton={false}
         showViewToggle
-        hideButton
+        // hideButton
         showWriteButton={false}
       />
     </View>

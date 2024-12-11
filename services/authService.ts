@@ -125,6 +125,8 @@ export const getUserInfoApi = async (token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    console.log('getUserInfoApi response', JSON.stringify(response.data, null, 2));
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {

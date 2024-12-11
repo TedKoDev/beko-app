@@ -13,7 +13,11 @@ export default function SupportScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: 'Support' }} />
+      <Stack.Screen
+        options={{
+          title: 'Support',
+        }}
+      />
       <View className="flex-1 bg-white px-6 py-8">
         {/* 문의하기 섹션 */}
         <TouchableOpacity

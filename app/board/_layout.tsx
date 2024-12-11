@@ -19,7 +19,7 @@ export default function BoardLayout() {
             color: '#D812DC',
           },
           headerTitleAlign: 'center',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
           headerBackVisible: true,
           headerLeft: ({ canGoBack }) =>
             canGoBack ? (

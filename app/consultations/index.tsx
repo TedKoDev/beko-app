@@ -44,12 +44,6 @@ export default function ConsultationsScreen() {
 
   return (
     <>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          headerTitle: 'Consultation List',
-        }}
-      />
       <ListLayout
         data={flattenedData}
         isLoading={isLoading}
@@ -57,7 +51,7 @@ export default function ConsultationsScreen() {
         onRefresh={refetch}
         isRefreshing={isRefetching}
         showWriteButton
-        hideButton
+        // hideButton
         writeRoute="/write/writeforconsultation"
         ListHeaderComponent={
           <ConsultationFilterHeader

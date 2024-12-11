@@ -62,7 +62,7 @@ export default function HotScreen() {
         onRefresh={refetch}
         isRefreshing={isRefetching}
         showViewToggle
-        hideButton
+        // hideButton
         showWriteButton={false}
       />
     </View>

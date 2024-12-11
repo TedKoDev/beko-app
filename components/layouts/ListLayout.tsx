@@ -137,7 +137,7 @@ export default function ListLayout({
                   router.back();
                 }}
                 style={({ pressed }) => ({
-                  marginLeft: 16,
+                  marginLeft: 0,
                   padding: 8,
                   opacity: pressed ? 0.5 : 1,
                   zIndex: 999,

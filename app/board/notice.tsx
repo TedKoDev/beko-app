@@ -60,7 +60,7 @@ export default function NoticeScreen() {
         onRefresh={refetch}
         isRefreshing={isRefetching}
         showViewToggle={false}
-        hideButton
+        // hideButton
         showWriteButton={false}
       />
     </View>
