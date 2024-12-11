@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { debounce } from 'lodash';
 import React, { useState } from 'react';
 import { View, TextInput, Pressable, Text, StyleSheet, FlatList, Modal } from 'react-native';
@@ -17,6 +17,20 @@ interface Country {
 }
 
 export default function RegisterScreen() {
+  const params = useLocalSearchParams<{
+    term_agreement: string;
+    privacy_agreement: string;
+    marketing_agreement: string;
+  }>();
+
+  console.log('params', params);
+  const agreements = {
+    terms: Boolean(Number(params.term_agreement)), // '1' -> true, '0' -> false
+    privacy: Boolean(Number(params.privacy_agreement)),
+    marketing: Boolean(Number(params.marketing_agreement)),
+  };
+
+  console.log('agreements', agreements);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,6 +43,7 @@ export default function RegisterScreen() {
   const [emailError, setEmailError] = useState<string>('');
   const { register } = useAuthStore();
   const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [selectedCountry, setSelectedCountry] = useState<Country>({
@@ -112,7 +127,15 @@ export default function RegisterScreen() {
 
     try {
       setIsLoading(true);
-      await register(name, email, password, selectedCountry.country_id);
+      await register(
+        name,
+        email,
+        password,
+        selectedCountry.country_id,
+        agreements.terms,
+        agreements.privacy,
+        agreements.marketing
+      );
       alert('Registration successful! Please login.');
       router.push('/login');
     } catch (error) {
@@ -125,7 +148,13 @@ export default function RegisterScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTitle: '',
+          headerShadowVisible: false,
+        }}
+      />
 
       <View style={styles.container}>
         <View style={styles.overlay}>

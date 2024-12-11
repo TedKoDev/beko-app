@@ -43,7 +43,10 @@ export const registerApi = async (
   name: string,
   email: string,
   password: string,
-  country_id: number
+  country_id: number,
+  term_agreement: boolean,
+  privacy_agreement: boolean,
+  marketing_agreement: boolean
 ) => {
   try {
     const response = await api.post('/auth/register', {
@@ -51,6 +54,9 @@ export const registerApi = async (
       email,
       password,
       country_id,
+      term_agreement,
+      privacy_agreement,
+      marketing_agreement,
     });
     console.log('Register success', response.data);
     return response.data;

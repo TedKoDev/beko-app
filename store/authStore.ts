@@ -37,7 +37,15 @@ interface AuthState {
   userToken?: string;
   login: (email: string, password: string) => Promise<void>;
 
-  register: (name: string, email: string, password: string, country_id: number) => Promise<void>;
+  register: (
+    name: string,
+    email: string,
+    password: string,
+    country_id: number,
+    term_agreement: boolean,
+    privacy_agreement: boolean,
+    marketing_agreement: boolean
+  ) => Promise<void>;
   logout: () => void;
   checkAuth: () => Promise<void>;
   setUserInfo: (info: any) => void;
@@ -55,8 +63,35 @@ export const useAuthStore = create<AuthState>((set) => ({
   userInfo: undefined,
   userToken: undefined,
 
-  register: async (name: string, email: string, password: string, country_id: number) => {
-    const response = await registerApi(name, email, password, country_id);
+  register: async (
+    name: string,
+    email: string,
+    password: string,
+    country_id: number,
+    term_agreement: boolean,
+    privacy_agreement: boolean,
+    marketing_agreement: boolean
+  ) => {
+    console.log(
+      'register',
+      name,
+      email,
+      password,
+      country_id,
+      term_agreement,
+      privacy_agreement,
+      marketing_agreement
+    );
+
+    const response = await registerApi(
+      name,
+      email,
+      password,
+      country_id,
+      term_agreement,
+      privacy_agreement,
+      marketing_agreement
+    );
     console.log('register response', response);
   },
 
