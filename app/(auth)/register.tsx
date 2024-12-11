@@ -156,57 +156,24 @@ export default function RegisterScreen() {
         }}
       />
 
-      <View style={styles.container}>
-        <View style={styles.overlay}>
-          <Text style={styles.title}>Create Account</Text>
+      <View className="flex-1 bg-white">
+        <View className="flex-1 items-center justify-center px-5">
+          <Text className="mb-8 text-2xl font-semibold text-gray-800">Create Account</Text>
 
-          <Pressable style={styles.countrySelector} onPress={() => setShowCountryModal(true)}>
-            <Text style={styles.countrySelectorText}>
+          <Pressable
+            className="mb-4 h-[50px] w-full flex-row items-center justify-between rounded-lg border border-gray-200 bg-white px-4"
+            onPress={() => setShowCountryModal(true)}>
+            <Text className="text-base text-gray-800">
               {selectedCountry.flag_icon} {selectedCountry.country_name}
             </Text>
             <Ionicons name="chevron-down" size={24} color="#666" />
           </Pressable>
 
-          <Modal visible={showCountryModal} animationType="slide" transparent>
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <View style={styles.modalHeader}>
-                  <Text style={styles.modalTitle}>Select Country</Text>
-                  <Pressable onPress={() => setShowCountryModal(false)}>
-                    <Ionicons name="close" size={24} color="#666" />
-                  </Pressable>
-                </View>
-
-                <TextInput
-                  style={styles.searchInput}
-                  placeholder="Search country..."
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                />
-
-                <FlatList
-                  data={filteredCountries}
-                  keyExtractor={(item) => item.country_code}
-                  renderItem={({ item }) => (
-                    <Pressable
-                      style={styles.countryItem}
-                      onPress={() => {
-                        setSelectedCountry(item);
-                        setShowCountryModal(false);
-                      }}>
-                      <Text style={styles.countryItemText}>
-                        {item.flag_icon} {item.country_name}
-                      </Text>
-                    </Pressable>
-                  )}
-                />
-              </View>
-            </View>
-          </Modal>
-
-          <View style={styles.inputContainer}>
+          <View className="w-full">
             <TextInput
-              style={[styles.input, nameError ? styles.inputError : null]}
+              className={`mb-4 h-[50px] w-full rounded-lg border bg-white px-4 ${
+                nameError ? 'border-red-500' : 'border-gray-200'
+              }`}
               placeholder="NickName"
               value={name}
               onChangeText={(text) => {
@@ -214,18 +181,19 @@ export default function RegisterScreen() {
                 checkName(text);
               }}
             />
-
             {nameError ? (
-              <Text style={styles.errorText}>{nameError}</Text>
+              <Text className="-mt-2 mb-2 text-xs text-red-500">{nameError}</Text>
             ) : isNameValid && name ? (
-              <Text style={styles.successText}>This name is available!</Text>
+              <Text className="-mt-2 mb-2 text-xs text-green-600">This name is available!</Text>
             ) : null}
           </View>
 
-          <View style={styles.inputContainer}>
-            <View style={styles.emailContainer}>
+          <View className="w-full">
+            <View className="mb-4 flex-row items-center">
               <TextInput
-                style={[styles.input, styles.emailInput, emailError ? styles.inputError : null]}
+                className={`mr-2 h-[50px] flex-1 rounded-lg border bg-white px-4 ${
+                  emailError ? 'border-red-500' : 'border-gray-200'
+                }`}
                 placeholder="Email"
                 value={email}
                 onChangeText={setEmail}
@@ -233,23 +201,25 @@ export default function RegisterScreen() {
                 autoCapitalize="none"
               />
               <Pressable
-                style={[styles.checkButton, isCheckingEmail && styles.checkingButton]}
+                className={`rounded-lg bg-[#B227D4] px-4 py-2.5 ${
+                  isCheckingEmail ? 'opacity-70' : ''
+                }`}
                 onPress={() => checkEmail(email)}
                 disabled={isCheckingEmail}>
-                <Text style={styles.checkButtonText}>
+                <Text className="text-sm font-medium text-white">
                   {isCheckingEmail ? 'Checking...' : 'Check'}
                 </Text>
               </Pressable>
             </View>
             {emailError ? (
-              <Text style={styles.errorText}>{emailError}</Text>
+              <Text className="-mt-2 mb-2 text-xs text-red-500">{emailError}</Text>
             ) : isEmailValid && email ? (
-              <Text style={styles.successText}>This email is available!</Text>
+              <Text className="-mt-2 mb-2 text-xs text-green-600">This email is available!</Text>
             ) : null}
           </View>
 
           <TextInput
-            style={styles.input}
+            className="mb-4 h-[50px] w-full rounded-lg border border-gray-200 bg-white px-4"
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
@@ -257,7 +227,7 @@ export default function RegisterScreen() {
           />
 
           <TextInput
-            style={styles.input}
+            className="mb-4 h-[50px] w-full rounded-lg border border-gray-200 bg-white px-4"
             placeholder="Confirm Password"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
@@ -265,178 +235,60 @@ export default function RegisterScreen() {
           />
 
           <Pressable
-            style={[styles.registerButton, isLoading && styles.disabledButton]}
+            className={`mt-4 h-[50px] w-full items-center justify-center rounded-lg ${
+              isLoading ? 'opacity-70' : ''
+            } bg-[#B227D4]`}
             onPress={handleRegister}
             disabled={isLoading}>
-            <Text style={styles.registerButtonText}>{isLoading ? '등록 중...' : 'Sign Up'}</Text>
+            <Text className="text-lg font-semibold text-white">
+              {isLoading ? '등록 중...' : 'Sign Up'}
+            </Text>
           </Pressable>
 
-          <Pressable onPress={() => router.back()}>
-            <Text style={styles.loginLink}>Already have an account? Login</Text>
+          <Pressable onPress={() => router.back()} className="mt-4">
+            <Text className="text-base text-[#5568FE] underline">
+              Already have an account? Login
+            </Text>
           </Pressable>
         </View>
+
+        <Modal visible={showCountryModal} animationType="slide" transparent>
+          <View className="flex-1 justify-end bg-black/50">
+            <View className="max-h-[80%] rounded-t-3xl bg-white px-5 pb-5">
+              <View className="flex-row items-center justify-between border-b border-gray-100 py-4">
+                <Text className="text-lg font-semibold text-gray-800">Select Country</Text>
+                <Pressable onPress={() => setShowCountryModal(false)}>
+                  <Ionicons name="close" size={24} color="#666" />
+                </Pressable>
+              </View>
+
+              <TextInput
+                className="my-2.5 h-10 rounded-lg bg-gray-100 px-4"
+                placeholder="Search country..."
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+
+              <FlatList
+                data={filteredCountries}
+                keyExtractor={(item) => item.country_code}
+                renderItem={({ item }) => (
+                  <Pressable
+                    className="border-b border-gray-100 py-3"
+                    onPress={() => {
+                      setSelectedCountry(item);
+                      setShowCountryModal(false);
+                    }}>
+                    <Text className="text-base text-gray-800">
+                      {item.flag_icon} {item.country_name}
+                    </Text>
+                  </Pressable>
+                )}
+              />
+            </View>
+          </View>
+        </Modal>
       </View>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f7f7f7', // 깔끔한 흰색 배경으로 변경
-  },
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 28,
-    color: '#333', // 부드러운 검정색으로 변경
-    fontWeight: '600',
-    marginBottom: 30,
-  },
-  input: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#ffffff', // 더 깔끔한 흰색 배경
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-    borderWidth: 1,
-    borderColor: '#ddd', // 더 부드러운 테두리 색상
-  },
-  inputContainer: {
-    width: '100%',
-  },
-  registerButton: {
-    backgroundColor: 'rgba(178, 39, 212, 1)', // 좀 더 명확한 파란색으로 변경
-    borderRadius: 10,
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    marginTop: 20,
-    width: '100%',
-    alignItems: 'center',
-  },
-  registerButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  loginLink: {
-    color: '#5568FE',
-    fontSize: 16,
-    textDecorationLine: 'underline',
-    marginTop: 15,
-  },
-  emailContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    marginBottom: 15,
-  },
-  emailInput: {
-    flex: 1,
-    marginBottom: 0,
-    marginRight: 10,
-  },
-  checkButton: {
-    backgroundColor: 'rgba(178, 39, 212, 1)',
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
-  checkingButton: {
-    opacity: 0.7,
-  },
-  checkButtonText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  checkingText: {
-    color: '#888', // 부드러운 회색으로 변경
-    fontSize: 12,
-    marginTop: -10,
-    marginBottom: 10,
-  },
-  errorText: {
-    color: '#D32F2F',
-    fontSize: 12,
-    marginTop: -10,
-    marginBottom: 10,
-  },
-  successText: {
-    color: '#388E3C',
-    fontSize: 12,
-    marginTop: -10,
-    marginBottom: 10,
-  },
-  inputError: {
-    borderColor: '#D32F2F', // 에러 상태일 때 빨간색 테두리
-    borderWidth: 1,
-  },
-  disabledButton: {
-    opacity: 0.7,
-  },
-  countrySelector: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    height: 50,
-    backgroundColor: '#ffffff',
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  countrySelectorText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end',
-  },
-  modalContent: {
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    maxHeight: '80%',
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
-  },
-  searchInput: {
-    height: 40,
-    backgroundColor: '#f5f5f5',
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    marginVertical: 10,
-  },
-  countryItem: {
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  countryItemText: {
-    fontSize: 16,
-    color: '#333',
-  },
-});

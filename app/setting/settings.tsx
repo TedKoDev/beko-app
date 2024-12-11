@@ -33,10 +33,10 @@ export default function Settings() {
             <Text className="text-base">Manage Account</Text>
             <FontAwesome5 name="chevron-right" size={16} color="#999" />
           </TouchableOpacity>
-          <TouchableOpacity className="flex-row items-center justify-between bg-white px-4 py-3">
+          {/* <TouchableOpacity className="flex-row items-center justify-between bg-white px-4 py-3">
             <Text className="text-base">Blocked Users</Text>
             <FontAwesome5 name="chevron-right" size={16} color="#999" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity className="flex-row items-center justify-between bg-white px-4 py-3">
             <Text className="text-base">Reset Password</Text>
             <FontAwesome5 name="chevron-right" size={16} color="#999" />
@@ -46,7 +46,9 @@ export default function Settings() {
         {/* 서비스 섹션 */}
         <View className="mb-6">
           <Text className="px-4 py-2 text-lg font-bold text-black">Service</Text>
-          <TouchableOpacity className="flex-row items-center justify-between bg-white px-4 py-3">
+          <TouchableOpacity
+            className="flex-row items-center justify-between bg-white px-4 py-3"
+            onPress={() => router.push('/setting/notification-settings')}>
             <Text className="text-base">Notification Settings</Text>
             <FontAwesome5 name="chevron-right" size={16} color="#999" />
           </TouchableOpacity>

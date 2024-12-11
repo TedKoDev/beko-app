@@ -1,12 +1,13 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { Platform } from 'react-native';
 import { notificationService } from '../../../services/notificationService';
 
+import { getNotificationSettings, updateNotificationSettings } from '~/services/authService';
+
 export const useNotification = () => {
   const [pushToken, setPushToken] = useState<string | null>(null);
-  const projectId = 'fd62690b-c7b1-4850-a014-8fd3746a89ea';
 
   const registerForPushNotifications = useCallback(async () => {
     try {
@@ -57,4 +58,42 @@ export const useNotification = () => {
     pushToken,
     registerForPushNotifications,
   };
+};
+
+export const useNotificationSettings = (userId: number) => {
+  const [settings, setSettings] = useState({
+    notification_benefit: false,
+    notification_community: false,
+  });
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const data = await getNotificationSettings(userId);
+        setSettings(data);
+      } catch (error) {
+        console.error('Failed to fetch notification settings:', error);
+      }
+    };
+
+    fetchSettings();
+  }, [userId]);
+
+  const updateSettings = async (newSettings: any) => {
+    console.log('updateSettings', newSettings);
+    const filteredSettings = Object.fromEntries(
+      Object.entries(newSettings).filter(([key, _]) => !key.endsWith('_at'))
+    );
+
+    console.log('Filtered Settings', filteredSettings);
+
+    try {
+      await updateNotificationSettings(userId, filteredSettings);
+      setSettings(newSettings);
+    } catch (error) {
+      console.error('Failed to update notification settings:', error);
+    }
+  };
+
+  return { settings, updateSettings };
 };

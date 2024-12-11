@@ -126,13 +126,15 @@ export const checkName = async (name: string): Promise<boolean> => {
 
 export const getUserInfoApi = async (token: string) => {
   try {
+    console.log('getUserInfoApi token', token);
+
     const response = await api.get('/users/me', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    console.log('getUserInfoApi response', JSON.stringify(response.data, null, 2));
+    console.log('getUserInfoApi response', JSON.stringify(response, null, 2));
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -205,6 +207,33 @@ export const socialLoginApi = async (
     return response.data;
   } catch (error) {
     console.error('Social login API failed:', error);
+    throw error;
+  }
+};
+
+export const getNotificationSettings = async (userId: number) => {
+  const token = useAuthStore.getState().userToken;
+  try {
+    const response = await api.get(`/users/notification-settings`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching notification settings:', error);
+    throw error;
+  }
+};
+
+export const updateNotificationSettings = async (userId: number, settings: any) => {
+  console.log('sss', userId, settings);
+  try {
+    const token = useAuthStore.getState().userToken;
+    const response = await api.patch(`/users/notification-settings`, settings, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating notification settings:', error);
     throw error;
   }
 };
