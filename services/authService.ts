@@ -223,7 +223,27 @@ export const getNotificationSettings = async (userId: number) => {
     throw error;
   }
 };
-
+export const updatePasswordApi = async (currentPassword: string, newPassword: string) => {
+  console.log('updatePasswordApi', currentPassword, newPassword);
+  const token = useAuthStore.getState().userToken;
+  try {
+    const response = await api.patch(
+      '/users/update-password',
+      {
+        currentPassword,
+        newPassword,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    console.log('updatePasswordApi response', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating password:', error);
+    throw error;
+  }
+};
 export const updateNotificationSettings = async (userId: number, settings: any) => {
   console.log('sss', userId, settings);
   try {
@@ -245,6 +265,7 @@ export const authService = {
   registerApi,
   getUserInfoApi,
   updateUserProfileApi,
+  updatePasswordApi,
   deactivateUserApi,
   socialLoginApi,
 };

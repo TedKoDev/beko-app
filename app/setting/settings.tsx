@@ -2,6 +2,7 @@ import { Stack, router } from 'expo-router';
 import React from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import GrayLine from '~/components/grayline';
 
 import { useAuthStore } from '~/store/authStore';
 
@@ -37,11 +38,15 @@ export default function Settings() {
             <Text className="text-base">Blocked Users</Text>
             <FontAwesome5 name="chevron-right" size={16} color="#999" />
           </TouchableOpacity> */}
-          <TouchableOpacity className="flex-row items-center justify-between bg-white px-4 py-3">
+          <TouchableOpacity
+            className="flex-row items-center justify-between bg-white px-4 py-3"
+            onPress={() => router.push('/setting/reset-password')}>
             <Text className="text-base">Reset Password</Text>
             <FontAwesome5 name="chevron-right" size={16} color="#999" />
           </TouchableOpacity>
         </View>
+
+        <GrayLine thickness={1} marginTop={0} marginBottom={10} />
 
         {/* 서비스 섹션 */}
         <View className="mb-6">
@@ -61,7 +66,7 @@ export default function Settings() {
             <FontAwesome5 name="chevron-right" size={16} color="#999" />
           </TouchableOpacity>
         </View>
-
+        <GrayLine thickness={1} marginTop={0} marginBottom={10} />
         {/* 기타 섹션 */}
         <View>
           <TouchableOpacity

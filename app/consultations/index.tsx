@@ -44,6 +44,13 @@ export default function ConsultationsScreen() {
 
   return (
     <>
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTitle: 'Consultation List',
+          headerTitleAlign: 'center',
+        }}
+      />
       <ListLayout
         data={flattenedData}
         isLoading={isLoading}
