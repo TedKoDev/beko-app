@@ -1,13 +1,13 @@
+import { Feather } from '@expo/vector-icons';
 import { Link, Tabs, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 
 import { HeaderButton } from '../../components/HeaderButton';
 import { TabBarIcon } from '../../components/TabBarIcon';
+import { useNotification } from '../../queries/hooks/notification/useNotification';
 
 import { useAuthStore } from '~/store/authStore';
-import { Feather } from '@expo/vector-icons';
-import { useNotification } from '../../queries/hooks/notification/useNotification';
 
 export default function TabLayout() {
   const userInfo = useAuthStore((state) => state.userInfo);
@@ -21,6 +21,12 @@ export default function TabLayout() {
     setTimeout(() => {
       if (!isAuthenticated) {
         router.replace('/login');
+      } else if (
+        isAuthenticated &&
+        userInfo &&
+        (!userInfo.terms_agreed || !userInfo.privacy_agreed)
+      ) {
+        router.replace('/terms-check');
       }
     }, 0);
   }, [isAuthenticated]);

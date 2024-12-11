@@ -73,9 +73,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     email: string,
     password: string,
     country_id: number,
-    term_agreement: boolean,
-    privacy_agreement: boolean,
-    marketing_agreement: boolean
+    terms_agreed: boolean,
+    privacy_agreed: boolean,
+    marketing_agreed: boolean
   ) => {
     console.log(
       'register',
@@ -83,9 +83,9 @@ export const useAuthStore = create<AuthState>((set) => ({
       email,
       password,
       country_id,
-      term_agreement,
-      privacy_agreement,
-      marketing_agreement
+      terms_agreed,
+      privacy_agreed,
+      marketing_agreed
     );
 
     const response = await registerApi(
@@ -93,9 +93,9 @@ export const useAuthStore = create<AuthState>((set) => ({
       email,
       password,
       country_id,
-      term_agreement,
-      privacy_agreement,
-      marketing_agreement
+      terms_agreed,
+      privacy_agreed,
+      marketing_agreed
     );
     console.log('register response', response);
   },

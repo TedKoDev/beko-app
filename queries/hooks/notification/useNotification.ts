@@ -4,7 +4,13 @@ import * as Device from 'expo-device';
 import { Platform } from 'react-native';
 import { notificationService } from '../../../services/notificationService';
 
-import { getNotificationSettings, updateNotificationSettings } from '~/services/authService';
+import {
+  authService,
+  getNotificationSettings,
+  updateNotificationSettings,
+} from '~/services/authService';
+import { useAuthStore } from '~/store/authStore';
+import { useMutation } from '@tanstack/react-query';
 
 export const useNotification = () => {
   const [pushToken, setPushToken] = useState<string | null>(null);
@@ -96,4 +102,46 @@ export const useNotificationSettings = (userId: number) => {
   };
 
   return { settings, updateSettings };
+};
+
+interface UpdateAgreementsDto {
+  terms_agreed: boolean;
+  privacy_agreed: boolean;
+  marketing_agreed: boolean;
+}
+
+export const useAgreements = () => {
+  const { userToken, setUserInfo, userInfo } = useAuthStore();
+
+  const updateAgreementsMutation = useMutation({
+    mutationFn: async (agreements: UpdateAgreementsDto) => {
+      if (!userToken) throw new Error('No token found');
+      return authService.updateInitialAgreementsApi(userToken, agreements);
+    },
+    onSuccess: (_, variables) => {
+      // 로컬 상태 업데이트
+      setUserInfo({
+        ...userInfo,
+        terms_agreed: variables.terms_agreed,
+        privacy_agreed: variables.privacy_agreed,
+        marketing_agreed: variables.marketing_agreed,
+      });
+    },
+  });
+
+  const updateAgreements = async (agreements: UpdateAgreementsDto) => {
+    try {
+      await updateAgreementsMutation.mutateAsync(agreements);
+      return true;
+    } catch (error) {
+      console.error('Failed to update agreements:', error);
+      throw error;
+    }
+  };
+
+  return {
+    updateAgreements,
+    isUpdating: updateAgreementsMutation.isPending,
+    error: updateAgreementsMutation.error,
+  };
 };

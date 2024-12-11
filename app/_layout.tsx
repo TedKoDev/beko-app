@@ -62,11 +62,20 @@ export default function RootLayout() {
     };
   });
 
+  const userInfo = useAuthStore((state) => state.userInfo);
+  console.log('userInfo', userInfo);
+
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
         await checkAuth();
+        // 인증은 되어있지만 약관 동의가 안된 경우
+        if (isAuthenticated && userInfo && (!userInfo.terms_agreed || !userInfo.privacy_agreed)) {
+          console.log('약관 동의 안됨');
+          router.replace('/terms-check');
+        }
       } catch (error) {
+        console.log('인증 실패');
         router.replace('/login');
       } finally {
         setLoading(false);

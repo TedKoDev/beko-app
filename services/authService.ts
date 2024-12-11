@@ -18,6 +18,12 @@ interface SocialLoginResponse {
   };
 }
 
+interface UpdateAgreementsDto {
+  terms_agreed: boolean;
+  privacy_agreed: boolean;
+  marketing_agreed: boolean;
+}
+
 export const getCountryListApi = async () => {
   try {
     const response = await api.get('/country/list'); // 또는 '/country'
@@ -264,6 +270,24 @@ export const updateNotificationSettings = async (userId: number, settings: any) 
   }
 };
 
+export const updateInitialAgreementsApi = async (
+  token: string,
+  agreements: UpdateAgreementsDto
+) => {
+  try {
+    const response = await api.post('/users/initial-agreements', agreements, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Update initial agreements failed:', error);
+    throw error;
+  }
+};
+
 export const authService = {
   checkEmail,
   checkName,
@@ -274,4 +298,5 @@ export const authService = {
   updatePasswordApi,
   deactivateUserApi,
   socialLoginApi,
+  updateInitialAgreementsApi,
 };
