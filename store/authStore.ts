@@ -20,6 +20,9 @@ interface UserInfo {
   points: number;
   profile_picture_url: string;
   role: string;
+  terms_agreed: boolean;
+  privacy_agreed: boolean;
+  marketing_agreed: boolean;
   social_login: {
     provider: string;
     provider_user_id: string;
@@ -53,8 +56,8 @@ interface AuthState {
   ) => Promise<void>;
   logout: () => void;
   checkAuth: () => Promise<void>;
-  setUserInfo: (info: any) => void;
-  updateUserInfo: (newData: any) => void;
+  setUserInfo: (info: UserInfo) => void;
+  updateUserInfo: (newData: UserInfo) => void;
   socialLogin: (
     provider: 'APPLE' | 'GOOGLE',
     providerUserId: string,

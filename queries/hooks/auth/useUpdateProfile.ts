@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { updateUserProfileApi } from '~/services/authService';
 import { useAuthStore } from '~/store/authStore';
@@ -8,9 +8,14 @@ interface UpdateUserProfileDto {
   username: string;
   bio?: string;
   profile_picture_url?: string;
+  country_id: number;
+  terms_agreed?: boolean;
+  privacy_agreed?: boolean;
+  marketing_agreed?: boolean;
 }
 
 export const useUpdateProfile = () => {
+  const queryClient = useQueryClient();
   const token = useAuthStore((state) => state.userToken);
   const setUserInfo = useAuthStore((state) => state.setUserInfo);
   const currentUserInfo = useAuthStore((state) => state.userInfo);
@@ -23,40 +28,43 @@ export const useUpdateProfile = () => {
         userId: Number(updateData.userId),
         username: updateData.username,
         bio: updateData.bio || '',
-        profile_picture_url: updateData.profile_picture_url || '',
+        profile_picture_url: updateData.profile_picture_url,
+        country_id: Number(updateData.country_id),
+        terms_agreed: updateData.terms_agreed,
+        privacy_agreed: updateData.privacy_agreed,
+        marketing_agreed: updateData.marketing_agreed,
       };
 
-      const response = await updateUserProfileApi(token, formattedData);
-
-      setUserInfo({
-        ...currentUserInfo,
-        username: response.username,
-        bio: response.bio,
-        profile_picture_url: response.profile_picture_url,
-        stats: currentUserInfo?.stats || {
-          commentCount: 0,
-          followersCount: 0,
-          followingCount: 0,
-          likedPostsCount: 0,
-          postCount: 0,
-        },
-        country: currentUserInfo?.country || {
-          country_code: 'GL',
-          country_id: 1,
-          country_name: 'Global',
-          flag_icon: '🌎',
-        },
-      });
-
-      return response;
+      return updateUserProfileApi(token, formattedData);
     },
-    onError: (error: any) => {
-      console.error('Mutation error details:', {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-        fullError: error,
-      });
+
+    onMutate: async (newData: any) => {
+      const previousData = queryClient.getQueryData(['userInfo']);
+
+      const optimisticUpdate: any = {
+        ...currentUserInfo,
+        username: newData.username,
+        bio: newData.bio,
+        profile_picture_url: newData.profile_picture_url,
+        country_id: Number(newData.country_id),
+      };
+
+      setUserInfo(optimisticUpdate);
+      queryClient.setQueryData(['userInfo'], optimisticUpdate);
+
+      return { previousData };
+    },
+
+    onSuccess: (response) => {
+      setUserInfo(response);
+      queryClient.setQueryData(['userInfo'], response);
+    },
+
+    onError: (error, _, context: any) => {
+      if (context?.previousData) {
+        setUserInfo(context.previousData);
+        queryClient.setQueryData(['userInfo'], context.previousData);
+      }
       throw error;
     },
   });

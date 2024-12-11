@@ -22,9 +22,18 @@ import { getPresignedUrlApi, uploadFileToS3 } from '~/services/s3Service';
 import { useAuthStore } from '~/store/authStore';
 
 export default function EditProfileScreen() {
+  // 사용안함.
   const router = useRouter();
   const userInfo = useAuthStore((state) => state.userInfo);
-  const updateProfileMutation = useUpdateProfile();
+  const updateProfileMutation = useUpdateProfile({
+    userId: userInfo?.user_id,
+    username: userInfo?.username || '',
+    bio: userInfo?.bio || '',
+    country_id: userInfo?.country?.country_id || 1,
+    terms_agreed: userInfo?.terms_agreed || false,
+    privacy_agreed: userInfo?.privacy_agreed || false,
+    marketing_agreed: userInfo?.marketing_agreed || false,
+  });
   const { data: countries } = useCountry();
 
   const [editedProfile, setEditedProfile] = useState({

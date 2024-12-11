@@ -12,12 +12,18 @@ import {
   Platform,
 } from 'react-native';
 import { Pressable } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, withTiming, useSharedValue } from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+  useSharedValue,
+  withSpring,
+  interpolate,
+} from 'react-native-reanimated';
 import uuid from 'react-native-uuid';
 
 import { useGameQuestions, useSubmitAnswer } from '~/queries/hooks/games/useGameService';
 
-const TIMER_DURATION = 30;
+const TIMER_DURATION = 15;
 
 export default function GamePlay() {
   const router = useRouter();
@@ -33,13 +39,26 @@ export default function GamePlay() {
   });
   const [scoreHistory, setScoreHistory] = useState<{ result: string; color: string }[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
+  const [setTimeLeft] = useState(TIMER_DURATION);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [lastResponse, setLastResponse] = useState<any>(null);
+  const [canAnswer, setCanAnswer] = useState(true);
+  const optionScales = useSharedValue(Array(4).fill(1));
 
   const progress = useSharedValue(1);
   const currentQuestion = gameQuestions?.[currentQuestionIndex];
+
+  const animatedStyles = Array(4)
+    .fill(0)
+    .map((_, index) =>
+      useAnimatedStyle(() => {
+        return {
+          transform: [{ scale: withSpring(optionScales.value[index]) }],
+          opacity: interpolate(optionScales.value[index], [0.95, 1], [0.8, 1]),
+        };
+      })
+    );
 
   useEffect(() => {
     if (!currentQuestion || isGameOver) return;
@@ -74,17 +93,25 @@ export default function GamePlay() {
 
   const moveToNextQuestion = () => {
     if (currentQuestionIndex < (gameQuestions?.length || 0) - 1) {
-      setTimeout(() => setCurrentQuestionIndex((prev) => prev + 1), 1000);
+      setTimeout(() => {
+        setCurrentQuestionIndex((prev) => prev + 1);
+        setCanAnswer(true);
+      }, 1000);
     } else {
       handleGameOver();
     }
   };
 
-  const handleAnswer = async (answer: string | null) => {
-    if (!currentQuestion || isSubmitting || isGameOver) return;
+  const handleAnswer = async (answer: string | null, optionIndex: number) => {
+    if (!currentQuestion || isSubmitting || isGameOver || !canAnswer) return;
 
+    setCanAnswer(false);
     setIsSubmitting(true);
-    console.log('Submitting answer with sessionId:', sessionId);
+
+    // 클릭 애니메이션
+    optionScales.value = optionScales.value.map((scale, idx) =>
+      idx === optionIndex ? 0.95 : scale
+    );
 
     try {
       const response = await submitAnswer.mutateAsync({
@@ -105,6 +132,8 @@ export default function GamePlay() {
       moveToNextQuestion();
     } finally {
       setIsSubmitting(false);
+      // 애니메이션 복구
+      optionScales.value = optionScales.value.map(() => 1);
     }
   };
 
@@ -228,21 +257,23 @@ export default function GamePlay() {
               justifyContent: 'space-between',
             }}>
             {currentQuestion.options.map((option, index) => (
-              <Pressable
-                key={index}
-                style={{
-                  width: '48%',
-                  backgroundColor: 'orange',
-                  borderRadius: 8,
-                  padding: 16,
-                  marginBottom: 16,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  elevation: 2,
-                }}
-                onPress={() => handleAnswer(option)}>
-                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{option}</Text>
-              </Pressable>
+              <Animated.View key={index} style={[{ width: '48%' }, animatedStyles[index]]}>
+                <Pressable
+                  style={{
+                    backgroundColor: 'orange',
+                    borderRadius: 8,
+                    padding: 16,
+                    marginBottom: 16,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    elevation: 2,
+                    opacity: canAnswer ? 1 : 0.7,
+                  }}
+                  disabled={!canAnswer}
+                  onPress={() => handleAnswer(option, index)}>
+                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{option}</Text>
+                </Pressable>
+              </Animated.View>
             ))}
           </View>
         </ScrollView>

@@ -82,7 +82,7 @@ export default function GameResult() {
         <View className="mt-6 space-y-4">
           <TouchableOpacity
             className="rounded-full bg-[#6C47FF] py-3"
-            onPress={() => router.replace('/game')}>
+            onPress={() => router.dismissTo('/game')}>
             <Text className="text-center text-base font-bold text-white">Game List</Text>
           </TouchableOpacity>
           {/* 

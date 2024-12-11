@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useQueryClient } from '@tanstack/react-query';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useNavigation, useRouter } from 'expo-router';
 import debounce from 'lodash/debounce';
 import React, { useState, useCallback, useEffect } from 'react';
 import {
@@ -51,7 +51,7 @@ export default function SearchScreen() {
     debounce((query: string) => {
       if (query.trim()) {
         useRecentSearchStore.getState().addSearch(query.trim());
-        router.push(`/search/results?q=${encodeURIComponent(query)}`);
+        router.push(`/results?q=${encodeURIComponent(query)}`);
       }
     }, 1000), // 1초 디바운스
     []
@@ -125,7 +125,13 @@ export default function SearchScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <Stack.Screen options={{ headerShown: true, headerTitle: 'Search' }} />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Search',
+          headerRight: () => null,
+        }}
+      />
+
       {/* Search Input */}
       <View className="border-b border-gray-100 p-4">
         <View className="flex-row items-center rounded-full bg-gray-100 px-4 py-2">

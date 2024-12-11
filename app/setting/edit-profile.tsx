@@ -1,5 +1,7 @@
-import { Stack } from 'expo-router';
-import React, { useState } from 'react';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { router, Stack } from 'expo-router';
+import { debounce } from 'lodash';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,23 +10,26 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
-  Pressable,
+  ActivityIndicator,
 } from 'react-native';
-import { AntDesign, Ionicons } from '@expo/vector-icons';
 
+import { useUpdateProfile } from '~/queries/hooks/auth/useUpdateProfile';
+import { useAgreements } from '~/queries/hooks/notification/useNotification';
 import { useCountry } from '~/queries/hooks/utils/useCountry';
+import { authService } from '~/services/authService';
 import { useAuthStore } from '~/store/authStore';
 
 export default function EditProfile() {
   const { userInfo } = useAuthStore();
   const { data: countries } = useCountry();
+  const { isUpdating } = useAgreements();
+
+  const updateProfileMutation = useUpdateProfile();
   const isSocialLogin = userInfo?.social_login && userInfo.social_login.length > 0;
 
   const [formData, setFormData] = useState({
     email: userInfo?.email || '',
     name: userInfo?.username || '',
-    birthDate: '1994-04-22',
-    phone: '010-1234-5678',
     bio: userInfo?.bio || '',
   });
 
@@ -39,10 +44,24 @@ export default function EditProfile() {
   );
 
   const [agreements, setAgreements] = useState({
-    terms: false,
-    privacy: false,
-    marketing: false,
+    terms: userInfo?.terms_agreed || false,
+    privacy: userInfo?.privacy_agreed || false,
+    marketing: userInfo?.marketing_agreed || false,
   });
+
+  const [isNameValid, setIsNameValid] = useState(true);
+  const [nameError, setNameError] = useState<string>('');
+  const [isCheckingName, setIsCheckingName] = useState(false);
+
+  useEffect(() => {
+    if (userInfo) {
+      setAgreements({
+        terms: userInfo.terms_agreed,
+        privacy: userInfo.privacy_agreed,
+        marketing: userInfo.marketing_agreed,
+      });
+    }
+  }, [userInfo]);
 
   const toggleAgreement = (key: keyof typeof agreements) => {
     setAgreements((prev) => ({
@@ -51,11 +70,70 @@ export default function EditProfile() {
     }));
   };
 
+  const checkName = debounce(async (name: string) => {
+    if (!name) {
+      setNameError('');
+      setIsNameValid(false);
+      return;
+    }
+
+    if (name === userInfo?.username) {
+      setIsNameValid(true);
+      setNameError('');
+      return;
+    }
+
+    setIsCheckingName(true);
+    try {
+      const available = await authService.checkName(name);
+      setIsNameValid(available);
+      setNameError(available ? '' : 'This name is already taken.');
+    } catch (error) {
+      if (error instanceof Error) {
+        setNameError(error.message);
+      } else {
+        setNameError('Failed to check name availability.');
+      }
+      setIsNameValid(false);
+    } finally {
+      setIsCheckingName(false);
+    }
+  }, 500);
+
+  const handleSubmit = async () => {
+    if (!formData.name.trim()) {
+      alert('이름을 입력해주세요.');
+      return;
+    }
+
+    if (!isNameValid) {
+      alert('사용할 수 없는 이름입니다.');
+      return;
+    }
+
+    try {
+      await updateProfileMutation.mutateAsync({
+        userId: userInfo?.user_id ?? 0,
+        username: formData.name.trim(),
+        bio: formData.bio.trim(),
+        country_id: Number(selectedCountry.country_id),
+        terms_agreed: agreements.terms,
+        privacy_agreed: agreements.privacy,
+        marketing_agreed: agreements.marketing,
+      });
+
+      alert('프로필이 성공적으로 업데이트되었습니다.');
+      router.back();
+    } catch (error: any) {
+      alert(error.message || '프로필 업데이트에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <Stack.Screen
         options={{
-          headerTitle: '개인정보 수정',
+          headerTitle: 'Edit Profile',
           headerShadowVisible: false,
         }}
       />
@@ -64,42 +142,55 @@ export default function EditProfile() {
         {/* 입력 필드들 */}
         <View className="space-y-5 p-4">
           <View className="mb-4">
-            <Text className="mb-2 text-sm">이메일 {isSocialLogin ? '(소셜 로그인 계정)' : ''}</Text>
+            <Text className="mb-2 text-sm">Email {isSocialLogin ? '(Social Login)' : ''}</Text>
             <TextInput
-              className={`h-12 rounded-lg border border-gray-200 px-4 ${isSocialLogin ? 'bg-gray-50' : ''}`}
+              className={`h-12 rounded-lg border border-gray-200 px-4 ${isSocialLogin ? 'bg-gray-300' : 'bg-gray-300'}`}
               value={formData.email}
               onChangeText={(text) => setFormData((prev) => ({ ...prev, email: text }))}
-              editable={!isSocialLogin}
+              editable={false}
               placeholder={
                 isSocialLogin
-                  ? '소셜 로그인 계정은 이메일을 수정할 수 없습니다'
-                  : '이메일을 입력해주세요'
+                  ? 'Social Login account cannot be modified'
+                  : 'Please enter your email'
               }
             />
           </View>
 
           <View className="mb-4">
-            <Text className="mb-2 text-sm">이름</Text>
+            <Text className="mb-2 text-sm">Name</Text>
             <TextInput
-              className="h-12 rounded-lg border border-gray-200 px-4"
+              className={`mb-4 h-[50px] w-full rounded-lg border px-4 ${
+                nameError ? 'border-red-500' : 'border-gray-200'
+              }`}
+              placeholder="Nickname"
               value={formData.name}
-              onChangeText={(text) => setFormData((prev) => ({ ...prev, name: text }))}
+              onChangeText={(text) => {
+                setFormData((prev) => ({ ...prev, name: text }));
+                checkName(text);
+              }}
             />
+            {nameError ? (
+              <Text className="-mt-2 mb-2 text-xs text-red-500">{nameError}</Text>
+            ) : isNameValid && formData.name ? (
+              <Text className="-mt-2 mb-2 text-xs text-green-600">
+                {isCheckingName ? 'Checking...' : 'This name is available!'}
+              </Text>
+            ) : null}
           </View>
 
           <View className="mb-4">
-            <Text className="mb-2 text-sm">자기소개</Text>
+            <Text className="mb-2 text-sm">Bio</Text>
             <TextInput
               className="h-24 rounded-lg border border-gray-200 px-4 py-2"
               value={formData.bio}
               onChangeText={(text) => setFormData((prev) => ({ ...prev, bio: text }))}
               multiline
-              placeholder="자기소개를 입력해주세요"
+              placeholder="Enter your bio"
             />
           </View>
 
           <View>
-            <Text className="mb-2 text-sm">국가</Text>
+            <Text className="mb-2 text-sm">Country</Text>
             <TouchableOpacity
               className="h-12 flex-row items-center justify-between rounded-lg border border-gray-200 px-4"
               onPress={() => setShowCountryModal(true)}>
@@ -116,7 +207,7 @@ export default function EditProfile() {
 
         {/* 약관 동의 섹션 */}
         <View className="p-4">
-          <Text className="mb-4 text-sm">약관 및 마케팅 수신 동의</Text>
+          <Text className="mb-4 text-sm">Terms and Marketing Agreement</Text>
           <TouchableOpacity
             className="flex-row items-center justify-between py-3"
             onPress={() => toggleAgreement('terms')}>
@@ -124,11 +215,13 @@ export default function EditProfile() {
               <AntDesign
                 name={agreements.terms ? 'checkcircle' : 'checkcircleo'}
                 size={20}
-                color={agreements.terms ? '#FF6B00' : '#DDD'}
+                color={agreements.terms ? '#6C47FF' : '#DDD'}
               />
-              <Text className="ml-2 text-base">(주)기적 이용약관에 동의 (필수)</Text>
+              <Text className="ml-2 text-base">Agree to Berakorean Terms (Required)</Text>
             </View>
-            <AntDesign name="right" size={16} color="#999" />
+            <TouchableOpacity onPress={() => router.push('/terms/terms')} className="p-2">
+              <AntDesign name="right" size={16} color="#999" />
+            </TouchableOpacity>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -138,11 +231,13 @@ export default function EditProfile() {
               <AntDesign
                 name={agreements.privacy ? 'checkcircle' : 'checkcircleo'}
                 size={20}
-                color={agreements.privacy ? '#FF6B00' : '#DDD'}
+                color={agreements.privacy ? '#6C47FF' : '#DDD'}
               />
-              <Text className="ml-2 text-base">개인정보 수집 및 이용에 대한 안내 (필수)</Text>
+              <Text className="ml-2 text-base">Privacy Policy (Required)</Text>
             </View>
-            <AntDesign name="right" size={16} color="#999" />
+            <TouchableOpacity onPress={() => router.push('/terms/privacy')} className="p-2">
+              <AntDesign name="right" size={16} color="#999" />
+            </TouchableOpacity>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -152,20 +247,31 @@ export default function EditProfile() {
               <AntDesign
                 name={agreements.marketing ? 'checkcircle' : 'checkcircleo'}
                 size={20}
-                color={agreements.marketing ? '#FF6B00' : '#DDD'}
+                color={agreements.marketing ? '#6C47FF' : '#DDD'}
               />
-              <Text className="ml-2 text-base">마케팅 정보 수신 동의 (선택)</Text>
+              <Text className="ml-2 text-base">
+                Agree to receive marketing information (Optional)
+              </Text>
             </View>
-            <AntDesign name="right" size={16} color="#999" />
+            <TouchableOpacity onPress={() => router.push('/terms/marketing')} className="p-2">
+              <AntDesign name="right" size={16} color="#999" />
+            </TouchableOpacity>
           </TouchableOpacity>
         </View>
 
         {/* 수정 완료 버튼 */}
         <View className="p-4">
           <TouchableOpacity
-            className="h-12 items-center justify-center rounded-lg bg-gray-200"
-            disabled={!agreements.terms || !agreements.privacy}>
-            <Text className="text-base text-white">수정 완료</Text>
+            className={`h-12 items-center justify-center rounded-lg ${
+              !isUpdating ? 'bg-[#6C47FF]' : 'bg-gray-200'
+            }`}
+            onPress={handleSubmit}
+            disabled={isUpdating}>
+            {isUpdating ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text className="text-base text-white">Save</Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>
@@ -179,7 +285,7 @@ export default function EditProfile() {
                 <TouchableOpacity onPress={() => setShowCountryModal(false)}>
                   <Ionicons name="chevron-back" size={24} color="#000" />
                 </TouchableOpacity>
-                <Text className="ml-4 text-lg">국가 선택</Text>
+                <Text className="ml-4 text-lg">Country Selection</Text>
               </View>
               <TouchableOpacity onPress={() => setShowCountryModal(false)}>
                 <Text className="text-gray-400">✕</Text>
@@ -191,7 +297,7 @@ export default function EditProfile() {
                 <Ionicons name="search" size={20} color="#666" />
                 <TextInput
                   className="ml-2 flex-1"
-                  placeholder="국가 검색..."
+                  placeholder="Search Country..."
                   value={searchQuery}
                   onChangeText={setSearchQuery}
                 />
@@ -199,7 +305,7 @@ export default function EditProfile() {
             </View>
 
             <FlatList
-              data={countries?.filter((country) =>
+              data={countries?.filter((country: any) =>
                 country.country_name.toLowerCase().includes(searchQuery.toLowerCase())
               )}
               keyExtractor={(item) => item.country_code}
