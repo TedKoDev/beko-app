@@ -39,11 +39,13 @@ export default function EventPage() {
     setActiveIndex(index);
   }, []);
 
+  // Move the useComments hook call here, but only use it if post is defined
+  const { data } = useComments(post.post_id, 'latest');
+
+  const comment_count = data?.pages[0]?.total ?? 0;
+
   if (isLoading) return <Text>Loading...</Text>;
   if (!post) return <Text>Post not found</Text>;
-
-  const { data } = useComments(post.post_id, 'latest');
-  const comment_count = data?.pages[0]?.total ?? 0;
 
   // console.log('post', JSON.stringify(post, null, 2));
   return (

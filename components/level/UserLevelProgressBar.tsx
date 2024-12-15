@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text, Image, ActivityIndicator } from 'react-native';
 
@@ -30,12 +30,16 @@ export const UserLevelProgressBar = () => {
     <View className="rounded-xl bg-white p-4 shadow-md">
       {/* User Info */}
       <View className="mb-4 flex-row items-center">
-        <Image
-          source={{
-            uri: userInfo.profile_picture_url || 'https://via.placeholder.com/100',
-          }}
-          className="h-20 w-20 rounded-full"
-        />
+        {userInfo.profile_picture_url ? (
+          <Image
+            source={{
+              uri: userInfo.profile_picture_url,
+            }}
+            className="h-20 w-20 rounded-full"
+          />
+        ) : (
+          <FontAwesome name="user-circle" size={48} color="#6C47FF" />
+        )}
         <View className="flex-row items-center">
           <View className="ml-3">
             <Text className="text-lg font-bold">{userInfo.username || 'Student'}</Text>

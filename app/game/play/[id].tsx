@@ -37,9 +37,12 @@ export default function GamePlay() {
     totalQuestions: 0,
     lastAnswerCorrect: null,
   });
+
+  console.log('gameState', gameState);
+
   const [scoreHistory, setScoreHistory] = useState<{ result: string; color: string }[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [setTimeLeft] = useState(TIMER_DURATION);
+  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [lastResponse, setLastResponse] = useState<any>(null);
@@ -67,16 +70,15 @@ export default function GamePlay() {
     if (gameQuestions?.length > 0) {
       progress.value = 1;
       progress.value = withTiming(0, { duration: TIMER_DURATION * 1000 });
-      setTimeLeft(TIMER_DURATION);
 
       timer = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
+        setTimeLeft((prevTimeLeft) => {
+          if (prevTimeLeft <= 1) {
             clearInterval(timer);
             if (!isSubmitting && !isGameOver) handleTimeout();
             return 0;
           }
-          return prev - 1;
+          return prevTimeLeft - 1; // 수정된 부분
         });
       }, 1000);
     }
@@ -140,48 +142,49 @@ export default function GamePlay() {
   const updateGameState = (isCorrect: boolean) => {
     const resultIcon = isCorrect ? 'check-circle' : 'close-circle';
     const color = isCorrect ? 'green' : 'red';
-
     setScoreHistory((prev) => [...prev, { result: resultIcon, color }]);
     setGameState((prev) => ({
       ...prev,
       correctAnswers: prev.correctAnswers + (isCorrect ? 1 : 0),
       totalQuestions: prev.totalQuestions + 1,
-      lastAnswerCorrect: isCorrect,
+      lastAnswerCorrect: isCorrect ? isCorrect : null,
     }));
   };
 
   const handleGameOver = () => {
     setIsGameOver(true);
 
-    if (!lastResponse) {
+    // 약간의 지연을 주어 마지막 상태 업데이트가 완료되도록 함
+    setTimeout(() => {
+      if (!lastResponse) {
+        const params = new URLSearchParams({
+          correctAnswers: gameState.correctAnswers.toString(),
+          totalQuestions: (gameState.totalQuestions + 1).toString(), // 마지막 문제 포함
+          currentLevel: '1',
+          leveledUp: 'false',
+          experienceGained: '0',
+          userLeveledUp: 'false',
+          currentUserLevel: '1',
+          gameId: id,
+        }).toString();
+
+        router.replace(`/game/result?${params}`);
+        return;
+      }
+
       const params = new URLSearchParams({
         correctAnswers: gameState.correctAnswers.toString(),
-        totalQuestions: gameState.totalQuestions.toString(),
-        currentLevel: '1',
-        leveledUp: 'false',
-        experienceGained: '0',
-        userLeveledUp: 'false',
-        currentUserLevel: '1',
-        gameId: id, // 게임 ID 추가
+        totalQuestions: (gameState.totalQuestions + 1).toString(), // 마지막 문제 포함
+        currentLevel: lastResponse.gameProgress.currentLevel.toString(),
+        leveledUp: lastResponse.gameProgress.leveledUp.toString(),
+        experienceGained: lastResponse.userProgress.experienceGained.toString(),
+        userLeveledUp: lastResponse.userProgress.userLeveledUp.toString(),
+        currentUserLevel: lastResponse.userProgress.currentUserLevel.toString(),
+        gameId: id,
       }).toString();
 
       router.replace(`/game/result?${params}`);
-      return;
-    }
-
-    const params = new URLSearchParams({
-      correctAnswers: gameState.correctAnswers.toString(),
-      totalQuestions: gameState.totalQuestions.toString(),
-
-      currentLevel: lastResponse.gameProgress.currentLevel.toString(),
-      leveledUp: lastResponse.gameProgress.leveledUp.toString(),
-      experienceGained: lastResponse.userProgress.experienceGained.toString(),
-      userLeveledUp: lastResponse.userProgress.userLeveledUp.toString(),
-      currentUserLevel: lastResponse.userProgress.currentUserLevel.toString(),
-      gameId: id, // 게임 ID 추가
-    }).toString();
-
-    router.replace(`/game/result?${params}`);
+    }, 100); // 100ms 지연
   };
   const progressStyle = useAnimatedStyle(() => ({
     width: `${progress.value * 100}%`,
@@ -240,6 +243,7 @@ export default function GamePlay() {
               style={[{ height: '100%', backgroundColor: '#6C47FF' }, progressStyle]}
             />
           </View>
+          <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Time Left: {timeLeft}s</Text>
         </View>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>

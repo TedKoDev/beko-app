@@ -6,16 +6,7 @@ import { Pressable, RectButton } from 'react-native-gesture-handler';
 
 export default function GameResult() {
   const router = useRouter();
-  const {
-    correctAnswers,
-    totalQuestions,
-    currentLevel,
-    leveledUp,
-    experienceGained,
-    userLeveledUp,
-    currentUserLevel,
-    gameId,
-  } = useLocalSearchParams<{
+  const params = useLocalSearchParams<{
     correctAnswers: string;
     totalQuestions: string;
     currentLevel: string;
@@ -26,11 +17,15 @@ export default function GameResult() {
     gameId: string;
   }>();
 
-  const accuracy = Math.round((Number(correctAnswers) / Number(totalQuestions)) * 100);
+  console.log('Raw params:', params);
+  console.log('Parsed values:', {
+    correctAnswers: Number(params.correctAnswers),
+    totalQuestions: Number(params.totalQuestions),
+  });
 
-  const handleRetry = () => {
-    router.replace(`/game/play/${gameId}?level=${currentLevel}`);
-  };
+  const correctAnswers = Number(params.correctAnswers);
+  const totalQuestions = Number(params.totalQuestions);
+  const accuracy = Math.round((correctAnswers / totalQuestions) * 100);
 
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
@@ -52,26 +47,26 @@ export default function GameResult() {
                 </Text>
               </View>
 
-              {leveledUp === 'true' && (
+              {params.leveledUp === 'true' && (
                 <View className="rounded-lg bg-yellow-200 p-5">
                   <Text className="text-center text-lg font-semibold text-yellow-900">
-                    🎉 Level {currentLevel} Achieved!
+                    🎉 Level {params.currentLevel} Achieved!
                   </Text>
                 </View>
               )}
 
-              {userLeveledUp === 'true' && (
+              {params.userLeveledUp === 'true' && (
                 <View className="rounded-lg bg-blue-200 p-5">
                   <Text className="text-center text-lg font-semibold text-blue-900">
-                    ⭐️ User Level {currentUserLevel} Reached!
+                    ⭐️ User Level {params.currentUserLevel} Reached!
                   </Text>
                 </View>
               )}
 
-              {Number(experienceGained) > 0 && (
+              {Number(params.experienceGained) > 0 && (
                 <View className="rounded-lg bg-green-200 p-5">
                   <Text className="text-center text-lg font-semibold text-green-900">
-                    +{experienceGained} XP Earned!
+                    +{params.experienceGained} XP Earned!
                   </Text>
                 </View>
               )}
