@@ -44,8 +44,8 @@ export const useCreateComment = () => {
     mutationFn: commentService.createComment,
     onSuccess: async (_, variables) => {
       await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ['post', variables.postId] }),
-        queryClient.refetchQueries({ queryKey: ['post', variables.postId] }),
+        // queryClient.invalidateQueries({ queryKey: ['post', variables.postId] }),
+        // queryClient.refetchQueries({ queryKey: ['post', variables.postId] }),
 
         queryClient.invalidateQueries({ queryKey: ['posts'] }),
         queryClient.refetchQueries({ queryKey: ['posts'] }),

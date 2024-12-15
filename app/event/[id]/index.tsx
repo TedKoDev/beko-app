@@ -22,6 +22,7 @@ import UserInfo from './components/UserInfo';
 
 import { useGetPostById } from '~/queries/hooks/posts/usePosts';
 import { useTogglePostLike } from '~/queries/hooks/useLikes';
+import { useComments } from '~/queries/hooks/comments/useComments';
 
 const { width } = Dimensions.get('window');
 
@@ -41,7 +42,10 @@ export default function EventPage() {
   if (isLoading) return <Text>Loading...</Text>;
   if (!post) return <Text>Post not found</Text>;
 
-  console.log('post', JSON.stringify(post, null, 2));
+  const { data } = useComments(post.post_id, 'latest');
+  const comment_count = data?.pages[0]?.total ?? 0;
+
+  // console.log('post', JSON.stringify(post, null, 2));
   return (
     <SafeAreaView className="flex-1 bg-white">
       <KeyboardAvoidingView
@@ -126,7 +130,7 @@ export default function EventPage() {
 
                 <View className="flex-row items-center">
                   <Feather name="message-square" size={24} color="#666666" />
-                  <Text className="ml-1 text-sm text-gray-500">{post.comment_count || 0}</Text>
+                  <Text className="ml-1 text-sm text-gray-500">{comment_count || 0}</Text>
                 </View>
 
                 <View className="flex-row items-center">
