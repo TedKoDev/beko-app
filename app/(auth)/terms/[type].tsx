@@ -25,7 +25,7 @@ export default function TermsDetailScreen() {
   return (
     // <View style={{ flex: 1, backgroundColor: 'white', height: windowHeight }}>
     <>
-      <View style={{ backgroundColor: 'white' }}>
+      <View style={{ backgroundColor: 'red' }}>
         <Stack.Screen
           options={{
             headerTitle: TERMS_LINKS[type].title,
@@ -35,16 +35,7 @@ export default function TermsDetailScreen() {
           }}
         />
       </View>
-      <WebView
-        source={{ uri: TERMS_LINKS[type].url }}
-        style={{ flex: 1, height: windowHeight }}
-        startInLoadingState
-        renderLoading={() => (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size="large" color="#6C47FF" />
-          </View>
-        )}
-      />
+      <WebView source={{ uri: TERMS_LINKS[type].url }} />
     </>
   );
 }

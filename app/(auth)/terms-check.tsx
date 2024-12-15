@@ -107,7 +107,7 @@ export default function TermsCheckScreen() {
             />
             <Text className="ml-3 text-base">개인정보 수집 및 이용에 대한 안내 (필수)</Text>
           </View>
-          <TouchableOpacity onPress={() => router.push('/terms/privacy')} className="p-2">
+          <TouchableOpacity onPress={() => router.push('/terms/webview')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
           </TouchableOpacity>
         </TouchableOpacity>
@@ -123,7 +123,7 @@ export default function TermsCheckScreen() {
             />
             <Text className="ml-3 text-base">마케팅 정보 수신 동의 (선택)</Text>
           </View>
-          <TouchableOpacity onPress={() => router.push('/terms/marketing')} className="p-2">
+          <TouchableOpacity onPress={() => router.push('/terms/webview')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
           </TouchableOpacity>
         </TouchableOpacity>
