@@ -5,6 +5,8 @@ import { queryClient } from '~/queries/queryClient';
 import {
   addPostApi,
   CreatePostDto,
+  getConsultationByIdApi,
+  getConsultationsApi,
   getPostApi,
   getPostByIdApi,
   postService,
@@ -131,9 +133,11 @@ export const useUpdatePost = () => {
         queryClient.invalidateQueries({ queryKey: ['post', variables.postId] }),
         queryClient.refetchQueries({ queryKey: ['posts'] }),
         queryClient.refetchQueries({ queryKey: ['post', variables.postId] }),
+        queryClient.invalidateQueries({ queryKey: ['consultations'] }),
+        queryClient.refetchQueries({ queryKey: ['consultations'] }),
+
         queryClient.invalidateQueries({ queryKey: ['comments', variables.postId] }),
         queryClient.refetchQueries({ queryKey: ['comments', variables.postId] }),
-
         // queryClient.invalidateQueries({ queryKey: ['logs'] }),
         queryClient.refetchQueries({ queryKey: ['logs'] }),
         // queryClient.invalidateQueries({ queryKey: ['userInfo'] }),
@@ -142,6 +146,42 @@ export const useUpdatePost = () => {
     },
     onError: (error) => {
       console.error('Update post failed:', error);
+    },
+  });
+};
+
+export const useUpdateConsultation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ postId, ...updateData }: UpdatePostDto & { postId: number }) =>
+      postService.updatePost(postId, updateData),
+    onSuccess: async (_, variables) => {
+      await Image.clearMemoryCache();
+      await Image.clearDiskCache();
+
+      // 일반 post와 동일한 패턴으로 변경
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ['consultations'],
+          exact: true,
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['consultation', variables.postId],
+          exact: true,
+        }),
+        queryClient.refetchQueries({
+          queryKey: ['consultations'],
+          exact: true,
+        }),
+        queryClient.refetchQueries({
+          queryKey: ['consultation', variables.postId],
+          exact: true,
+        }),
+      ]);
+    },
+    onError: (error) => {
+      console.error('Update consultation failed:', error);
     },
   });
 };

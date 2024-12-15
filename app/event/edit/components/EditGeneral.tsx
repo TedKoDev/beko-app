@@ -154,7 +154,11 @@ export default function EditGeneral({ post }) {
       await new Promise((resolve) => setTimeout(resolve, 100));
 
       await queryClient.invalidateQueries({ queryKey: ['posts'] });
-      router.back();
+
+      // setTimeout을 사용하여 네비게이션 지연
+      setTimeout(() => {
+        router.back();
+      }, 300);
     } catch (error) {
       console.error('Failed to update post:', error);
       Alert.alert('Error', 'Failed to update post');

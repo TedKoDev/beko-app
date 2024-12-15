@@ -32,8 +32,8 @@ export default function WriteWithWordsScreen() {
       {
         content: sentence,
         type: 'SENTENCE',
-        categoryId: 2,
-        title: `3 Words Writing + ${userInfo?.username} + ${new Date().toLocaleDateString()}`,
+        categoryId: 9,
+        title: `3 Words Writing : ${userInfo?.username} Date : ${new Date().toLocaleDateString()}`,
       },
       {
         onSuccess: async () => {

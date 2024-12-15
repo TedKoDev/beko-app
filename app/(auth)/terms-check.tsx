@@ -91,7 +91,7 @@ export default function TermsCheckScreen() {
             />
             <Text className="ml-3 text-base">BeraKorean 이용약관에 동의 (필수)</Text>
           </View>
-          <TouchableOpacity onPress={() => router.push('/terms/terms')} className="p-2">
+          <TouchableOpacity onPress={() => router.push('/terms/webview')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
           </TouchableOpacity>
         </TouchableOpacity>

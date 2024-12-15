@@ -152,7 +152,7 @@ export default function ManageAccount() {
                   setPassword('');
                 }}
                 disabled={isPending}>
-                <Text className="text-gray-600">취소</Text>
+                <Text className="text-gray-600">Cancel</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -162,7 +162,7 @@ export default function ManageAccount() {
                 {isPending ? (
                   <ActivityIndicator size="small" color="white" />
                 ) : (
-                  <Text className="text-white">탈퇴하기</Text>
+                  <Text className="text-white">Withdraw</Text>
                 )}
               </TouchableOpacity>
             </View>

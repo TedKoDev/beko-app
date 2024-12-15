@@ -45,7 +45,6 @@ export default function ListLayout({
   showSearchButton = false,
   showWriteButton = false,
   writeRoute = '/write',
-
   onScroll,
   ListHeaderComponent,
   ListEmptyComponent,

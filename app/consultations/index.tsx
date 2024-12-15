@@ -34,12 +34,6 @@ export default function ConsultationsScreen() {
     ...filters,
   });
 
-  useEffect(() => {
-    if (data) {
-      // console.log('Received data:', data.pages[0].data);
-    }
-  }, [data]);
-
   const flattenedData = data?.pages.flatMap((page) => page.data) ?? [];
 
   return (
@@ -59,6 +53,7 @@ export default function ConsultationsScreen() {
         isRefreshing={isRefetching}
         showWriteButton
         // hideButton
+        showViewToggle={false}
         writeRoute="/write/writeforconsultation"
         ListHeaderComponent={
           <ConsultationFilterHeader

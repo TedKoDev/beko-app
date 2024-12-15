@@ -5,6 +5,7 @@ import { View, Alert, Image, Text, TouchableOpacity, SafeAreaView, ScrollView } 
 
 import { LevelProgressBar } from '~/components/level/LevelProgressBar';
 import { useAuthStore } from '~/store/authStore';
+import { BekoIcon } from '~/assets/icons';
 
 export default function MyPage() {
   const router = useRouter();
@@ -29,9 +30,9 @@ export default function MyPage() {
           <View className="mb-4 flex-row items-center">
             <View className="relative mr-3">
               <Image
-                source={{
-                  uri: userInfo?.profile_picture_url || 'https://via.placeholder.com/100',
-                }}
+                source={
+                  userInfo?.profile_picture_url ? { uri: userInfo?.profile_picture_url } : BekoIcon
+                }
                 className="h-20 w-20 rounded-full"
               />
               <TouchableOpacity

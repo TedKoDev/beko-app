@@ -13,8 +13,8 @@ export function useConsultations({
 } & ConsultationFilters) {
   return useInfiniteQuery({
     queryKey: ['consultations', filters],
-    queryFn: ({ pageParam = 1 }) => {
-      console.log('Sending filters to API:', filters);
+    queryFn: ({ pageParam = page }) => {
+      console.log('Sending filters to API111:', filters);
       return getConsultationsApi({
         page: pageParam,
         limit,
@@ -25,7 +25,12 @@ export function useConsultations({
       const nextPage = allPages.length + 1;
       return lastPage.data.length === limit ? nextPage : undefined;
     },
+    // initialPageParam: 1,
     initialPageParam: 1,
+    staleTime: 30 * 1000,
+    gcTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 }
 

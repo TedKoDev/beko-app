@@ -155,6 +155,7 @@ export default function RootLayout() {
               <Stack.Screen name="board" options={{ headerShown: false }} />
               <Stack.Screen name="setting" options={{ headerShown: false }} />
               <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="consultations/[id]" options={{ headerShown: false }} />
             </Stack>
           </QueryClientProvider>
         </BottomSheetModalProvider>

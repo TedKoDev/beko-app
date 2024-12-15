@@ -1,12 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Image, Text, Dimensions } from 'react-native';
 import { TapGestureHandler } from 'react-native-gesture-handler';
 import Carousel from 'react-native-reanimated-carousel';
 
+// import { useAdbanner } from '~/queries/hooks/adbanner/useAdbanner';
+
 interface CarouselItem {
-  uri: string;
-  title?: string;
+  image_url: string;
+  company_name?: string;
   link?: string;
 }
 
@@ -25,17 +27,20 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const windowWidth = Dimensions.get('window').width;
-  // //console.log('windowWidth:', windowWidth);
+
+  // console.log('items', items);
 
   const carouselWidth = width || windowWidth;
   const carouselHeight = height || 170;
 
   const handlePress = (item: CarouselItem) => {
+    console.log('dsf');
+    console.log('item', item);
     if (item.link) {
       if (item.link.startsWith('http')) {
-        //console.log('Open URL:', item.link);
+        console.log('Open URL:', item.link);
       } else {
-        // navigation.navigate(item.link as never);
+        console.log('Navigate to:', item.link);
       }
     }
   };
@@ -52,20 +57,21 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
         autoPlayInterval={autoSlideInterval}
         scrollAnimationDuration={1000}
         data={items}
-        onSnapToItem={(index) => setCurrentIndex(index)} // Update current index
+        onSnapToItem={(index) => setCurrentIndex(index)}
         renderItem={({ item }) => (
           <TapGestureHandler
             onHandlerStateChange={(event) => {
               if (event.nativeEvent.state === 4) {
-                // 4 is the 'end' state of the gesture (tap recognized)
                 handlePress(item);
               }
             }}>
             <View className="items-center justify-center">
               <Image
-                source={{ uri: item.uri }}
+                source={{ uri: item.image_url }}
                 className="h-full w-full rounded-none"
-                style={{ resizeMode: 'cover' }} // resizeMode 속성은 NativeWind로 설정되지 않으므로 스타일로 설정
+                style={{
+                  resizeMode: 'contain',
+                }}
               />
             </View>
           </TapGestureHandler>

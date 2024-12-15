@@ -9,20 +9,20 @@ export default function ConsultationLayout() {
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#6C47FF',
+            backgroundColor: 'white',
           },
           headerTitleStyle: {
             fontSize: 18,
             fontWeight: '600',
-            color: '#6C47FF',
+            color: '#D812DC',
           },
           headerTitleAlign: 'center',
-          headerShadowVisible: true,
-          headerBackVisible: true,
+          headerShadowVisible: false,
+          headerBackVisible: false,
           headerLeft: ({ canGoBack }) =>
             canGoBack ? (
               <TouchableOpacity onPress={() => router.back()}>
-                <Ionicons name="chevron-back" size={24} color="#6C47FF" />
+                <Ionicons name="chevron-back" size={24} color="#D812DC" />
               </TouchableOpacity>
             ) : null,
         }}

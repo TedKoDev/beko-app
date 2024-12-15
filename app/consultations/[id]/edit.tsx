@@ -17,17 +17,16 @@ import {
 
 import { useUserInfo } from '~/queries/hooks/auth/useUserinfo';
 import { useConsultationById } from '~/queries/hooks/posts/useConsultations';
-import { useUpdatePost } from '~/queries/hooks/posts/usePosts';
+import { useUpdateConsultation, useUpdatePost } from '~/queries/hooks/posts/usePosts';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
+import { queryClient } from '~/queries/queryClient';
 import { getPresignedUrlApi, uploadFileToS3 } from '~/services/s3Service';
 import { getStatusColor, getStatusText } from '~/types/consultation';
 
-export default function EditConsultationScreen() {
+export default function EditConsultation() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const { data: consultation, isLoading } = useConsultationById(Number(id));
-  const { width } = Dimensions.get('window');
-  const [activeIndex, setActiveIndex] = useState(0);
 
   // 초기 상태 설정
   const [title, setTitle] = useState('');
@@ -61,7 +60,7 @@ export default function EditConsultationScreen() {
     }
   }, [consultation]);
 
-  const updatePost = useUpdatePost();
+  const updatePost = useUpdateConsultation();
   const { data: topics = [] } = useTopics();
 
   const { data: userInfo } = useUserInfo();
@@ -72,12 +71,12 @@ export default function EditConsultationScreen() {
 
   const consultationCategories = topics.find((topic) => topic.topic_id === 1)?.category || [];
 
-  console.log('consultationCategories', consultationCategories);
+  // console.log('consultationCategories', consultationCategories);
 
   const pickImages = async () => {
     try {
       if (selectedImages.length >= MAX_IMAGES) {
-        Alert.alert('알림', '최대 5개의 이미지만 업로드할 수 있습니다.');
+        Alert.alert('Alert', 'You can only upload up to 5 images.');
         return;
       }
 
@@ -99,8 +98,8 @@ export default function EditConsultationScreen() {
         setSelectedImages((prev) => [...prev, ...newImages].slice(0, MAX_IMAGES));
       }
     } catch (error) {
-      console.error('이미지 선택 오류:', error);
-      Alert.alert('오류', '이미지 선택에 실패했습니다.');
+      console.error('EditConsultationScreen - 이미지 선택 오류:', error);
+      Alert.alert('Error', 'Failed to select image.');
     } finally {
       setIsImageLoading(false);
     }
@@ -108,7 +107,7 @@ export default function EditConsultationScreen() {
 
   const handleSubmit = async () => {
     if (!title.trim() || !content.trim()) {
-      Alert.alert('알림', '제목과 내용을 모두 입력해주세요.');
+      Alert.alert('Alert', 'Please enter both title and content.');
       return;
     }
 
@@ -152,13 +151,36 @@ export default function EditConsultationScreen() {
         ],
       };
 
-      console.log('updateData', JSON.stringify(updateData, null, 2));
+      // console.log('updateData', JSON.stringify(updateData, null, 2));
 
-      await updatePost.mutateAsync(updateData);
-      router.back();
+      // Convert mediaType from string to 'IMAGE' | 'VIDEO' type
+      const formattedUpdateData = {
+        ...updateData,
+        media: updateData.media.map((media) => ({
+          ...media,
+          mediaType: media.mediaType as 'IMAGE' | 'VIDEO',
+        })),
+      };
+      // 데이터 업데이트가 반영될 시간을 주기
+      // await new Promise((resolve) => setTimeout(resolve, 100));
+
+      await updatePost.mutateAsync(formattedUpdateData);
+      // 데이터 업데이트가 반영될 시간을 주기
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      await queryClient.invalidateQueries({ queryKey: ['consultations'] });
+      await queryClient.invalidateQueries({ queryKey: ['consultation', Number(id)] });
+      await queryClient.refetchQueries({ queryKey: ['consultation', Number(id)] });
+      await queryClient.refetchQueries({ queryKey: ['consultations'] });
+      await queryClient.refetchQueries({ queryKey: ['consultation', Number(id)] });
+
+      // setTimeout을 사용하여 네비게이션 지연
+      setTimeout(() => {
+        router.back();
+      }, 300);
     } catch (error) {
-      console.error('수정 실패:', error);
-      Alert.alert('오류', '수정에 실패했습니다.');
+      console.error('EditConsultationScreen - 수정 실패:', error);
+      Alert.alert('Error', 'Failed to update.');
     } finally {
       setIsImageLoading(false);
     }
@@ -170,12 +192,6 @@ export default function EditConsultationScreen() {
 
   // 포인트가 충분한지 확인
   const hasEnoughPoints = (userInfo?.points || 0) >= selectedCategoryPrice;
-
-  const handleScroll = (event: any) => {
-    const slideSize = event.nativeEvent.layoutMeasurement.width;
-    const index = event.nativeEvent.contentOffset.x / slideSize;
-    setActiveIndex(Math.round(index));
-  };
 
   if (isLoading) {
     return (
@@ -189,7 +205,7 @@ export default function EditConsultationScreen() {
     <>
       <Stack.Screen
         options={{
-          headerTitle: '상담 수정',
+          headerTitle: 'Edit Consultation',
           headerTitleAlign: 'center',
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()} className="ml-4">
@@ -203,9 +219,9 @@ export default function EditConsultationScreen() {
         {/* 카테고리 택 */}
         <View className="mb-4">
           <View className="mb-2 flex-row items-center justify-between">
-            <Text className="text-base font-bold">상담 유형</Text>
+            <Text className="text-base font-bold">Consultation Type</Text>
             <Text className="text-sm text-gray-500">
-              현재 선택:{' '}
+              Current Selection:{' '}
               {
                 consultationCategories.find((cat) => cat.category_id === selectedCategory)
                   ?.category_name
@@ -242,7 +258,7 @@ export default function EditConsultationScreen() {
 
         {/* 상담 상태 표시 */}
         <View className="mb-4">
-          <Text className="mb-2 text-base font-bold">상담 상태</Text>
+          <Text className="mb-2 text-base font-bold">Consultation Status</Text>
           <View className={`rounded-lg p-3 ${getStatusColor(consultation?.post_content.status)}`}>
             <Text className="text-center font-medium">
               {getStatusText(consultation?.post_content.status)}
@@ -253,11 +269,11 @@ export default function EditConsultationScreen() {
         {/* 가격 및 포인트 정보 */}
         <View className="mb-4 rounded-lg bg-gray-100 p-4">
           <View className="mb-2 flex-row items-center justify-between">
-            <Text className="text-gray-600">상담 비용</Text>
+            <Text className="text-gray-600">Consultation Cost</Text>
             <Text className="text-lg font-bold text-purple-500">{selectedCategoryPrice} P</Text>
           </View>
           <View className="flex-row items-center justify-between">
-            <Text className="text-gray-600">보유 포인트</Text>
+            <Text className="text-gray-600">Owned Points</Text>
             <Text
               className={`text-lg font-bold ${hasEnoughPoints ? 'text-green-500' : 'text-red-500'}`}>
               {userInfo?.points || 0} P
@@ -265,7 +281,7 @@ export default function EditConsultationScreen() {
           </View>
           {!hasEnoughPoints && (
             <Text className="mt-2 text-sm text-red-500">
-              포인트가 부족합니다. 충전 후 이용해주세요.
+              You don't have enough points. Please charge and use it.
             </Text>
           )}
         </View>
@@ -273,7 +289,7 @@ export default function EditConsultationScreen() {
         {/* 제목 입력 */}
         <TextInput
           className="mb-4 rounded-lg border border-gray-300 p-3"
-          placeholder="제목을 입력하세요"
+          placeholder="Title"
           value={title}
           onChangeText={setTitle}
         />
@@ -281,7 +297,7 @@ export default function EditConsultationScreen() {
         {/* 내용 입력 */}
         <TextInput
           className="mb-4 h-40 rounded-lg border border-gray-300 p-3"
-          placeholder="상담 내용을 자세히 작성해주세요"
+          placeholder="Write your consultation content"
           multiline
           textAlignVertical="top"
           value={content}

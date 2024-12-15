@@ -32,8 +32,8 @@ import { ConsultationStatus, getStatusColor, getStatusText } from '~/types/consu
 export default function ConsultationDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
+  // app/consultations/[id].tsx
   const { data: consultation, isLoading } = useConsultationById(Number(id));
-
   console.log('123consultation', JSON.stringify(consultation, null, 2));
 
   const { userInfo } = useAuthStore();
@@ -185,7 +185,7 @@ export default function ConsultationDetailScreen() {
     <>
       <Stack.Screen
         options={{
-          headerTitle: '상담 상세',
+          headerTitle: 'Consultation Detail',
           headerTitleAlign: 'center',
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()} className="ml-4">

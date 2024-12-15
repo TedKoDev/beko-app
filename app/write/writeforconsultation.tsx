@@ -52,14 +52,23 @@ export default function WriteForConsultationScreen() {
         return;
       }
 
+      // 권한 체크 추가
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('권한 필요', '사진 라이브러리 접근 권한이 필요합니다.');
+        return;
+      }
+
       setIsImageLoading(true);
 
       const remainingSlots = MAX_IMAGES - selectedImages.length;
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsMultipleSelection: true,
-        quality: 1,
+        quality: 0.8, // 품질을 약간 낮춤
         selectionLimit: remainingSlots,
+        allowsEditing: false, // 편집 비활성화
+        exif: false, // EXIF 데이터 비활성화
       });
 
       if (!result.canceled) {
@@ -71,7 +80,7 @@ export default function WriteForConsultationScreen() {
       }
     } catch (error) {
       console.error('이미지 선택 오류:', error);
-      Alert.alert('오류', '이미지 선택에 실패했습니다.');
+      Alert.alert('오류', '이미지를 선택하는 중 문제가 발생했습니다. 다시 시도해주세요.');
     } finally {
       setIsImageLoading(false);
     }

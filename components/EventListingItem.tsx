@@ -20,11 +20,15 @@ export default function EventListItem({ event }: any) {
               contentFit="cover"
               transition={200}
             />
-            <Text className="ml-2 text-sm text-gray-500">{event.username}</Text>
+            <Text className="ml-2 text-sm text-gray-500">{event.username || ''}</Text>
 
-            <Text className="ml-2 text-xs text-orange-400">{event.flag_icon}</Text>
+            {event.flag_icon && (
+              <Text className="ml-2 text-xs text-orange-400">{event.flag_icon}</Text>
+            )}
 
-            <Text className="ml-2 text-xs text-orange-400">Lv {event.user_level}</Text>
+            {event.user_level != null && (
+              <Text className="ml-2 text-xs text-orange-400">Lv {event.user_level}</Text>
+            )}
             <Text className="ml-2 text-sm text-gray-500">
               · {dayjs(event.created_at).format('YY/MMM/DD')}
             </Text>
@@ -33,11 +37,13 @@ export default function EventListItem({ event }: any) {
 
         <View className={`flex-row ${activeMedia.length > 0 ? 'gap-4' : ''}`}>
           <View className={`flex-1 ${activeMedia.length > 0 ? 'flex-[2]' : ''}`}>
-            <Text className="mb-2 text-lg font-bold" numberOfLines={2}>
-              {event.post_content.title}
-            </Text>
+            {event.post_content?.title && (
+              <Text className="mb-2 text-lg font-bold" numberOfLines={2}>
+                {event.post_content.title}
+              </Text>
+            )}
             <Text className="text-base text-gray-600" numberOfLines={2}>
-              {event.post_content.content}
+              {event.post_content?.content || ''}
             </Text>
           </View>
 
@@ -60,14 +66,16 @@ export default function EventListItem({ event }: any) {
 
         <View className="mt-3 flex-row items-center justify-between">
           <View className="flex-row items-center gap-2">
-            <Text className="text-xs text-purple-500">{event.category_name}</Text>
+            {event.category_name && (
+              <Text className="text-xs text-purple-500">{event.category_name}</Text>
+            )}
             {event.type === 'QUESTION' && (
               <>
                 <Text className="text-xs text-gray-500">·</Text>
-                {event.post_content.points && (
+                {event.post_content?.points != null && (
                   <Text className="text-xs text-orange-500">{event.post_content.points}P</Text>
                 )}
-                {event.post_content.is_answer && (
+                {event.post_content?.is_answer && (
                   <>
                     <Text className="text-xs text-gray-500">·</Text>
                     <Text className="text-xs text-green-500">답변완료</Text>
@@ -80,11 +88,11 @@ export default function EventListItem({ event }: any) {
           <View className="flex-row items-center">
             <View className="flex-row items-center">
               <Feather name="eye" size={16} color="gray" />
-              <Text className="ml-1 text-sm text-gray-500">{event.views}</Text>
+              <Text className="ml-1 text-sm text-gray-500">{event.views || 0}</Text>
             </View>
             <View className="ml-4 flex-row items-center">
               <Feather name="message-square" size={16} color="gray" />
-              <Text className="ml-1 text-sm text-gray-500">{event.comment_count}</Text>
+              <Text className="ml-1 text-sm text-gray-500">{event.comment_count || 0}</Text>
             </View>
             <View className="ml-4 flex-row items-center">
               <FontAwesome
@@ -92,7 +100,7 @@ export default function EventListItem({ event }: any) {
                 size={16}
                 color={event.user_liked ? 'red' : 'gray'}
               />
-              <Text className="ml-1 text-sm text-gray-500">{event.likes}</Text>
+              <Text className="ml-1 text-sm text-gray-500">{event.likes || 0}</Text>
             </View>
           </View>
         </View>

@@ -1,9 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, Stack } from 'expo-router';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, ScrollView, RefreshControl } from 'react-native';
 
-import maincarousel from '~/assets/dummy/maincarousel.json';
 import BoardTabs from '~/components/board/BoardTabs';
 import CustomCarousel from '~/components/customCarousel';
 import GrayLine from '~/components/grayline';
@@ -11,6 +10,7 @@ import MenuCards from '~/components/home/MenuCards';
 import YoutubeSection from '~/components/home/YoutubeSection';
 import MainMenu from '~/components/maincategory/mainmenu';
 import LessonCard from '~/components/todayvoca/lessoncard';
+import { useAdbanner } from '~/queries/hooks/adbanner/useAdbanner';
 import { useRefreshUserInfo } from '~/queries/hooks/auth/useUserinfo';
 
 export default function Home() {
@@ -24,6 +24,25 @@ export default function Home() {
       return response.json();
     },
   });
+  const {
+    data: adBannerResponse,
+    isRefetching: adBannersIsRefetching,
+    refetch: adBannersRefetch,
+    isLoading: adBannerLoading,
+  } = useAdbanner({ limit: 5 });
+
+  // console.log('adBanners:', JSON.stringify(adBannerResponse, null, 2));
+
+  const adBanners = useMemo(() => {
+    if (!adBannerResponse?.pages) return [];
+    return adBannerResponse.pages.flatMap((page) =>
+      page.map((banner) => ({
+        ...banner,
+      }))
+    );
+  }, [adBannerResponse]);
+
+  // console.log('adBanners1111:', JSON.stringify(adBanners, null, 2));
 
   const onRefresh = async () => {
     await Promise.all([
@@ -47,7 +66,7 @@ export default function Home() {
         }}
       />
       <View>
-        <CustomCarousel items={maincarousel} />
+        <CustomCarousel items={adBanners} />
       </View>
       <View className="flex-row justify-around">
         <MainMenu />

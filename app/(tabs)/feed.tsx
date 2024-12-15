@@ -14,7 +14,6 @@ export default function Feed() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | undefined>();
   const [showSortModal, setShowSortModal] = useState(false);
   const [showQuestionsOnly, setShowQuestionsOnly] = useState(false);
-
   const [dropdownPosition, setDropdownPosition] = useState(200);
 
   const { data: topicsData } = useTopics();
@@ -44,8 +43,6 @@ export default function Feed() {
     { value: 'popular', label: 'Popular' },
   ] as const;
 
-  const selectedSortLabel = sortOptions.find((option) => option.value === sortBy)?.label;
-
   useEffect(() => {
     if (selectedTopic?.category?.length) {
       setDropdownPosition(200);
@@ -60,45 +57,49 @@ export default function Feed() {
 
   return (
     <View className="flex-1 bg-white">
-      <ListLayout
-        headerTitle="Community"
-        data={allPosts}
-        showViewToggle
-        showWriteButton
-        showSearchButton
-        hideButton
-        isLoading={isFetchingNextPage}
-        onLoadMore={() => {
-          if (hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
+      <View style={{ flex: 1 }}>
+        <ListLayout
+          headerTitle="Community"
+          data={allPosts}
+          showViewToggle
+          showWriteButton
+          showSearchButton
+          hideButton
+          isLoading={isFetchingNextPage}
+          onLoadMore={() => {
+            if (hasNextPage && !isFetchingNextPage) {
+              fetchNextPage();
+            }
+          }}
+          onRefresh={refetch}
+          isRefreshing={isRefetching}
+          ListHeaderComponent={
+            <FilterHeader
+              selectedTopicId={selectedTopicId}
+              selectedCategoryId={selectedCategoryId}
+              topicsData={topicsData}
+              selectedTopic={selectedTopic ?? undefined}
+              showSortModal={showSortModal}
+              selectedSortLabel={
+                sortOptions.find((option) => option.value === sortBy)?.label ?? 'Latest'
+              }
+              setSelectedTopicId={setSelectedTopicId}
+              setSelectedCategoryId={setSelectedCategoryId}
+              setShowSortModal={setShowSortModal}
+              showQuestionsOnly={showQuestionsOnly}
+              setShowQuestionsOnly={setShowQuestionsOnly}
+            />
           }
-        }}
-        onRefresh={refetch}
-        isRefreshing={isRefetching}
-        ListHeaderComponent={
-          <FilterHeader
-            selectedTopicId={selectedTopicId}
-            selectedCategoryId={selectedCategoryId}
-            topicsData={topicsData}
-            selectedTopic={selectedTopic ?? undefined}
-            showSortModal={showSortModal}
-            selectedSortLabel={selectedSortLabel ?? 'Latest'}
-            setSelectedTopicId={setSelectedTopicId}
-            setSelectedCategoryId={setSelectedCategoryId}
-            setShowSortModal={setShowSortModal}
-            showQuestionsOnly={showQuestionsOnly}
-            setShowQuestionsOnly={setShowQuestionsOnly}
-          />
-        }
-        ListEmptyComponent={
-          <View className="flex-1 items-center justify-center py-20">
-            <Text className="text-gray-500">No posts available</Text>
-          </View>
-        }
-        contentContainerStyle={{
-          paddingTop: 0,
-        }}
-      />
+          ListEmptyComponent={
+            <View className="flex-1 items-center justify-center py-20">
+              <Text className="text-gray-500">No posts available</Text>
+            </View>
+          }
+          contentContainerStyle={{
+            paddingTop: 0,
+          }}
+        />
+      </View>
 
       {showSortModal && (
         <View

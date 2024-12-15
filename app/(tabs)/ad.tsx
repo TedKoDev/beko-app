@@ -1,8 +1,14 @@
 import { router, Stack } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import CustomCarousel from '~/components/customCarousel';
+import { useAdbanner } from '~/queries/hooks/adbanner/useAdbanner';
+import NoticeScreen from '../board/notice';
+import AdList from '~/components/AdList';
+import NoticeCategories from '~/components/notice/NoticeSection';
 
 type Language = 'ko' | 'en' | 'jp';
+type TabType = 'ads' | 'teacher';
 
 const content = {
   ko: {
@@ -99,7 +105,11 @@ const content = {
 
 export default function AdPage() {
   const [language, setLanguage] = useState<Language>('ko');
+  const [activeTab, setActiveTab] = useState<TabType>('teacher');
   const currentContent = content[language];
+
+  const { data: adBannerResponse } = useAdbanner({ limit: 5 });
+  const adBanners = adBannerResponse?.pages?.[0] ?? [];
 
   const links = {
     ko: {
@@ -119,97 +129,144 @@ export default function AdPage() {
     },
   };
 
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'ads':
+        return (
+          <ScrollView className="flex-1">
+            {/* <View className="mb-6">
+              <CustomCarousel items={adBanners} />
+            </View> */}
+            <NoticeCategories />
+          </ScrollView>
+        );
+      case 'teacher':
+        return (
+          <View className="flex-1">
+            {/* Language Selector */}
+            <View className="flex-row justify-center space-x-2 border-b border-gray-100 px-6 py-3">
+              {(['en', 'ko', 'jp'] as Language[]).map((lang) => (
+                <TouchableOpacity
+                  key={lang}
+                  onPress={() => setLanguage(lang)}
+                  className={`mr-2 rounded-full px-4 py-2 ${
+                    language === lang ? 'bg-purple-600' : 'bg-gray-200'
+                  }`}>
+                  <Text
+                    className={`font-medium ${language === lang ? 'text-white' : 'text-gray-600'}`}>
+                    {lang.toUpperCase()}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Teacher Content */}
+            <ScrollView className="flex-1 px-6">
+              {/* Header Section */}
+              <View className="mb-8 items-center py-6">
+                <Text className="text-3xl font-bold text-gray-800">{currentContent.greeting}</Text>
+                <Text className="mt-3 text-xl text-gray-600">{currentContent.name}</Text>
+              </View>
+
+              {/* Introduction Section */}
+              <View className="mb-8 rounded-lg bg-purple-50 p-6">
+                <Text className="mb-3 text-xl font-bold text-purple-800">
+                  {currentContent.intro.title}
+                </Text>
+                <Text className="text-base leading-7 text-gray-700">
+                  {currentContent.intro.content}
+                </Text>
+                <Text className="mt-4 text-base font-bold text-purple-700">
+                  {currentContent.intro.closing}
+                </Text>
+              </View>
+
+              {/* Call-to-Action Section */}
+              <View className="mb-8 rounded-lg bg-purple-100 p-6">
+                <Text className="mb-4 text-xl font-bold text-purple-800">
+                  {links[language].cta}
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(
+                      'https://cafetalk.com/tutor/profile/?c=eJzLrwp09s7R9tNPCSqrTM7KdkwuSE1Kt7UFAGnjCHY.&lang=en'
+                    )
+                  }
+                  className="mb-3 rounded-full bg-purple-600 px-6 py-3">
+                  <Text className="text-center text-white">{links[language].cafetalk}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => Linking.openURL('https://www.youtube.com/@berakorean')}
+                  className="mb-4 rounded-full bg-red-600 px-6 py-3">
+                  <Text className="text-center text-white">{links[language].youtube}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => router.push('/consultations')}
+                  className="rounded-full bg-blue-600 px-6 py-3">
+                  <Text className="text-center text-white">{links[language].cta}</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* Recommended For Section */}
+              <View className="mb-8 rounded-lg bg-gray-50 p-6">
+                <Text className="mb-4 text-xl font-bold text-gray-800">
+                  {currentContent.recommended.title}
+                </Text>
+                {currentContent.recommended.items.map((text, index) => (
+                  <View key={index} className="mb-2 flex-row items-center last:mb-0">
+                    <Text className="mr-2 text-purple-600">•</Text>
+                    <Text className="text-base leading-7 text-gray-700">{text}</Text>
+                  </View>
+                ))}
+              </View>
+
+              {/* Academic Background Section */}
+              <View className="mb-8 rounded-lg bg-gray-50 p-6">
+                <Text className="mb-4 text-xl font-bold text-gray-800">
+                  {currentContent.background.title}
+                </Text>
+                {currentContent.background.items.map((text, index) => (
+                  <View key={index} className="mb-2 flex-row items-center last:mb-0">
+                    <Text className="mr-2 text-purple-600">•</Text>
+                    <Text className="text-base leading-7 text-gray-700">{text}</Text>
+                  </View>
+                ))}
+              </View>
+            </ScrollView>
+          </View>
+        );
+    }
+  };
+
   return (
-    <>
-      {/* <Stack.Screen options={{ title: 'Teacher' }} /> */}
-      <View className="flex-1 bg-white">
-        {/* Language Selector */}
-        <View className="flex-row justify-center space-x-2 border-b border-gray-100 px-6 py-3">
-          {(['en', 'ko', 'jp'] as Language[]).map((lang) => (
-            <TouchableOpacity
-              key={lang}
-              onPress={() => setLanguage(lang)}
-              className={`mr-2 rounded-full px-4 py-2 ${
-                language === lang ? 'bg-purple-600' : 'bg-gray-200'
-              }`}>
-              <Text className={`font-medium ${language === lang ? 'text-white' : 'text-gray-600'}`}>
-                {lang.toUpperCase()}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        <ScrollView className="flex-1 px-6">
-          {/* Header Section */}
-          <View className="mb-8 items-center py-6">
-            <Text className="text-3xl font-bold text-gray-800">{currentContent.greeting}</Text>
-            <Text className="mt-3 text-xl text-gray-600">{currentContent.name}</Text>
-          </View>
-
-          {/* Introduction Section */}
-          <View className="mb-8 rounded-lg bg-purple-50 p-6">
-            <Text className="mb-3 text-xl font-bold text-purple-800">
-              {currentContent.intro.title}
-            </Text>
-            <Text className="text-base leading-7 text-gray-700">
-              {currentContent.intro.content}
-            </Text>
-            <Text className="mt-4 text-base font-bold text-purple-700">
-              {currentContent.intro.closing}
-            </Text>
-          </View>
-
-          {/* Call-to-Action Section */}
-          <View className="mb-8 rounded-lg bg-purple-100 p-6">
-            <Text className="mb-4 text-xl font-bold text-purple-800">{links[language].cta}</Text>
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL(
-                  'https://cafetalk.com/tutor/profile/?c=eJzLrwp09s7R9tNPCSqrTM7KdkwuSE1Kt7UFAGnjCHY.&lang=en'
-                )
-              }
-              className="mb-3 rounded-full bg-purple-600 px-6 py-3">
-              <Text className="text-center text-white">{links[language].cafetalk}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => Linking.openURL('https://www.youtube.com/@berakorean')}
-              className="mb-4 rounded-full bg-red-600 px-6 py-3">
-              <Text className="text-center text-white">{links[language].youtube}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => router.push('/consultations')}
-              className="rounded-full bg-blue-600 px-6 py-3">
-              <Text className="text-center text-white">{links[language].cta}</Text>
-            </TouchableOpacity>
-          </View>
-          {/* Recommended For Section */}
-          <View className="mb-8 rounded-lg bg-gray-50 p-6">
-            <Text className="mb-4 text-xl font-bold text-gray-800">
-              {currentContent.recommended.title}
-            </Text>
-            {currentContent.recommended.items.map((text, index) => (
-              <View key={index} className="mb-2 flex-row items-center last:mb-0">
-                <Text className="mr-2 text-purple-600">•</Text>
-                <Text className="text-base leading-7 text-gray-700">{text}</Text>
-              </View>
-            ))}
-          </View>
-
-          {/* Academic Background Section */}
-          <View className="mb-8 rounded-lg bg-gray-50 p-6">
-            <Text className="mb-4 text-xl font-bold text-gray-800">
-              {currentContent.background.title}
-            </Text>
-            {currentContent.background.items.map((text, index) => (
-              <View key={index} className="mb-2 flex-row items-center last:mb-0">
-                <Text className="mr-2 text-purple-600">•</Text>
-                <Text className="text-base leading-7 text-gray-700">{text}</Text>
-              </View>
-            ))}
-          </View>
-        </ScrollView>
+    <View className="flex-1 bg-white">
+      {/* Tab Buttons */}
+      <View className="flex-row border-b border-gray-200">
+        <TouchableOpacity
+          onPress={() => setActiveTab('teacher')}
+          className={`flex-1 p-4 ${activeTab === 'teacher' ? 'border-b-2 border-purple-600' : ''}`}>
+          <Text
+            className={`text-center font-medium ${
+              activeTab === 'teacher' ? 'text-purple-600' : 'text-gray-600'
+            }`}>
+            선생님 소개
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setActiveTab('ads')}
+          className={`flex-1 p-4 ${activeTab === 'ads' ? 'border-b-2 border-purple-600' : ''}`}>
+          <Text
+            className={`text-center font-medium ${
+              activeTab === 'ads' ? 'text-purple-600' : 'text-gray-600'
+            }`}>
+            광고
+          </Text>
+        </TouchableOpacity>
       </View>
-    </>
+
+      {/* Tab Content */}
+      {renderTabContent()}
+    </View>
   );
 }

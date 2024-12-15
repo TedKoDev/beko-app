@@ -1,12 +1,15 @@
-import { Stack } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 import ListLayout from '~/components/layouts/ListLayout';
 import { usePosts } from '~/queries/hooks/posts/usePosts';
+import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
 
 export default function NoticeScreen() {
+  const { categoryId } = useLocalSearchParams<{ categoryId: string }>();
   const [sort, setSort] = useState<'latest' | 'oldest' | 'popular'>('latest');
+  const { data: topics } = useTopics();
 
   const {
     data: posts,
@@ -20,6 +23,7 @@ export default function NoticeScreen() {
     limit: 25,
     sort,
     type: 'COLUMN',
+    categoryId: categoryId ? parseInt(categoryId) : undefined,
   });
 
   const postItems = posts?.pages.flatMap((page) => page.data) || [];
@@ -38,11 +42,17 @@ export default function NoticeScreen() {
     </TouchableOpacity>
   );
 
+  // Notice 토픽의 현재 카테고리 이름 찾기
+  const noticeTopic = topics?.find((topic) => topic.title === 'Notice');
+  const currentCategory = noticeTopic?.category.find(
+    (cat) => cat.category_id === parseInt(categoryId || '0')
+  );
+
   return (
     <View className="flex-1 bg-white">
       <Stack.Screen
         options={{
-          headerTitle: 'Notice',
+          headerTitle: currentCategory?.category_name || 'Notice',
         }}
       />
 
