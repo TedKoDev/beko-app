@@ -14,12 +14,16 @@ export default function EventListItem({ event }: any) {
         <View className="mb-2 flex-row items-center">
           <View className="flex-1 flex-row items-center">
             {event.type === 'QUESTION' && <Text className="mr-2 text-lg text-purple-500">Q.</Text>}
-            <Image
-              source={{ uri: event.user_profile_picture_url || 'https://via.placeholder.com/32' }}
-              style={{ width: 24, height: 24, borderRadius: 12 }}
-              contentFit="cover"
-              transition={200}
-            />
+            {event.user_profile_picture_url ? (
+              <Image
+                source={{ uri: event.user_profile_picture_url }}
+                style={{ width: 24, height: 24, borderRadius: 12 }}
+                contentFit="cover"
+                transition={200}
+              />
+            ) : (
+              <FontAwesome name="user-circle" size={24} color="#B227D4" />
+            )}
             <Text className="ml-2 text-sm text-gray-500">{event.username || ''}</Text>
 
             {event.flag_icon && (

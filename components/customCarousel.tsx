@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
 import React, { useState, useMemo } from 'react';
-import { View, Image, Text, Dimensions } from 'react-native';
+import { View, Image, Text, Dimensions, Linking } from 'react-native';
 import { TapGestureHandler } from 'react-native-gesture-handler';
 import Carousel from 'react-native-reanimated-carousel';
 
@@ -34,14 +35,14 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   const carouselHeight = height || 170;
 
   const handlePress = (item: CarouselItem) => {
-    console.log('dsf');
-    console.log('item', item);
     if (item.link) {
-      if (item.link.startsWith('http')) {
-        console.log('Open URL:', item.link);
-      } else {
-        console.log('Navigate to:', item.link);
-      }
+      Linking.openURL(item.link);
+    } else {
+      // 명시적으로 type을 'ads'로 설정하여 전달
+      router.push({
+        pathname: '/ad',
+        params: { type: 'ads' },
+      });
     }
   };
 

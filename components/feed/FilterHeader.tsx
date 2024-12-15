@@ -39,7 +39,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
       <View className="">
         <Text className="mb-2 pl-4 text-gray-600">Topic</Text>
         <ScrollView className="pl-4" horizontal showsHorizontalScrollIndicator={false}>
-          <View className="flex-row gap-2">
+          <View className="mr-6 flex-row gap-2">
             <TouchableOpacity
               onPress={() => {
                 setSelectedTopicId(undefined);

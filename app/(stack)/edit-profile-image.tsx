@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons';
+import { Feather, FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { Stack, router } from 'expo-router';
 import React, { useState } from 'react';
@@ -86,12 +86,15 @@ export default function EditProfileImage() {
 
       <View className="flex-1 items-center justify-center p-4">
         <View className="relative mb-8">
-          <Image
-            source={{
-              uri: userInfo?.profile_picture_url || 'https://via.placeholder.com/200',
-            }}
-            className="h-40 w-40 rounded-full"
-          />
+          {userInfo?.profile_picture_url ? (
+            <Image
+              source={{ uri: userInfo?.profile_picture_url }}
+              style={{ width: 200, height: 200, borderRadius: 100 }}
+            />
+          ) : (
+            <FontAwesome name="user-circle" size={200} color="#B227D4" />
+          )}
+
           <TouchableOpacity
             className="absolute bottom-0 right-0 rounded-full bg-[#6C47FF] p-3"
             onPress={pickImage}

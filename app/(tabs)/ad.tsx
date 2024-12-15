@@ -1,5 +1,5 @@
-import { router, Stack } from 'expo-router';
-import React, { useState } from 'react';
+import { router, Stack, useLocalSearchParams } from 'expo-router';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import CustomCarousel from '~/components/customCarousel';
 import { useAdbanner } from '~/queries/hooks/adbanner/useAdbanner';
@@ -102,14 +102,14 @@ const content = {
     },
   },
 };
-
 export default function AdPage() {
+  const { type } = useLocalSearchParams<{ type: string }>();
+  console.log('type', type);
   const [language, setLanguage] = useState<Language>('ko');
-  const [activeTab, setActiveTab] = useState<TabType>('teacher');
+  const [activeTab, setActiveTab] = useState<TabType>(type === 'ads' ? 'ads' : 'teacher');
   const currentContent = content[language];
 
-  const { data: adBannerResponse } = useAdbanner({ limit: 5 });
-  const adBanners = adBannerResponse?.pages?.[0] ?? [];
+  // const { data: adBannerResponse } = useAdbanner({ limit: 5 });
 
   const links = {
     ko: {
@@ -128,6 +128,13 @@ export default function AdPage() {
       cta: '1:1 相談を申し込む',
     },
   };
+
+  // type이 'ads'일 때만 광고 탭 활성화
+  useEffect(() => {
+    if (type === 'ads') {
+      setActiveTab('ads');
+    }
+  }, [type]);
 
   const renderTabContent = () => {
     switch (activeTab) {

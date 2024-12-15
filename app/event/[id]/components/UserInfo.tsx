@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons';
+import { Feather, FontAwesome } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState, useCallback } from 'react';
 import { View, Text, Image, Alert, Animated, Modal, TouchableOpacity } from 'react-native';
@@ -132,12 +132,16 @@ export default function UserInfo({
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View className="flex-row items-center border-b border-gray-200 p-4">
-        <Image
-          source={{
-            uri: user_profile_picture_url || 'https://via.placeholder.com/100',
-          }}
-          className="h-10 w-10 rounded-full"
-        />
+        {user_profile_picture_url ? (
+          <Image
+            source={{
+              uri: user_profile_picture_url,
+            }}
+            className="h-10 w-10 rounded-full"
+          />
+        ) : (
+          <FontAwesome name="user-circle" size={40} color="#B227D4" />
+        )}
         <View className="ml-3 flex-1">
           <View className="flex-row items-center">
             <Text className="text-base font-bold">{username}</Text>

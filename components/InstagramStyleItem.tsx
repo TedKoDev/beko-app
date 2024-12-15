@@ -14,12 +14,16 @@ export default function InstagramStyleItem({ event }: any) {
         <View className="flex-row items-center p-3">
           <View className="flex-row items-center">
             {event.type === 'QUESTION' && <Text className="mr-2 text-lg text-purple-500">Q.</Text>}
-            <Image
-              source={{ uri: event.user_profile_picture_url || 'https://via.placeholder.com/32' }}
-              style={{ width: 32, height: 32, borderRadius: 16 }}
-              contentFit="cover"
-              transition={200}
-            />
+            {event.user_profile_picture_url ? (
+              <Image
+                source={{ uri: event.user_profile_picture_url }}
+                style={{ width: 32, height: 32, borderRadius: 16 }}
+                contentFit="cover"
+                transition={200}
+              />
+            ) : (
+              <FontAwesome name="user-circle" size={32} color="#B227D4" />
+            )}
           </View>
           <View className="ml-3 flex-1">
             <View className="flex-row items-center justify-between">

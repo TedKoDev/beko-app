@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons';
+import { Feather, FontAwesome } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import { View, Alert, Image, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
@@ -29,12 +29,14 @@ export default function MyPage() {
           {/* Profile Section */}
           <View className="mb-4 flex-row items-center">
             <View className="relative mr-3">
-              <Image
-                source={
-                  userInfo?.profile_picture_url ? { uri: userInfo?.profile_picture_url } : BekoIcon
-                }
-                className="h-20 w-20 rounded-full"
-              />
+              {userInfo?.profile_picture_url ? (
+                <Image
+                  source={{ uri: userInfo?.profile_picture_url }}
+                  className="h-20 w-20 rounded-full"
+                />
+              ) : (
+                <FontAwesome name="user-circle" size={80} color="#B227D4" />
+              )}
               <TouchableOpacity
                 className="absolute right-0 top-0 rounded-full bg-white p-1 shadow-md"
                 onPress={() => router.push('/(stack)/edit-profile-image')}
