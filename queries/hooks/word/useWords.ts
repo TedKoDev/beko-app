@@ -74,45 +74,92 @@ export const useAddWordToUserWordList = (wordId: number, notes?: string) => {
 
   return useMutation({
     mutationFn: async () => {
-      // console.log('Toggling word in list - mutationFn:', wordId);
       return await wordListService.addToUserWordList(wordId, notes);
     },
     onMutate: async () => {
-      // console.log('onMutate started - wordId:', wordId);
+      await Promise.all([
+        queryClient.cancelQueries({ queryKey: ['wordList'] }),
+        queryClient.cancelQueries({ queryKey: ['userWordList'] }),
+      ]);
 
-      await queryClient.cancelQueries({ queryKey: ['wordList'] });
+      const previousWordList = queryClient.getQueryData(['wordList']);
+      const previousUserWordList = queryClient.getQueryData(['userWordList']);
 
-      const queryData = queryClient.getQueriesData({ queryKey: ['wordList'] });
-      console.log('Query data found:', queryData);
-
+      // 낙관적 업데이트
       queryClient.setQueriesData({ queryKey: ['wordList'] }, (oldData: any) => {
         if (!oldData) return oldData;
-
-        console.log('Updating data for word:', wordId);
         return {
           ...oldData,
           pages: oldData.pages?.map((page: any) => ({
             ...page,
-            wordList: page.wordList.map((word: any) =>
+            wordList: page.wordList?.map((word: any) =>
               word.word_id === wordId ? { ...word, isInUserWordList: !word.isInUserWordList } : word
             ),
           })),
         };
       });
 
-      return { queryData };
+      return { previousWordList, previousUserWordList };
     },
     onError: (err, variables, context: any) => {
-      console.log('onError triggered:', err);
-      if (context?.queryData) {
-        queryClient.setQueriesData({ queryKey: ['wordList'] }, context.queryData);
+      if (context?.previousWordList) {
+        queryClient.setQueryData(['wordList'], context.previousWordList);
+      }
+      if (context?.previousUserWordList) {
+        queryClient.setQueryData(['userWordList'], context.previousUserWordList);
       }
     },
-    onSuccess: (data) => {
-      console.log('onSuccess triggered:', data);
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['wordList'] });
+      queryClient.invalidateQueries({ queryKey: ['userWordList'] });
+    },
+  });
+};
+
+// 사용자 단어 메모 업데이트
+export const useUpdateUserWordNotes = (wordId: number, notes: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => wordListService.updateUserWord(wordId, notes),
+    onMutate: async () => {
+      // 기존 쿼리 취소
+      await queryClient.cancelQueries({ queryKey: ['userWordList'] });
+
+      // 기존 데이터 백업
+      const previousData = queryClient.getQueryData(['userWordList']);
+
+      // 낙관적 업데이트
+      queryClient.setQueryData(['userWordList'], (old: any) => {
+        if (!old) return old;
+
+        return {
+          ...old,
+          pages: old.pages.map((page: any) => ({
+            ...page,
+            ...Object.fromEntries(
+              Object.entries(page).map(([key, value]: [string, any]) => {
+                if (value?.word?.word_id === wordId) {
+                  return [key, { ...value, notes }];
+                }
+                return [key, value];
+              })
+            ),
+          })),
+        };
+      });
+
+      return { previousData };
+    },
+    onError: (err, variables, context: any) => {
+      // 에러 시 롤백
+      if (context?.previousData) {
+        queryClient.setQueryData(['userWordList'], context.previousData);
+      }
     },
     onSettled: () => {
-      console.log('onSettled triggered');
+      // 모든 관련 쿼리 무효화
+      queryClient.invalidateQueries({ queryKey: ['userWordList'] });
       queryClient.invalidateQueries({ queryKey: ['wordList'] });
     },
   });
@@ -130,14 +177,24 @@ export const useCreateNewWord = () => {
   });
 };
 
-export const useGetUserWordList = (page: number, limit: number = 10) => {
+export const useGetUserWordList = () => {
   const token = useAuthStore((state) => state.userToken);
   return useInfiniteQuery({
     queryKey: ['userWordList'],
-    queryFn: ({ pageParam = 1 }) => wordListService.getUserWordList(pageParam, limit),
-    getNextPageParam: (lastPage: any) => {
-      if (lastPage.data.length < limit) return undefined;
-      return lastPage.page + 1;
+    queryFn: async ({ pageParam }) => {
+      const page = (pageParam as number) ?? 1;
+      const response = await wordListService.getUserWordList(page, 10);
+      return {
+        ...response,
+        page,
+      };
+    },
+    getNextPageParam: (lastPage) => {
+      const totalPages = Math.ceil(lastPage.totalCount / 20);
+      if (lastPage.page < totalPages) {
+        return lastPage.page + 1;
+      }
+      return undefined;
     },
     enabled: !!token,
     initialPageParam: 1,
@@ -149,6 +206,9 @@ export const useUpdateWordInUserWordList = (wordId: number, notes: string) => {
     mutationFn: () => wordListService.updateUserWord(wordId, notes),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userWordList'] });
+      queryClient.refetchQueries({ queryKey: ['userWordList'] });
+      queryClient.refetchQueries({ queryKey: ['wordList'] });
+      queryClient.invalidateQueries({ queryKey: ['wordList'] });
     },
     onError: (error: Error) => {
       console.error('단어 업데이트 실패:', error);

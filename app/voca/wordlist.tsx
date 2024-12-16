@@ -3,11 +3,7 @@ import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 
 import { WordItem } from './components/worditem';
 
-import {
-  useAddWordToUserWordList,
-  useWordList,
-  useDeleteWordFromUserWordList,
-} from '~/queries/hooks/word/useWords';
+import { useAddWordToUserWordList, useWordList } from '~/queries/hooks/word/useWords';
 
 export default function WordListPage() {
   const [wordId, setWordId] = useState(0);

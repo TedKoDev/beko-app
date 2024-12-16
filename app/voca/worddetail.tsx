@@ -1,15 +1,24 @@
 import { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
-import { useAddWordToUserWordList } from '~/queries/hooks/word/useWords';
+import { useAddWordToUserWordList, useUpdateUserWordNotes } from '~/queries/hooks/word/useWords';
 
 export default function WordDetailPage() {
   const params = useLocalSearchParams();
   const word = JSON.parse(params.word as string);
-  const [wordId] = useState(word.word_id);
-  const [isInList, setIsInList] = useState(word.isInUserWordList);
 
-  const toggleWordInList = useAddWordToUserWordList(wordId);
+  console.log('word', JSON.stringify(word, null, 2));
+  const [wordId] = useState(word.word_id);
+  const [notes, setNotes] = useState(word.userNotes || word.notes || '');
+  const [isInList, setIsInList] = useState(word.isInUserWordList);
+  const updateUserWordNotes = useUpdateUserWordNotes(wordId, notes);
+
+  const toggleWordInList = useAddWordToUserWordList(wordId, notes);
+
+  const handleUpdateNotes = async () => {
+    console.log('handleUpdateNotes called');
+    await updateUserWordNotes.mutateAsync();
+  };
 
   const handleAddToWordList = async () => {
     try {
@@ -17,7 +26,7 @@ export default function WordDetailPage() {
       await toggleWordInList.mutateAsync();
     } catch (error) {
       setIsInList(isInList);
-      console.error('단어 추가 실패:', error);
+      console.error('Word addition failed:', error);
     }
   };
 
@@ -36,14 +45,30 @@ export default function WordDetailPage() {
         </View>
 
         <View className="mb-6">
-          <Text className="mb-2 text-lg font-semibold text-gray-800">의미</Text>
+          <Text className="mb-2 text-lg font-semibold text-gray-800">Meaning</Text>
           <Text className="text-base text-gray-700">{word.meaning_en}</Text>
         </View>
 
         <View className="mb-6">
-          <Text className="mb-2 text-lg font-semibold text-gray-800">예문</Text>
+          <Text className="mb-2 text-lg font-semibold text-gray-800">Example</Text>
           <Text className="mb-1 text-base">{word.example_sentence}</Text>
-          <Text className="text-base text-gray-600">{word.example_translation}</Text>
+          <Text className="mb-16 text-base text-gray-600">{word.example_translation}</Text>
+
+          <View className="flex-row items-center justify-between">
+            <Text className="mb-2 text-lg font-semibold text-gray-800">Memo</Text>
+            {isInList ? (
+              <TouchableOpacity onPress={handleUpdateNotes}>
+                <Text className="text-blue-500">Save Notes</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+          <TextInput
+            multiline
+            className=" h-20 rounded-lg border border-gray-300 p-2 "
+            placeholder="when you want to remember this word"
+            value={notes}
+            onChangeText={setNotes}
+          />
         </View>
 
         <TouchableOpacity
@@ -52,10 +77,10 @@ export default function WordDetailPage() {
           disabled={toggleWordInList.isPending}>
           <Text className={`text-center font-medium ${isInList ? 'text-gray-700' : 'text-white'}`}>
             {toggleWordInList.isPending
-              ? '처리 중...'
+              ? 'Processing...'
               : isInList
-                ? '내 단어장에서 제거'
-                : '내 단어장에 추가'}
+                ? 'Remove from my word list'
+                : 'Add to my word list'}
           </Text>
         </TouchableOpacity>
       </View>
