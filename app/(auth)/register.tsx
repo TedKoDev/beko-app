@@ -53,9 +53,11 @@ export default function RegisterScreen() {
     flag_icon: '🌎',
     user_count: 0,
   });
+
   const [showCountryModal, setShowCountryModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { data: countries } = useCountry();
+  console.log('countries', countries);
 
   const filteredCountries = countries?.filter(
     (country: Country) =>

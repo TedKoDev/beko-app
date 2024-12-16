@@ -1,7 +1,7 @@
+import { AntDesign } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 
 export default function AgreementScreen() {
   const router = useRouter();

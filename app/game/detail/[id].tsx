@@ -1,8 +1,8 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLocalSearchParams, Stack, useRouter } from 'expo-router';
 import React from 'react';
-import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { Text, Surface } from 'react-native-paper';
+import { View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native-paper';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -10,11 +10,7 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 
-import {
-  useGameLevelInfo,
-  useGameProgress,
-  useGameQuestions,
-} from '~/queries/hooks/games/useGameService';
+import { useGameLevelInfo, useGameProgress } from '~/queries/hooks/games/useGameService';
 
 interface LevelCardProps {
   level: number;
@@ -117,7 +113,7 @@ export default function GameDetail() {
           <LevelCard
             key={index}
             level={index + 1}
-            isLocked={index + 1 > (gameProgress?.progress.current_level || 0)}
+            isLocked={index + 1 > (gameProgress?.currentLevel || 0)}
             onPress={() => handleLevelSelect(index + 1)}
           />
         ))}

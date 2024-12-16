@@ -26,7 +26,11 @@ interface UpdateAgreementsDto {
 
 export const getCountryListApi = async () => {
   try {
+    console.log('getCountryListApi1');
+
     const response = await api.get('/country/list'); // 또는 '/country'
+
+    console.log('getCountryListApi', response.data);
     if (response.data.status === 'success') {
       return response.data.data; // 실제 국가 데이터 배열 반환
     }
