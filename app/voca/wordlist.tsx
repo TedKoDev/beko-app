@@ -48,7 +48,7 @@ export default function WordListPage() {
 
     const words = wordList.pages.reduce((acc, page) => {
       return [...acc, ...page.wordList];
-    }, [] as Word[]);
+    }, [] as any[]);
 
     console.log('Total words:', words.length);
 

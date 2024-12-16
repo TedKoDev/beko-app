@@ -1,8 +1,7 @@
 // components/WordItem.tsx
-import { View, Text, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
+import { View, Text, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 type WordItemProps = {
   item: {
@@ -13,6 +12,7 @@ type WordItemProps = {
     example_sentence: string;
     example_translation: string;
     isInUserWordList: boolean;
+    notes: string;
   };
 };
 

@@ -14,14 +14,22 @@ interface MenuItemProps {
   color: string;
   label: string;
   route: string;
-  icon: React.FC<any>; // SVG 컴포넌트 타입
+  type?: string;
+  icon: React.FC<any>;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ color, label, route, icon: Icon }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ color, label, route, type, icon: Icon }) => {
   const router = useRouter();
 
   const handlePress = () => {
-    router.push(route as any);
+    if (type) {
+      router.push({
+        pathname: route,
+        params: { type },
+      } as any);
+    } else {
+      router.push(route as any);
+    }
   };
 
   return (
@@ -59,10 +67,16 @@ const MenuItem: React.FC<MenuItemProps> = ({ color, label, route, icon: Icon }) 
 const MainMenu = () => {
   const menuItems = [
     { color: '#ADD8FF', label: 'VOCA', route: '/voca/vocaindex', icon: VocaIcon },
-    { color: '#D1B3FF', label: 'TOPIK', route: '/topik', icon: TopicTestIcon },
+    {
+      color: '#D1B3FF',
+      label: 'TOPIK',
+      route: '/ad',
+      type: 'ads',
+      icon: TopicTestIcon,
+    },
     { color: '#FFCCFF', label: 'SCHOOL', route: '/(stack)/koreanschools', icon: SchoolIcon },
-    { color: '#FFEB3B', label: 'JOB', route: 'EmotionalStay', icon: JobIcon },
-    { color: '#00FFCC', label: 'AGENCY', route: 'Activity', icon: TravelIcon },
+    { color: '#FFEB3B', label: 'JOB', route: '/ad', type: 'ads', icon: JobIcon },
+    { color: '#00FFCC', label: 'AGENCY', route: '/ad', type: 'ads', icon: TravelIcon },
   ];
 
   return (
@@ -79,6 +93,7 @@ const MainMenu = () => {
           color={item.color}
           label={item.label}
           route={item.route}
+          type={item.type}
           icon={item.icon}
         />
       ))}

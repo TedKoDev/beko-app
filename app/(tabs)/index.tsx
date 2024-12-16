@@ -17,26 +17,21 @@ export default function Home() {
   const queryClient = useQueryClient();
   const refreshUserInfo = useRefreshUserInfo();
 
-  const { data, isRefetching, refetch } = useQuery({
+  const { isRefetching, refetch } = useQuery({
     queryKey: ['lessons'],
     queryFn: async () => {
       const response = await fetch('/api/lessons');
       return response.json();
     },
   });
-  const {
-    data: adBannerResponse,
-    isRefetching: adBannersIsRefetching,
-    refetch: adBannersRefetch,
-    isLoading: adBannerLoading,
-  } = useAdbanner({ limit: 5 });
+  const { data: adBannerResponse } = useAdbanner({ limit: 5 });
 
   // console.log('adBanners:', JSON.stringify(adBannerResponse, null, 2));
 
   const adBanners = useMemo(() => {
     if (!adBannerResponse?.pages) return [];
     return adBannerResponse.pages.flatMap((page) =>
-      page.map((banner) => ({
+      page.map((banner: any) => ({
         ...banner,
       }))
     );
