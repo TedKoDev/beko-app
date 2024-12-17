@@ -175,7 +175,7 @@ export default function LoginScreen() {
             </Pressable>
           )}
           {/* {Platform.OS !== 'ios' && <Auth />} */}
-
+          <Auth />
           <Pressable style={styles.registerLink} onPress={() => router.push('/agreement')}>
             <Text style={styles.registerLinkText}>Don't have an account? Register</Text>
           </Pressable>

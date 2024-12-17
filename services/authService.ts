@@ -292,6 +292,12 @@ export const updateInitialAgreementsApi = async (
   }
 };
 
+export const healthCheckApi = async () => {
+  const response = await api.get('/health-check');
+  console.log('healthCheckApi', response.data);
+  return response.data;
+};
+
 export const authService = {
   checkEmail,
   checkName,
@@ -303,4 +309,5 @@ export const authService = {
   deactivateUserApi,
   socialLoginApi,
   updateInitialAgreementsApi,
+  healthCheckApi,
 };

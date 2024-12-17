@@ -13,16 +13,16 @@ const menuItems = [
   {
     title: 'Korean Community',
     korTitle: '커뮤니티 보러가기',
-    color: '#4A90E2', // 버튼 기본 색상
-    pressedColor: '#357ABD', // 버튼 눌렸을 때 색상
+    color: '#9013FE', // 버튼 기본 색상
+    pressedColor: '#7310C8', // 버튼 눌렸을 때 색상
     icon: <MaterialIcons name="forum" size={24} color="white" />,
     route: '/(tabs)/feed',
   },
   {
     title: 'Ask Bera Questions 1:1',
     korTitle: 'Bera 선생님한테 1:1 질문하러 가기',
-    color: '#9013FE',
-    pressedColor: '#7310C8',
+    color: '#4A90E2',
+    pressedColor: '#357ABD',
     icon: <Ionicons name="school" size={24} color="white" />,
     route: '/consultations',
   },

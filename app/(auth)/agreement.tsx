@@ -46,6 +46,7 @@ export default function AgreementScreen() {
         <View className="mb-36 mt-8">
           <Image source={require('~/assets/icon.png')} className="h-48 w-48" resizeMode="contain" />
           <Text className="mt-4 text-2xl font-bold">BeraKorean에 오신 것을{'\n'}환영합니다!</Text>
+          <Text className="mt-4 text-2xl font-bold">Welcome to BeraKorean!</Text>
         </View>
 
         {/* 모두 동의하기 버튼 */}
@@ -59,7 +60,7 @@ export default function AgreementScreen() {
             });
           }}>
           <AntDesign name="check" size={20} color="#6C47FF" />
-          <Text className="ml-2 text-base text-[#6C47FF]">모두 동의하고 시작하기</Text>
+          <Text className="ml-2 text-base text-[#6C47FF]">Agree All and Start</Text>
         </TouchableOpacity>
 
         {/* 개별 동의 항목들 */}
@@ -72,7 +73,7 @@ export default function AgreementScreen() {
               size={22}
               color={agreements.terms ? '#6C47FF' : '#E8E8E8'}
             />
-            <Text className="ml-3 text-base">BeraKorean 이용약관에 동의 (필수)</Text>
+            <Text className="ml-3 text-base">Agree to BeraKorean Terms of Use (Required)</Text>
           </View>
           <TouchableOpacity onPress={() => router.push('/terms/terms')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
@@ -88,7 +89,7 @@ export default function AgreementScreen() {
               size={22}
               color={agreements.privacy ? '#6C47FF' : '#E8E8E8'}
             />
-            <Text className="ml-3 text-base">개인정보 수집 및 이용에 대한 안내 (필수)</Text>
+            <Text className="ml-3 text-base">Agree to Privacy Policy (Required)</Text>
           </View>
           <TouchableOpacity onPress={() => router.push('/terms/privacy')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
@@ -104,7 +105,7 @@ export default function AgreementScreen() {
               size={22}
               color={agreements.marketing ? '#6C47FF' : '#E8E8E8'}
             />
-            <Text className="ml-3 text-base">마케팅 정보 수신 동의 (선택)</Text>
+            <Text className="ml-3 text-base">Receive Marketing Information (Optional)</Text>
           </View>
           <TouchableOpacity onPress={() => router.push('/terms/marketing')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />

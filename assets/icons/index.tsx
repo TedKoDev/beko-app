@@ -2,6 +2,8 @@
 import AngleRiget from './angle-right.svg';
 import ContractIcon from './contract.svg';
 import FlameIcon from './flame.svg';
+// import GIcon from './glogo.png';
+import GoogleIcon from './android_light.png';
 import BekoIcon from './icon.png';
 import JobIcon from './job.svg';
 import SchoolIcon from './school.svg';
@@ -17,4 +19,5 @@ export {
   FlameIcon,
   AngleRiget,
   BekoIcon,
+  GoogleIcon,
 };

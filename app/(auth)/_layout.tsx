@@ -1,8 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router, Stack } from 'expo-router';
+import { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { healthCheckApi } from '~/services/authService';
 
 export default function AuthLayout() {
+  useEffect(() => {
+    healthCheckApi();
+  }, []);
+
   return (
     <Stack
       screenOptions={{
