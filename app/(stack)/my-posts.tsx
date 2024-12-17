@@ -4,6 +4,8 @@ import { View, FlatList, Text } from 'react-native';
 import { usePosts } from '~/queries/hooks/posts/usePosts';
 import { useAuthStore } from '~/store/authStore';
 import EventListingItem from '~/components/EventListingItem';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { adUnitId } from '~/src/config/ads';
 
 export default function MyPostsScreen() {
   const userInfo = useAuthStore((state) => state.userInfo);
@@ -25,6 +27,15 @@ export default function MyPostsScreen() {
 
   return (
     <View className="flex-1 bg-gray-50">
+      <View className="w-full ">
+        <BannerAd
+          unitId={adUnitId ?? ''}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+        />
+      </View>
       <Stack.Screen
         options={{
           title: 'My Posts',

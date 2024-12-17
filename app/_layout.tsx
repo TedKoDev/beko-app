@@ -1,4 +1,6 @@
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import * as Notifications from 'expo-notifications';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
@@ -18,8 +20,8 @@ import {
   withTiming,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import * as Notifications from 'expo-notifications';
+
+import { adUnitId } from '~/src/config/ads';
 
 import { useAuthStore } from '../store/authStore';
 

@@ -15,7 +15,7 @@ interface Post {
   location: string;
 }
 
-export default function BelaPick() {
+export function BelaPick() {
   const { data: posts, isLoading: postsLoading } = usePosts({
     page: 1,
     limit: 5,

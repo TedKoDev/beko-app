@@ -2,16 +2,19 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, Stack } from 'expo-router';
 import React, { useMemo } from 'react';
 import { View, ScrollView, RefreshControl } from 'react-native';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
-import BoardTabs from '~/components/board/BoardTabs';
+import { BoardTabs } from '~/components/board/BoardTabs';
 import CustomCarousel from '~/components/customCarousel';
 import GrayLine from '~/components/grayline';
 import MenuCards from '~/components/home/MenuCards';
 import YoutubeSection from '~/components/home/YoutubeSection';
 import MainMenu from '~/components/maincategory/mainmenu';
-import LessonCard from '~/components/todayvoca/lessoncard';
+import { LessonCard } from '~/components/todayvoca/lessoncard';
 import { useAdbanner } from '~/queries/hooks/adbanner/useAdbanner';
 import { useRefreshUserInfo } from '~/queries/hooks/auth/useUserinfo';
+import { AdBanner } from '~/src/components/ads/AdBanner';
+import { adUnitId } from '~/src/config/ads';
 
 export default function Home() {
   const queryClient = useQueryClient();
@@ -70,9 +73,19 @@ export default function Home() {
       <View className="-mb-4">
         <MenuCards />
       </View>
-
+      <AdBanner />
       <GrayLine thickness={5} marginTop={0} />
       <YoutubeSection />
+      <GrayLine thickness={5} marginTop={0} />
+      <View className="w-full ">
+        <BannerAd
+          unitId={adUnitId ?? ''}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+        />
+      </View>
       <GrayLine thickness={5} marginTop={0} />
       <LessonCard
         onMorePress={() => router.push('/write/with-words')}
@@ -82,6 +95,16 @@ export default function Home() {
       <View>
         <GrayLine thickness={5} marginTop={10} />
       </View>
+      <View className="w-full ">
+        <BannerAd
+          unitId={adUnitId ?? ''}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+        />
+      </View>
+      <GrayLine thickness={5} marginTop={0} />
       <BoardTabs />
       <View className="mb-10">
         <GrayLine thickness={5} marginTop={10} />

@@ -4,17 +4,18 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 import HotList from './HotList';
 import Notice from './Notice';
-import BelaPick from './belapick';
+import { BelaPick } from './belapick';
 
 import { useBoardStore } from '~/store/boardStore';
-
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { adUnitId } from '~/src/config/ads';
 const tabs = [
   { id: 'Bera', title: "Bera's Pick", component: BelaPick },
   { id: 'notice', title: 'Notice', component: Notice },
   { id: 'hot', title: 'Hot Posts', component: HotList },
 ];
 
-export default function BoardTabs() {
+export function BoardTabs() {
   const [activeTab, setActiveTab] = useState('Bera');
   const { cachedPosts } = useBoardStore();
 

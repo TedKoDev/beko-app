@@ -13,9 +13,11 @@ import {
   Button,
 } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import EventListingItem from '~/components/EventListingItem';
 import { usePosts } from '~/queries/hooks/posts/usePosts';
+import { adUnitId } from '~/src/config/ads';
 
 export default function FeedList() {
   const {
@@ -46,6 +48,15 @@ export default function FeedList() {
     });
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <View className="w-full ">
+        <BannerAd
+          unitId={adUnitId}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+        />
+      </View>
       <Stack.Screen
         options={{
           headerTitle: 'Feed',

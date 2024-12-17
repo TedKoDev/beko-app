@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 
-import { WordItem } from './components/worditem';
+import {WordItem} from './components/worditem';
 
 import { useAddWordToUserWordList, useWordList } from '~/queries/hooks/word/useWords';
 

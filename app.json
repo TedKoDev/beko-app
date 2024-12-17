@@ -25,6 +25,15 @@
           "icon": "./assets/icon.png",
           "color": "#ffffff"
         }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "android": true,
+          "ios": true,
+          "androidAppId": "ca-app-pub-3099985704584658~7990797006",
+          "iosAppId": "ca-app-pub-3099985704584658~4313880641"
+        }
       ]
     ],
     "experiments": {
@@ -41,6 +50,7 @@
     "userInterfaceStyle": "light",
     "assetBundlePatterns": ["**/*"],
     "ios": {
+
       "supportsTablet": true,
       "usesAppleSignIn": true,
       "bundleIdentifier": "com.ordihong.beko",
@@ -48,10 +58,14 @@
       "config": {
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.1036338973947-dpfemgoahom2r6e9qm2flsbog29c8me0"
-        }
+        },
+        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713"
       }
     },
     "android": {
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713"
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

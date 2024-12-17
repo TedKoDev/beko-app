@@ -11,6 +11,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import { Pressable } from 'react-native-gesture-handler';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import EventListingItem from '~/components/EventListingItem';
 import InstagramStyleItem from '~/components/InstagramStyleItem';
@@ -54,8 +55,6 @@ export default function ListLayout({
 }: ListLayoutProps) {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<'list' | 'instagram'>(defaultViewMode);
-
-  // console.log('data', JSON.stringify(data, null, 2));
 
   useEffect(() => {
     if (data?.length) {

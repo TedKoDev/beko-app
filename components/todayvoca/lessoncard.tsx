@@ -4,13 +4,13 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 
+import { useLogs } from '../../queries/hooks/logs/useLogs';
+import { useAuthStore } from '../../store/authStore';
 import GrayLine from '../grayline';
 
 import AngleRightIcon from '~/assets/icons/AnglerightIcon';
-import { useLogs } from '~/queries/hooks/logs/useLogs';
 import { usePosts } from '~/queries/hooks/posts/usePosts';
 import { useWords } from '~/queries/hooks/word/useWords';
-import { useAuthStore } from '~/store/authStore';
 
 // interface PostContent {
 //   content: string;
@@ -23,7 +23,7 @@ import { useAuthStore } from '~/store/authStore';
 //   total: number;
 // }
 
-export default function LessonCard({ onMorePress, participationCount = 0, points = 0 }: any) {
+export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: any) {
   const userInfo = useAuthStore((state) => state.userInfo);
   const { data: todayWords, isLoading } = useWords();
   const { data: participationLogs } = useLogs({ type: 'TODAY_TASK_PARTICIPATION' });

@@ -6,7 +6,8 @@ import AdList from '../AdList';
 
 import { usePosts } from '~/queries/hooks/posts/usePosts';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
-
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import { adUnitId } from '~/src/config/ads';
 interface NoticeSectionProps {
   title: string;
   categoryId: number;
@@ -61,30 +62,41 @@ const NoticeCategories: React.FC = () => {
   }
 
   return (
-    <ScrollView className="flex-1">
-      {noticeTopic.category.map((category) => {
-        // 해당 카테고리의 게시물만 필터링
-        const categoryPosts = noticePosts
-          .filter((post: any) => post.category_id === category.category_id)
-          .map((post: any) => ({
-            id: post.post_id,
-            company_name: post.post_content.title,
-            description: post.post_content.content,
-            image_url: post.media[0]?.media_url || '',
-            created_at: post.created_at,
-            link: null, // 필요한 경우 링크 추가
-          }));
+    <>
+      <View className="w-full ">
+        <BannerAd
+          unitId={adUnitId}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+        />
+      </View>
+      <ScrollView className="flex-1">
+        {noticeTopic.category.map((category) => {
+          // 해당 카테고리의 게시물만 필터링
+          const categoryPosts = noticePosts
+            .filter((post: any) => post.category_id === category.category_id)
+            .map((post: any) => ({
+              id: post.post_id,
+              company_name: post.post_content.title,
+              description: post.post_content.content,
+              image_url: post.media[0]?.media_url || '',
+              created_at: post.created_at,
+              link: null, // 필요한 경우 링크 추가
+            }));
 
-        return (
-          <NoticeSection
-            key={category.category_id}
-            title={category.category_name}
-            categoryId={category.category_id}
-            items={categoryPosts}
-          />
-        );
-      })}
-    </ScrollView>
+          return (
+            <NoticeSection
+              key={category.category_id}
+              title={category.category_name}
+              categoryId={category.category_id}
+              items={categoryPosts}
+            />
+          );
+        })}
+      </ScrollView>
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import { FilterHeader } from '~/components/feed/FilterHeader';
 import ListLayout from '~/components/layouts/ListLayout';
 import { usePosts } from '~/queries/hooks/posts/usePosts';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 
 export default function Feed() {
   const [sortBy, setSortBy] = useState<'latest' | 'oldest' | 'popular'>('latest');
@@ -100,7 +101,6 @@ export default function Feed() {
           }}
         />
       </View>
-
       {showSortModal && (
         <View
           style={{

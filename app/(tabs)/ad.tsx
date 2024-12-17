@@ -1,12 +1,10 @@
-import { router, Stack, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Linking } from 'react-native';
-import CustomCarousel from '~/components/customCarousel';
-import { useAdbanner } from '~/queries/hooks/adbanner/useAdbanner';
-import NoticeScreen from '../board/notice';
-import AdList from '~/components/AdList';
-import NoticeCategories from '~/components/notice/NoticeSection';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
+import NoticeCategories from '~/components/notice/NoticeSection';
+import { adUnitId } from '~/src/config/ads';
 type Language = 'ko' | 'en' | 'jp';
 type TabType = 'ads' | 'teacher';
 
@@ -149,7 +147,7 @@ export default function AdPage() {
         );
       case 'teacher':
         return (
-          <View className="flex-1">
+          <View className="flex-1 px-4">
             {/* Language Selector */}
             <View className="flex-row justify-center space-x-2 border-b border-gray-100 px-6 py-3">
               {(['en', 'ko', 'jp'] as Language[]).map((lang) => (
@@ -168,7 +166,7 @@ export default function AdPage() {
             </View>
 
             {/* Teacher Content */}
-            <ScrollView className="flex-1 px-6">
+            <ScrollView className="flex-1 ">
               {/* Header Section */}
               <View className="mb-8 items-center py-6">
                 <Text className="text-3xl font-bold text-gray-800">{currentContent.greeting}</Text>
@@ -187,7 +185,15 @@ export default function AdPage() {
                   {currentContent.intro.closing}
                 </Text>
               </View>
-
+              <View className="w-ful ">
+                <BannerAd
+                  unitId={adUnitId}
+                  size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                  requestOptions={{
+                    requestNonPersonalizedAdsOnly: true,
+                  }}
+                />
+              </View>
               {/* Call-to-Action Section */}
               <View className="mb-8 rounded-lg bg-purple-100 p-6">
                 <Text className="mb-4 text-xl font-bold text-purple-800">

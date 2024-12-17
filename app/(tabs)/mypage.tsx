@@ -7,6 +7,9 @@ import { LevelProgressBar } from '~/components/level/LevelProgressBar';
 import { useAuthStore } from '~/store/authStore';
 import { BekoIcon } from '~/assets/icons';
 import GrayLine from '~/components/grayline';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { adUnitId } from '~/src/config/ads';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 
 export default function MyPage() {
   const router = useRouter();
@@ -23,7 +26,7 @@ export default function MyPage() {
     <SafeAreaView className="flex-1 bg-white">
       <Stack.Screen options={{ title: 'My Page' }} />
       <ScrollView
-        className="flex-1 p-4"
+        className="m-4 flex-1 "
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}>
         <View className="mb-4">
@@ -59,12 +62,10 @@ export default function MyPage() {
               <Text className="text-xs text-gray-500">{userInfo?.email}</Text>
             </View>
           </View>
-
           {/* Level Progress Section */}
           <View className="mb-4">
             <LevelProgressBar />
           </View>
-
           {/* Points Section */}
           <TouchableOpacity
             className="mb-4 flex-row justify-between rounded-xl bg-blue-100 p-4"
@@ -79,7 +80,6 @@ export default function MyPage() {
             <Text className="text-base">🎯 Learning Points</Text>
             <Text className="text-base font-bold">{userInfo?.points || 0} pts</Text>
           </TouchableOpacity>
-
           {/* Activity Section */}
           <View
             className="mb-4 flex-row justify-around rounded-xl bg-gray-100 p-4"
@@ -104,9 +104,9 @@ export default function MyPage() {
               <Text className="text-xs text-gray-500">Comments</Text>
             </TouchableOpacity>
           </View>
-
           {/* Learning Section */}
           <View className="mb-4">
+            <AdBanner />
             <TouchableOpacity
               className="flex-row items-center py-3"
               onPress={() => router.push('/consultations')}>

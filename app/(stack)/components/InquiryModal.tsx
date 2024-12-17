@@ -9,6 +9,7 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
+
 import { useReport } from '~/queries/hooks/report/useReport';
 
 interface InquiryModalProps {

@@ -9,6 +9,9 @@ import {
   useDeleteComment,
   useUpdateComment,
 } from '~/queries/hooks/comments/useComments';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { adUnitId } from '~/src/config/ads';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 
 export default function MyCommentsScreen() {
   const router = useRouter();
@@ -58,6 +61,7 @@ export default function MyCommentsScreen() {
 
   return (
     <View className="flex-1 bg-gray-50">
+      <AdBanner />
       <Stack.Screen
         options={{
           title: 'My Comments',
