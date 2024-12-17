@@ -4,6 +4,7 @@ import React from 'react';
 import { View, Alert, Image, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 
 import { LevelProgressBar } from '~/components/level/LevelProgressBar';
+import { useUserInfo } from '~/queries/hooks/auth/useUserinfo';
 import { AdBanner } from '~/src/components/ads/AdBanner';
 import { useAuthStore } from '~/store/authStore';
 
@@ -12,6 +13,8 @@ export default function MyPage() {
 
   const userInfo = useAuthStore((state) => state.userInfo);
 
+  // const { data: userInfodd, isLoading } = useUserInfo();
+  // console.log('userInfodd', JSON.stringify(userInfodd, null, 2));
   // console.log('userInfo from store', JSON.stringify(userInfo, null, 2));
 
   const handleSettings = () => {

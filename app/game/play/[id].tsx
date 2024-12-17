@@ -42,7 +42,8 @@ export default function GamePlay() {
 
   const [scoreHistory, setScoreHistory] = useState<{ result: string; color: string }[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
+  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION); // 매번 새로 시작
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [lastResponse, setLastResponse] = useState<any>(null);
@@ -67,23 +68,28 @@ export default function GamePlay() {
     if (!currentQuestion || isGameOver) return;
 
     let timer: NodeJS.Timeout;
-    if (gameQuestions?.length > 0) {
-      progress.value = 1;
-      progress.value = withTiming(0, { duration: TIMER_DURATION * 1000 });
 
-      timer = setInterval(() => {
-        setTimeLeft((prevTimeLeft) => {
-          if (prevTimeLeft <= 1) {
-            clearInterval(timer);
-            if (!isSubmitting && !isGameOver) handleTimeout();
-            return 0;
-          }
-          return prevTimeLeft - 1; // 수정된 부분
-        });
-      }, 1000);
-    }
+    // 프로그레스 바와 시간 초기화
+    progress.value = 1;
+    setTimeLeft(TIMER_DURATION);
 
-    return () => clearInterval(timer);
+    progress.value = withTiming(0, { duration: TIMER_DURATION * 1000 });
+
+    timer = setInterval(() => {
+      setTimeLeft((prevTimeLeft) => {
+        if (prevTimeLeft <= 1) {
+          clearInterval(timer); // 타이머 종료
+          if (!isSubmitting && !isGameOver) handleTimeout();
+          return 0;
+        }
+        return prevTimeLeft - 1; // 시간 감소
+      });
+    }, 1000);
+
+    // 이전 타이머 클리어 (cleanup)
+    return () => {
+      clearInterval(timer);
+    };
   }, [currentQuestionIndex, gameQuestions, isGameOver]);
 
   const handleTimeout = () => {

@@ -3,6 +3,8 @@ import React from 'react';
 import { View, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { Pressable, RectButton } from 'react-native-gesture-handler';
+import { Surface } from 'react-native-paper';
+import { UserLevelProgressBar } from '~/components/level/UserLevelProgressBar';
 
 export default function GameResult() {
   const router = useRouter();
@@ -57,7 +59,11 @@ export default function GameResult() {
                   </Text>
                 </View>
               )}
-
+              <Surface className="mb-4 bg-white px-4 pb-4 pt-4">
+                <View className="mt-4">
+                  <UserLevelProgressBar />
+                </View>
+              </Surface>
               {params.userLeveledUp === 'true' && (
                 <View className="rounded-lg bg-blue-200 p-5">
                   <Text className="text-center text-lg font-semibold text-blue-900">
