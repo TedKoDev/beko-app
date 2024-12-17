@@ -12,6 +12,7 @@ import {
   postService,
   UpdatePostDto,
 } from '~/services/postService';
+import { useAuthStore } from '~/store/authStore';
 
 interface Post {
   post_id: number;
@@ -38,6 +39,7 @@ type UsePostsParams = {
 };
 
 export function usePosts(params: UsePostsParams) {
+  const token = useAuthStore((state) => state.userToken);
   return useInfiniteQuery({
     queryKey: ['posts', params],
     queryFn: ({ pageParam = 1 }) =>
@@ -60,6 +62,7 @@ export function usePosts(params: UsePostsParams) {
     gcTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    enabled: !!token,
   });
 }
 export function useGetPostById(id: number) {

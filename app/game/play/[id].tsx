@@ -100,7 +100,33 @@ export default function GamePlay() {
         setCanAnswer(true);
       }, 1000);
     } else {
-      handleGameOver();
+      console.log('moveToNextQuestion');
+      setTimeout(() => {
+        setGameState((currentState) => {
+          const finalState = {
+            correctAnswers: currentState.correctAnswers,
+            totalQuestions: currentState.totalQuestions,
+          };
+
+          setTimeout(() => {
+            const params = new URLSearchParams({
+              correctAnswers: finalState.correctAnswers.toString(),
+              totalQuestions: finalState.totalQuestions.toString(),
+              currentLevel: '1',
+              leveledUp: 'false',
+              experienceGained: '0',
+              userLeveledUp: 'false',
+              currentUserLevel: '1',
+              gameId: id,
+            }).toString();
+
+            setIsGameOver(true);
+            router.replace(`/game/result?${params}`);
+          }, 0);
+
+          return currentState;
+        });
+      }, 1000);
     }
   };
 
@@ -147,45 +173,9 @@ export default function GamePlay() {
       ...prev,
       correctAnswers: prev.correctAnswers + (isCorrect ? 1 : 0),
       totalQuestions: prev.totalQuestions + 1,
-      lastAnswerCorrect: isCorrect ? isCorrect : null,
     }));
   };
 
-  const handleGameOver = () => {
-    setIsGameOver(true);
-
-    // 약간의 지연을 주어 마지막 상태 업데이트가 완료되도록 함
-    setTimeout(() => {
-      if (!lastResponse) {
-        const params = new URLSearchParams({
-          correctAnswers: gameState.correctAnswers.toString(),
-          totalQuestions: (gameState.totalQuestions + 1).toString(), // 마지막 문제 포함
-          currentLevel: '1',
-          leveledUp: 'false',
-          experienceGained: '0',
-          userLeveledUp: 'false',
-          currentUserLevel: '1',
-          gameId: id,
-        }).toString();
-
-        router.replace(`/game/result?${params}`);
-        return;
-      }
-
-      const params = new URLSearchParams({
-        correctAnswers: gameState.correctAnswers.toString(),
-        totalQuestions: (gameState.totalQuestions + 1).toString(), // 마지막 문제 포함
-        currentLevel: lastResponse.gameProgress.currentLevel.toString(),
-        leveledUp: lastResponse.gameProgress.leveledUp.toString(),
-        experienceGained: lastResponse.userProgress.experienceGained.toString(),
-        userLeveledUp: lastResponse.userProgress.userLeveledUp.toString(),
-        currentUserLevel: lastResponse.userProgress.currentUserLevel.toString(),
-        gameId: id,
-      }).toString();
-
-      router.replace(`/game/result?${params}`);
-    }, 100); // 100ms 지연
-  };
   const progressStyle = useAnimatedStyle(() => ({
     width: `${progress.value * 100}%`,
   }));

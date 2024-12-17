@@ -1,6 +1,6 @@
 import { AntDesign } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -16,7 +16,7 @@ import { useAuthStore } from '~/store/authStore';
 
 export default function TermsCheckScreen() {
   const router = useRouter();
-  const { userInfo, userToken, setUserInfo } = useAuthStore();
+  const { userInfo, userToken } = useAuthStore();
   const [agreements, setAgreements] = useState({
     terms: userInfo?.terms_agreed || false,
     privacy: userInfo?.privacy_agreed || false,
@@ -44,7 +44,7 @@ export default function TermsCheckScreen() {
         router.replace('/');
       } catch (error) {
         console.error('Failed to update agreements:', error);
-        alert('약관 동의 업데이트에 실패했습니다. 다시 시도해주세요.');
+        alert('Failed to update agreements. Please try again.');
       }
     }
   };
@@ -63,7 +63,7 @@ export default function TermsCheckScreen() {
         <View className="mb-36 mt-8">
           <Image source={require('~/assets/icon.png')} className="h-48 w-48" resizeMode="contain" />
           <Text className="mt-4 text-2xl font-bold">
-            서비스 이용을 위해{'\n'}약관 동의가 필요합니다
+            To use the service{'\n'}Agreement is required
           </Text>
         </View>
 
@@ -77,7 +77,7 @@ export default function TermsCheckScreen() {
             });
           }}>
           <AntDesign name="check" size={20} color="#6C47FF" />
-          <Text className="ml-2 text-base text-[#6C47FF]">모두 동의하기</Text>
+          <Text className="ml-2 text-base text-[#6C47FF]">Agree All</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -89,7 +89,7 @@ export default function TermsCheckScreen() {
               size={22}
               color={agreements.terms ? '#6C47FF' : '#E8E8E8'}
             />
-            <Text className="ml-3 text-base">BeraKorean 이용약관에 동의 (필수)</Text>
+            <Text className="ml-3 text-base">Agree to BeraKorean Terms of Use (Required)</Text>
           </View>
           <TouchableOpacity onPress={() => router.push('/terms/webview')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
@@ -105,7 +105,7 @@ export default function TermsCheckScreen() {
               size={22}
               color={agreements.privacy ? '#6C47FF' : '#E8E8E8'}
             />
-            <Text className="ml-3 text-base">개인정보 수집 및 이용에 대한 안내 (필수)</Text>
+            <Text className="ml-3 text-base">Agree to Privacy Policy (Required)</Text>
           </View>
           <TouchableOpacity onPress={() => router.push('/terms/webview')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
@@ -121,7 +121,7 @@ export default function TermsCheckScreen() {
               size={22}
               color={agreements.marketing ? '#6C47FF' : '#E8E8E8'}
             />
-            <Text className="ml-3 text-base">마케팅 정보 수신 동의 (선택)</Text>
+            <Text className="ml-3 text-base">Receive Marketing Information (Optional)</Text>
           </View>
           <TouchableOpacity onPress={() => router.push('/terms/webview')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
@@ -139,7 +139,7 @@ export default function TermsCheckScreen() {
           {isUpdating ? (
             <ActivityIndicator color="white" />
           ) : (
-            <Text className="text-base font-medium text-white">동의하고 계속하기</Text>
+            <Text className="text-base font-medium text-white">Agree and Continue</Text>
           )}
         </TouchableOpacity>
       </View>

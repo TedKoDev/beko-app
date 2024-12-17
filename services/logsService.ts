@@ -21,7 +21,7 @@ export const getlogsApi = async (params?: logsParams) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Get word failed', error);
+    console.error('Get logs failed', error);
     throw error;
   }
 };

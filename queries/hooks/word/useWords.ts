@@ -35,6 +35,7 @@ export function useWords() {
     queryKey: ['todayWords'],
     queryFn: () => getWordApi(),
     enabled: !!token,
+
     onSuccess: (data: Word[]) => {
       console.log('API 응답:', data);
     },
@@ -64,7 +65,7 @@ export const useWordList = () => {
       }
       return undefined;
     },
-    enabled: !!token,
+    enabled: !!token, // token이 있을 때만 쿼리 실행
     initialPageParam: 1,
   });
 };
@@ -102,12 +103,7 @@ export const useAddWordToUserWordList = (wordId: number, notes?: string) => {
       return { previousWordList, previousUserWordList };
     },
     onError: (err, variables, context: any) => {
-      if (context?.previousWordList) {
-        queryClient.setQueryData(['wordList'], context.previousWordList);
-      }
-      if (context?.previousUserWordList) {
-        queryClient.setQueryData(['userWordList'], context.previousUserWordList);
-      }
+      console.log('onError', err, variables, context);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['wordList'] });
@@ -151,11 +147,8 @@ export const useUpdateUserWordNotes = (wordId: number, notes: string) => {
 
       return { previousData };
     },
-    onError: (err, variables, context: any) => {
-      // 에러 시 롤백
-      if (context?.previousData) {
-        queryClient.setQueryData(['userWordList'], context.previousData);
-      }
+    onError: (error: Error) => {
+      console.error('단어 메모 업데이트 실패:', error);
     },
     onSettled: () => {
       // 모든 관련 쿼리 무효화

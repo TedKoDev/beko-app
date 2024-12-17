@@ -17,15 +17,18 @@ export default function GameResult() {
     gameId: string;
   }>();
 
-  console.log('Raw params:', params);
-  console.log('Parsed values:', {
-    correctAnswers: Number(params.correctAnswers),
-    totalQuestions: Number(params.totalQuestions),
+  console.log('Game Result - Received params:', {
+    correctAnswers: params.correctAnswers,
+    totalQuestions: params.totalQuestions,
+    timestamp: new Date().toISOString(),
   });
 
   const correctAnswers = Number(params.correctAnswers);
   const totalQuestions = Number(params.totalQuestions);
-  const accuracy = Math.round((correctAnswers / totalQuestions) * 100);
+  const accuracy =
+    !isNaN(correctAnswers) && !isNaN(totalQuestions) && totalQuestions !== 0
+      ? Math.round((correctAnswers / totalQuestions) * 100)
+      : 0;
 
   return (
     <SafeAreaView className="flex-1 bg-gray-100">

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { youtubeService } from '~/services/youtubeService';
+import { useAuthStore } from '~/store/authStore';
 
 // videoId 추출 유틸 함수
 const getYoutubeVideoId = (url: string) => {
@@ -23,6 +24,7 @@ const CHANNEL_INFO = {
 };
 
 export const useYoutubeLinks = () => {
+  const token = useAuthStore((state) => state.userToken);
   return useQuery({
     queryKey: ['youtube', 'links'],
     queryFn: async () => {
@@ -46,6 +48,7 @@ export const useYoutubeLinks = () => {
     staleTime: 1000 * 60 * 5, // 5분간 데이터가 신선하다고 간주
 
     refetchOnWindowFocus: false,
+    enabled: !!token,
   });
 };
 
