@@ -8,6 +8,7 @@ import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
 
 export default function NoticeScreen() {
   const { categoryId } = useLocalSearchParams<{ categoryId: string }>();
+
   const [sort, setSort] = useState<'latest' | 'oldest' | 'popular'>('latest');
   const { data: topics } = useTopics();
 

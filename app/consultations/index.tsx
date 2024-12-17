@@ -1,14 +1,14 @@
 import { Stack } from 'expo-router';
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, TouchableOpacity } from 'react-native';
-import { ConsultationFilterHeader } from '~/components/consultation/ConsultationFilterHeader';
-import { SortModal } from '~/components/consultation/SortModal';
+import { View, Text } from 'react-native';
 
 import ConsultationListItem from '~/components/ConsultationListItem';
+import { ConsultationFilterHeader } from '~/components/consultation/ConsultationFilterHeader';
+import { SortModal } from '~/components/consultation/SortModal';
 import ListLayout from '~/components/layouts/ListLayout';
-import { useConsultations, useMyConsultations } from '~/queries/hooks/posts/useConsultations';
+import { useMyConsultations } from '~/queries/hooks/posts/useConsultations';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
-import { ConsultationStatus, ConsultationFilters } from '~/types/consultation';
+import { ConsultationFilters } from '~/types/consultation';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -60,14 +60,14 @@ export default function ConsultationsScreen() {
         ListHeaderComponent={
           <ConsultationFilterHeader
             selectedStatus={filters.status}
-            selectedSort={filters.sort}
+            selectedSort={filters.sort as any}
             selectedCategoryId={filters.category_id}
             showSortModal={showSortModal}
             setSelectedStatus={(status) => setFilters((prev) => ({ ...prev, status }))}
             setSelectedSort={(sort) => setFilters((prev) => ({ ...prev, sort }))}
             setSelectedCategoryId={(id) => setFilters((prev) => ({ ...prev, category_id: id }))}
             setShowSortModal={setShowSortModal}
-            topicsData={topicsData}
+            topicsData={topicsData as any}
           />
         }
         renderItem={({ item }) => <ConsultationListItem consultation={item} />}
@@ -76,10 +76,11 @@ export default function ConsultationsScreen() {
             <Text className="text-gray-500">No consultation history.</Text>
           </View>
         }
+        headerTitle="Consultation List"
       />
       <SortModal
         visible={showSortModal}
-        selectedSort={filters.sort}
+        selectedSort={filters.sort as any}
         onSelect={(sort) => {
           setFilters((prev) => ({ ...prev, sort }));
           setShowSortModal(false);

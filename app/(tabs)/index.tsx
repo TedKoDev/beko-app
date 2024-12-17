@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, Stack } from 'expo-router';
 import React, { useMemo } from 'react';
 import { View, ScrollView, RefreshControl } from 'react-native';
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import { BoardTabs } from '~/components/board/BoardTabs';
 import CustomCarousel from '~/components/customCarousel';
@@ -77,15 +77,7 @@ export default function Home() {
       <GrayLine thickness={5} marginTop={0} />
       <YoutubeSection />
       <GrayLine thickness={5} marginTop={0} />
-      <View className="w-full ">
-        <BannerAd
-          unitId={adUnitId ?? ''}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true,
-          }}
-        />
-      </View>
+      <AdBanner />
       <GrayLine thickness={5} marginTop={0} />
       <LessonCard
         onMorePress={() => router.push('/write/with-words')}

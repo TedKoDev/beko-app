@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Stack } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
@@ -7,7 +6,6 @@ import { FilterHeader } from '~/components/feed/FilterHeader';
 import ListLayout from '~/components/layouts/ListLayout';
 import { usePosts } from '~/queries/hooks/posts/usePosts';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
-import { AdBanner } from '~/src/components/ads/AdBanner';
 
 export default function Feed() {
   const [sortBy, setSortBy] = useState<'latest' | 'oldest' | 'popular'>('latest');
@@ -78,8 +76,8 @@ export default function Feed() {
             <FilterHeader
               selectedTopicId={selectedTopicId}
               selectedCategoryId={selectedCategoryId}
-              topicsData={topicsData}
-              selectedTopic={selectedTopic ?? undefined}
+              topicsData={topicsData as any}
+              selectedTopic={selectedTopic as any}
               showSortModal={showSortModal}
               selectedSortLabel={
                 sortOptions.find((option) => option.value === sortBy)?.label ?? 'Latest'

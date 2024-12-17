@@ -1,11 +1,12 @@
 import { Stack } from 'expo-router';
 import React from 'react';
 import { View, FlatList, Text } from 'react-native';
-import { usePosts } from '~/queries/hooks/posts/usePosts';
-import { useAuthStore } from '~/store/authStore';
-import EventListingItem from '~/components/EventListingItem';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+
+import EventListingItem from '~/components/EventListingItem';
+import { usePosts } from '~/queries/hooks/posts/usePosts';
 import { adUnitId } from '~/src/config/ads';
+import { useAuthStore } from '~/store/authStore';
 
 export default function MyPostsScreen() {
   const userInfo = useAuthStore((state) => state.userInfo);

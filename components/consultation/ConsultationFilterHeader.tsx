@@ -79,7 +79,7 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
                 All
               </Text>
             </TouchableOpacity>
-            {consultationCategories.map((category) => (
+            {consultationCategories.map((category: any) => (
               <TouchableOpacity
                 key={category.category_id}
                 onPress={() => setSelectedCategoryId(category.category_id)}

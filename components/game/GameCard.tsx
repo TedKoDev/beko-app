@@ -56,10 +56,18 @@ export const GameCard = ({ game, onPress }: GameCardProps) => {
         <View className="h-32 bg-purple-400">
           {game.isComingSoon ? (
             <View className="flex-1 items-center justify-center">
-              <MaterialCommunityIcons name="gamepad-variant" size={40} color="#9CA3AF" />
+              <MaterialCommunityIcons name="gamepad-variant" size={40} color="blue" />
             </View>
+          ) : game.imageUrl ? (
+            <Image
+              source={require('~/assets/icon.png')}
+              className="h-full w-full"
+              resizeMode="cover"
+            />
           ) : (
-            <Image source={{ uri: game.imageUrl }} className="h-full w-full" resizeMode="cover" />
+            <View className="flex-1 items-center justify-center">
+              <MaterialCommunityIcons name="image-off-outline" size={40} color="white" />
+            </View>
           )}
           {!game.isComingSoon && (
             <View className="absolute bottom-0 left-0 right-0 bg-black/30 p-2">

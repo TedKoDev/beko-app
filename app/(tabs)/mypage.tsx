@@ -4,12 +4,8 @@ import React from 'react';
 import { View, Alert, Image, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 
 import { LevelProgressBar } from '~/components/level/LevelProgressBar';
-import { useAuthStore } from '~/store/authStore';
-import { BekoIcon } from '~/assets/icons';
-import GrayLine from '~/components/grayline';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { adUnitId } from '~/src/config/ads';
 import { AdBanner } from '~/src/components/ads/AdBanner';
+import { useAuthStore } from '~/store/authStore';
 
 export default function MyPage() {
   const router = useRouter();

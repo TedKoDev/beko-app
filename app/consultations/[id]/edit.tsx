@@ -11,13 +11,11 @@ import {
   Alert,
   Image,
   ActivityIndicator,
-  Dimensions,
-  FlatList,
 } from 'react-native';
 
 import { useUserInfo } from '~/queries/hooks/auth/useUserinfo';
 import { useConsultationById } from '~/queries/hooks/posts/useConsultations';
-import { useUpdateConsultation, useUpdatePost } from '~/queries/hooks/posts/usePosts';
+import { useUpdateConsultation } from '~/queries/hooks/posts/usePosts';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
 import { queryClient } from '~/queries/queryClient';
 import { getPresignedUrlApi, uploadFileToS3 } from '~/services/s3Service';
@@ -49,8 +47,8 @@ export default function EditConsultation() {
       // 이미지 설정
       if (consultation.media) {
         const activeImages = consultation.media
-          .filter((m) => !m.deleted_at && m.media_type === 'IMAGE')
-          .map((media) => ({
+          .filter((m: any) => !m.deleted_at && m.media_type === 'IMAGE')
+          .map((media: any) => ({
             uri: media.media_url,
             type: 'image/jpeg',
             media_id: media.media_id,
@@ -332,7 +330,7 @@ export default function EditConsultation() {
                   <Image
                     source={{ uri: image.uri }}
                     className="h-20 w-20 rounded-lg"
-                    contentFit="cover"
+                    resizeMode="cover"
                   />
                   <TouchableOpacity
                     className="absolute right-1 top-1 rounded-full bg-black/50 p-1"

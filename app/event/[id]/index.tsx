@@ -1,8 +1,7 @@
 import { Feather, FontAwesome } from '@expo/vector-icons';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
-import { useLocalSearchParams, Stack, router } from 'expo-router';
+import { useLocalSearchParams, Stack } from 'expo-router';
 import React, { useState, useCallback } from 'react';
 import {
   Text,
@@ -13,6 +12,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  Modal,
+  TouchableOpacity,
 } from 'react-native';
 import { Pressable } from 'react-native-gesture-handler';
 
@@ -29,12 +30,13 @@ const { width } = Dimensions.get('window');
 export default function EventPage() {
   const { id } = useLocalSearchParams();
   const { data: post, isLoading } = useGetPostById(Number(id));
-  const { data } = useComments(Number(id), 'latest');
+  const { data } = useComments(Number(id), null, 'latest');
 
-  console.log('post', post);
+  // console.log('post', post);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const togglePostLikeMutation = useTogglePostLike();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleScroll = useCallback((event: any) => {
     const slideSize = event.nativeEvent.layoutMeasurement.width;
@@ -92,12 +94,14 @@ export default function EventPage() {
                     showsHorizontalScrollIndicator={false}
                     onScroll={handleScroll}
                     renderItem={({ item }) => (
-                      <Image
-                        contentFit="cover"
-                        source={{ uri: item.media_url }}
-                        style={{ width, height: 300 }}
-                        className="mb-4 rounded-lg"
-                      />
+                      <TouchableOpacity onPress={() => setSelectedImage(item.media_url)}>
+                        <Image
+                          contentFit="cover"
+                          source={{ uri: item.media_url }}
+                          style={{ width, height: 300 }}
+                          className="mb-4 rounded-lg"
+                        />
+                      </TouchableOpacity>
                     )}
                     keyExtractor={(item) => item.media_id.toString()}
                   />
@@ -176,6 +180,23 @@ export default function EventPage() {
           </View>
         </View>
       </KeyboardAvoidingView>
+
+      {/* 이미지 전체화면 모달 */}
+      <Modal visible={!!selectedImage} transparent={true} animationType="fade">
+        <TouchableOpacity
+          className="flex-1 bg-black/90"
+          activeOpacity={1}
+          onPress={() => setSelectedImage(null)}>
+          <View className="flex-1 items-center justify-center">
+            <Image
+              source={{ uri: selectedImage || undefined }}
+              style={{ width: '100%', height: '100%' }}
+              contentFit="contain"
+              contentPosition="center"
+            />
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 }

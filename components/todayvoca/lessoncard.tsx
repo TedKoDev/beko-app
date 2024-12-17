@@ -41,8 +41,8 @@ export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: 
   //console.log('Current userInfo in LessonCard:', userInfo);
 
   // 사용자 데이터 구조 통일
-  const userData = userInfo?.user || userInfo;
-  //console.log('User data:', userData);
+  const userData = userInfo;
+  console.log('User data in LessonCard:', userData);
 
   const router = useRouter();
 

@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 
 import { useGetSchools } from '~/queries/hooks/schools/useSchools';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 import { School } from '~/types/school';
 
 export default function KoreanSchoolsScreen() {
@@ -61,6 +62,7 @@ export default function KoreanSchoolsScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
+      <AdBanner />
       <Stack.Screen
         options={{
           title: 'Korean Schools Info',
@@ -70,7 +72,6 @@ export default function KoreanSchoolsScreen() {
           headerRight: () => null,
         }}
       />
-
       <FlatList
         data={allItems}
         renderItem={renderItem}

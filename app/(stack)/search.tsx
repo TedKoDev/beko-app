@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useQueryClient } from '@tanstack/react-query';
-import { Stack, useNavigation, useRouter } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import debounce from 'lodash/debounce';
 import React, { useState, useCallback, useEffect } from 'react';
 import {

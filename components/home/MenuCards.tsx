@@ -56,7 +56,21 @@ export default function MenuCards() {
   );
 }
 
-function AnimatedButton({ title, korTitle, color, pressedColor, icon, route }) {
+function AnimatedButton({
+  title,
+  korTitle,
+  color,
+  pressedColor,
+  icon,
+  route,
+}: {
+  title: string;
+  korTitle: string;
+  color: string;
+  pressedColor: string;
+  icon: React.ReactNode;
+  route: string;
+}) {
   const scale = useSharedValue(1);
   const [isPressed, setIsPressed] = useState(false);
 
@@ -74,7 +88,7 @@ function AnimatedButton({ title, korTitle, color, pressedColor, icon, route }) {
         setIsPressed(false); // 눌림 상태 해제
         scale.value = withSpring(1, { damping: 6 });
       }}
-      onPress={() => router.push(route)}>
+      onPress={() => router.push(route as any)}>
       <Animated.View
         style={[
           styles.button,

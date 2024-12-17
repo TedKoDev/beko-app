@@ -1,23 +1,19 @@
 import { Feather } from '@expo/vector-icons';
-import { router, Stack, useRouter } from 'expo-router';
-import { tap } from 'lodash';
+import { router, Stack } from 'expo-router';
 import React from 'react';
 import {
   View,
   FlatList,
   RefreshControl,
   ActivityIndicator,
-  TouchableOpacity,
   Platform,
   SafeAreaView,
-  Button,
 } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import EventListingItem from '~/components/EventListingItem';
 import { usePosts } from '~/queries/hooks/posts/usePosts';
-import { adUnitId } from '~/src/config/ads';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 
 export default function FeedList() {
   const {
@@ -48,15 +44,7 @@ export default function FeedList() {
     });
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <View className="w-full ">
-        <BannerAd
-          unitId={adUnitId}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true,
-          }}
-        />
-      </View>
+      <AdBanner />
       <Stack.Screen
         options={{
           headerTitle: 'Feed',

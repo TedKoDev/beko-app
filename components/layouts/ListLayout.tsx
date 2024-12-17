@@ -9,9 +9,10 @@ import {
   ActivityIndicator,
   StyleProp,
   ViewStyle,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
 import { Pressable } from 'react-native-gesture-handler';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import EventListingItem from '~/components/EventListingItem';
 import InstagramStyleItem from '~/components/InstagramStyleItem';
@@ -32,6 +33,8 @@ interface ListLayoutProps {
   contentContainerStyle?: StyleProp<ViewStyle>;
   renderItem?: ({ item }: { item: any }) => React.ReactElement;
   defaultViewMode?: 'list' | 'instagram';
+  writeRoute?: string;
+  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
 
 export default function ListLayout({

@@ -1,10 +1,10 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Linking } from 'react-native';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import NoticeCategories from '~/components/notice/NoticeSection';
-import { adUnitId } from '~/src/config/ads';
+import { AdBanner } from '~/src/components/ads/AdBanner';
+
 type Language = 'ko' | 'en' | 'jp';
 type TabType = 'ads' | 'teacher';
 
@@ -185,15 +185,7 @@ export default function AdPage() {
                   {currentContent.intro.closing}
                 </Text>
               </View>
-              <View className="w-ful ">
-                <BannerAd
-                  unitId={adUnitId}
-                  size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-                  requestOptions={{
-                    requestNonPersonalizedAdsOnly: true,
-                  }}
-                />
-              </View>
+              <AdBanner />
               {/* Call-to-Action Section */}
               <View className="mb-8 rounded-lg bg-purple-100 p-6">
                 <Text className="mb-4 text-xl font-bold text-purple-800">

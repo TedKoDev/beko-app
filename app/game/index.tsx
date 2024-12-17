@@ -19,8 +19,8 @@ export default function GameHome() {
   };
 
   const allGames = React.useMemo(() => {
-    const realGames = (gameTypes || []).map((game) => {
-      const progress = allGameProgress?.find((p) => p.game_type_id === game.game_type_id);
+    const realGames = (gameTypes || []).map((game: any) => {
+      const progress = allGameProgress?.find((p: any) => p.game_type_id === game.game_type_id);
 
       return {
         id: game.game_type_id,

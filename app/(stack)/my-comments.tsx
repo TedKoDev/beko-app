@@ -1,20 +1,18 @@
-import { Stack, useRouter } from 'expo-router';
+import { Stack } from 'expo-router';
 import React from 'react';
 import { View, FlatList, Text } from 'react-native';
-import { useComments } from '~/queries/hooks/comments/useComments';
-import { useAuthStore } from '~/store/authStore';
+
 import CommentItem from '~/app/event/[id]/components/CommentItem';
 import {
+  useComments,
   useToggleCommentLike,
   useDeleteComment,
   useUpdateComment,
 } from '~/queries/hooks/comments/useComments';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { adUnitId } from '~/src/config/ads';
 import { AdBanner } from '~/src/components/ads/AdBanner';
+import { useAuthStore } from '~/store/authStore';
 
 export default function MyCommentsScreen() {
-  const router = useRouter();
   const userInfo = useAuthStore((state) => state.userInfo);
   const toggleLike = useToggleCommentLike();
   const deleteComment = useDeleteComment();
@@ -40,7 +38,7 @@ export default function MyCommentsScreen() {
     updateComment.mutate({ commentId, content: newContent });
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: any) => (
     <CommentItem
       comment={item}
       onToggleLike={handleToggleLike}

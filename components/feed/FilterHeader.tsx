@@ -90,7 +90,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
                   All
                 </Text>
               </TouchableOpacity>
-              {selectedTopic.category.map((category) => (
+              {selectedTopic.category.map((category: any) => (
                 <TouchableOpacity
                   key={category.category_id}
                   onPress={() => setSelectedCategoryId(category.category_id)}

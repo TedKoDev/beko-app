@@ -1,12 +1,12 @@
 import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import AdList from '../AdList';
 
 import { usePosts } from '~/queries/hooks/posts/usePosts';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import { adUnitId } from '~/src/config/ads';
 interface NoticeSectionProps {
   title: string;
@@ -65,7 +65,7 @@ const NoticeCategories: React.FC = () => {
     <>
       <View className="w-full ">
         <BannerAd
-          unitId={adUnitId}
+          unitId={adUnitId || ''}
           size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
           requestOptions={{
             requestNonPersonalizedAdsOnly: true,

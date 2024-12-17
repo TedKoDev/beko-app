@@ -12,17 +12,14 @@ import {
   TextInput,
   FlatList,
   Dimensions,
+  Modal,
 } from 'react-native';
 
 import ConsultationCommentSection from './components/ConsultationCommentSection';
 import EditCommentModal from '../event/[id]/components/EditCommentModal';
 
 import { useAnswerConsultation } from '~/queries/hooks/comments/useAnswerConsultation';
-import {
-  useCreateComment,
-  useDeleteComment,
-  useUpdateComment,
-} from '~/queries/hooks/comments/useComments';
+import { useCreateComment, useUpdateComment } from '~/queries/hooks/comments/useComments';
 import { useConsultationById } from '~/queries/hooks/posts/useConsultations';
 import { useDeletePost } from '~/queries/hooks/posts/usePosts';
 import { commentService } from '~/services/commentService';
@@ -39,7 +36,6 @@ export default function ConsultationDetailScreen() {
   const { userInfo } = useAuthStore();
   console.log('userInfo', userInfo);
   const createCommentMutation = useCreateComment();
-  const deleteCommentMutation = useDeleteComment();
   const updateCommentMutation = useUpdateComment();
   const answerConsultationMutation = useAnswerConsultation();
 
@@ -51,6 +47,7 @@ export default function ConsultationDetailScreen() {
   const deletePost = useDeletePost();
   const isAuthor = userInfo?.user_id === consultation?.user_id;
   const isTeacher = userInfo?.role === 'TEACHER' || userInfo?.role === 'ADMIN';
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   if (isLoading) {
     return (
@@ -68,7 +65,7 @@ export default function ConsultationDetailScreen() {
     );
   }
 
-  const handleCommentSubmit = async (comment_id: any, content: any) => {
+  const handleCommentSubmit = async () => {
     if (!newComment.trim()) {
       Alert.alert('Notification', 'Please enter the comment content.');
       return;
@@ -79,26 +76,9 @@ export default function ConsultationDetailScreen() {
         content: newComment.trim(),
       });
       setNewComment('');
-    } catch (error) {
-      Alert.alert('Error', 'Failed to write comment.');
+    } catch (error: any) {
+      Alert.alert('Error', 'Failed to write comment.' + error.message);
     }
-  };
-
-  const handleCommentDelete = async (commentId: number) => {
-    Alert.alert('Delete comment', 'Are you sure you want to delete this comment?', [
-      { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            await deleteCommentMutation.mutateAsync(commentId);
-          } catch (error) {
-            Alert.alert('Error', 'Failed to delete comment.');
-          }
-        },
-      },
-    ]);
   };
 
   const handleEditSubmit = async (newContent: string) => {
@@ -152,7 +132,7 @@ export default function ConsultationDetailScreen() {
                 postId: consultation.post_id,
                 sort: 'latest',
               });
-              const comment = data.find((c) => c.comment_id === commentId);
+              const comment = data.find((c: any) => c.comment_id === commentId);
 
               if (!comment) {
                 Alert.alert('Error', 'Failed to find answer.');
@@ -259,28 +239,32 @@ export default function ConsultationDetailScreen() {
 
           {/* 이미지가 있는 경우 이미지 표시 */}
           {consultation.media &&
-            consultation.media.filter((m) => !m.deleted_at && m.media_type === 'IMAGE').length >
-              0 && (
+            consultation.media.filter((m: any) => !m.deleted_at && m.media_type === 'IMAGE')
+              .length > 0 && (
               <View>
                 <FlatList
-                  data={consultation.media.filter((m) => !m.deleted_at && m.media_type === 'IMAGE')}
+                  data={consultation.media.filter(
+                    (m: any) => !m.deleted_at && m.media_type === 'IMAGE'
+                  )}
                   horizontal
                   pagingEnabled
                   showsHorizontalScrollIndicator={false}
                   onScroll={handleScroll}
                   renderItem={({ item }) => (
-                    <Image
-                      contentFit="cover"
-                      source={{ uri: item.media_url }}
-                      style={{ width, height: 300 }}
-                      className="mb-4 rounded-lg"
-                    />
+                    <TouchableOpacity onPress={() => setSelectedImage(item.media_url)}>
+                      <Image
+                        contentFit="cover"
+                        source={{ uri: item.media_url }}
+                        style={{ width, height: 300 }}
+                        className="mb-4 rounded-lg"
+                      />
+                    </TouchableOpacity>
                   )}
                   keyExtractor={(item) => item.media_id.toString()}
                 />
                 <View className="mt-2 flex-row justify-center">
                   {consultation.media
-                    .filter((m) => !m.deleted_at && m.media_type === 'IMAGE')
+                    .filter((m: any) => !m.deleted_at && m.media_type === 'IMAGE')
                     .map((_: any, index: any) => (
                       <View
                         key={index}
@@ -357,7 +341,6 @@ export default function ConsultationDetailScreen() {
           </View>
         </View>
       )}
-
       {/* 댓글 수정 모달 */}
       <EditCommentModal
         visible={editingCommentId !== null}
@@ -365,6 +348,22 @@ export default function ConsultationDetailScreen() {
         onSubmit={handleEditSubmit}
         initialContent={editingCommentContent}
       />
+      {/* 이미지 전체화면 모달 */}
+      <Modal visible={!!selectedImage} transparent={true} animationType="fade">
+        <TouchableOpacity
+          className="flex-1 bg-black/90"
+          activeOpacity={1}
+          onPress={() => setSelectedImage(null)}>
+          <View className="flex-1 items-center justify-center">
+            <Image
+              source={{ uri: selectedImage || undefined }}
+              style={{ width: '100%', height: '100%' }} // 명시적인 크기 지정
+              contentFit="contain"
+              contentPosition="center"
+            />
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </>
   );
 }
