@@ -45,6 +45,7 @@ interface GetPostsParams {
   admin_pick?: boolean;
   topic_id?: number;
   category_id?: number;
+  check_id?: number;
 }
 
 export const getPostApi = async ({
@@ -55,6 +56,7 @@ export const getPostApi = async ({
   admin_pick,
   topic_id,
   category_id,
+  check_id,
 }: GetPostsParams) => {
   try {
     const token = useAuthStore.getState().userToken;
@@ -70,6 +72,7 @@ export const getPostApi = async ({
       admin_pick,
       topic_id,
       category_id,
+      check_id,
     };
 
     // undefined 값 제거

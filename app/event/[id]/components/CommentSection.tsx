@@ -38,8 +38,10 @@ export default function CommentSection({
   // console.log('post_user_id', post_user_id);
   // console.log('userInfo', userInfo);
 
-  // 최신 댓글 5개만 가져오기
-  const { data } = useComments(postId, 'latest');
+  console.log('authorId', authorId);
+
+  // userId를 null로 전달하면 백엔드의 whereClause에서 조건이 추가되지 않음
+  const { data } = useComments(postId, undefined, 'latest');
   console.log('data', JSON.stringify(data, null, 2));
   const comments = data?.pages[0]?.data.slice(0, 5) ?? [];
   const comment_count = data?.pages[0]?.total ?? 0;

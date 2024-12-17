@@ -176,8 +176,7 @@ export default function EditConsultation() {
 
       // setTimeout을 사용하여 네비게이션 지연
       setTimeout(() => {
-        router.dismissAll();
-        router.push(`/consultations/${consultation?.post_id}`);
+        router.back();
       }, 300);
     } catch (error) {
       console.error('EditConsultationScreen - 수정 실패:', error);

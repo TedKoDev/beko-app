@@ -151,13 +151,9 @@ export default function WriteForConsultationScreen() {
       };
 
       await addPost.mutateAsync(postData);
-      await queryClient.invalidateQueries({ queryKey: ['posts'] });
-      await queryClient.refetchQueries({ queryKey: ['posts'] });
-
-      // router.back() 대신 feed로 이동
-      setTimeout(() => {
-        router.push('/feed'); // 또는 router.replace('/feed')
-      }, 500);
+      // router.back();
+      router.dismissAll();
+      router.push('/consultations');
     } catch (error) {
       console.error('상담 글 작성 실패:', error);
       Alert.alert('오류', '상담 글 작성에 실패했습니다.');

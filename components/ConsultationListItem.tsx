@@ -8,6 +8,9 @@ import { ConsultationStatus, getStatusText, getStatusColor } from '~/types/consu
 export default function ConsultationListItem({ consultation }: any) {
   const { post_content: content } = consultation;
 
+  // console.log('vvv', consultation);
+  // console.log('vvv', content);
+
   // console.log('vvv', content);
 
   // console.log('Consultation Status:', content.status);

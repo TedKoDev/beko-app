@@ -16,6 +16,7 @@ export interface PaginationQueryDto {
   limit?: number;
   sort?: 'latest' | 'oldest' | 'popular';
   postId?: number;
+  userId?: number;
 }
 
 export const commentService = {
@@ -57,16 +58,25 @@ export const commentService = {
       if (!token) {
         throw new Error('No token found');
       }
+
+      // undefined, null, 빈 문자열, NaN 체크를 포함한 파라미터 필터링
+      const params = {
+        ...(typeof queryDto.page === 'number' && { page: queryDto.page }),
+        ...(typeof queryDto.limit === 'number' && { limit: queryDto.limit }),
+        ...(queryDto.sort && { sort: queryDto.sort }),
+        ...(typeof queryDto.postId === 'number' && { postId: queryDto.postId }),
+        ...(queryDto.userId !== undefined &&
+          queryDto.userId !== null &&
+          !isNaN(Number(queryDto.userId)) && {
+            userId: Number(queryDto.userId),
+          }),
+      };
+
       const response = await api.get('/comments', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        params: {
-          page: queryDto.page,
-          limit: queryDto.limit,
-          sort: queryDto.sort,
-          postId: queryDto.postId,
-        },
+        params,
       });
       return response.data;
     } catch (error) {

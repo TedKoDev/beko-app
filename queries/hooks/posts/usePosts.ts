@@ -34,6 +34,7 @@ type UsePostsParams = {
   admin_pick?: boolean;
   topicId?: number;
   categoryId?: number;
+  check_id?: number;
 };
 
 export function usePosts(params: UsePostsParams) {
@@ -44,6 +45,7 @@ export function usePosts(params: UsePostsParams) {
         page: pageParam,
         limit: params.limit,
         sort: params.sort,
+        check_id: params.check_id,
         type: params.type,
         admin_pick: params.admin_pick,
         topic_id: params.topicId,
@@ -103,13 +105,16 @@ export function useAddPost() {
     },
 
     onSuccess: async () => {
-      // 모든 관련 쿼리 무효화 및 리페치
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['posts'] }),
         queryClient.refetchQueries({ queryKey: ['posts'] }),
         queryClient.invalidateQueries({ queryKey: ['logs'] }),
         queryClient.invalidateQueries({ queryKey: ['userInfo'] }),
         queryClient.refetchQueries({ queryKey: ['userInfo'], exact: true }),
+        queryClient.invalidateQueries({ queryKey: ['myConsultations'] }),
+        queryClient.refetchQueries({ queryKey: ['myConsultations'] }),
+        queryClient.invalidateQueries({ queryKey: ['ssconsultations'] }),
+        queryClient.refetchQueries({ queryKey: ['ssconsultations'] }),
       ]);
     },
   });
@@ -162,16 +167,18 @@ export const useUpdateConsultation = () => {
 
       // 일반 post와 동일한 패턴으로 변경
       await Promise.all([
+        console.log('ssconsultationsinvalidateQueries'),
         queryClient.invalidateQueries({
-          queryKey: ['consultations'],
+          queryKey: ['ssconsultations'],
           exact: true,
         }),
         queryClient.invalidateQueries({
           queryKey: ['consultation', variables.postId],
           exact: true,
         }),
+        console.log('ssconsultationsrefetchQueries'),
         queryClient.refetchQueries({
-          queryKey: ['consultations'],
+          queryKey: ['ssconsultations'],
           exact: true,
         }),
         queryClient.refetchQueries({

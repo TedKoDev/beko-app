@@ -20,15 +20,18 @@ import CommentInput from './components/CommentInput';
 import CommentSection from './components/CommentSection';
 import UserInfo from './components/UserInfo';
 
+import { useComments } from '~/queries/hooks/comments/useComments';
 import { useGetPostById } from '~/queries/hooks/posts/usePosts';
 import { useTogglePostLike } from '~/queries/hooks/useLikes';
-import { useComments } from '~/queries/hooks/comments/useComments';
 
 const { width } = Dimensions.get('window');
 
 export default function EventPage() {
   const { id } = useLocalSearchParams();
   const { data: post, isLoading } = useGetPostById(Number(id));
+  const { data } = useComments(Number(id), 'latest');
+
+  console.log('post', post);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const togglePostLikeMutation = useTogglePostLike();
@@ -40,7 +43,6 @@ export default function EventPage() {
   }, []);
 
   // Move the useComments hook call here, but only use it if post is defined
-  const { data } = useComments(post.post_id, 'latest');
 
   const comment_count = data?.pages[0]?.total ?? 0;
 
@@ -116,6 +118,11 @@ export default function EventPage() {
                   {post.post_content.content}
                 </Text>
               )}
+              {/* 토픽 카테고리 */}
+              <View className="ml-4 flex-row items-center gap-2">
+                <Text className="text-sm font-bold text-purple-500">Category:</Text>
+                <Text className="text-sm text-gray-500">{post.category_name}</Text>
+              </View>
 
               {/* Engagement Stats */}
               <View className="mt-2 flex-row items-center gap-4 border-b border-gray-200 px-4 pb-4">

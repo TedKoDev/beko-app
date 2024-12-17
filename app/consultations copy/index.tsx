@@ -6,7 +6,7 @@ import { SortModal } from '~/components/consultation/SortModal';
 
 import ConsultationListItem from '~/components/ConsultationListItem';
 import ListLayout from '~/components/layouts/ListLayout';
-import { useConsultations, useMyConsultations } from '~/queries/hooks/posts/useConsultations';
+import { useConsultations } from '~/queries/hooks/posts/useConsultations';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
 import { ConsultationStatus, ConsultationFilters } from '~/types/consultation';
 
@@ -22,19 +22,17 @@ export default function ConsultationsScreen() {
   });
   const [showSortModal, setShowSortModal] = useState(false);
 
-  // const selectedTopic = topicsData?.find((topic) => topic.topic_id === filters.topic_id);
+  const selectedTopic = topicsData?.find((topic) => topic.topic_id === filters.topic_id);
 
   useEffect(() => {
     console.log('Current filters:', filters);
   }, [filters]);
 
-  const { data, fetchNextPage, hasNextPage, isLoading, refetch, isRefetching } = useMyConsultations(
-    {
-      page: 1,
-      limit: ITEMS_PER_PAGE,
-      filters,
-    }
-  );
+  const { data, fetchNextPage, hasNextPage, isLoading, refetch, isRefetching } = useConsultations({
+    page: 1,
+    limit: ITEMS_PER_PAGE,
+    ...filters,
+  });
 
   const flattenedData = data?.pages.flatMap((page) => page.data) ?? [];
 

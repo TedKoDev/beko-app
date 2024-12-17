@@ -63,7 +63,7 @@ export default function RootLayout() {
   });
 
   const userInfo = useAuthStore((state) => state.userInfo);
-  console.log('userInfo', userInfo);
+  // console.log('userInfo', userInfo);
 
   useEffect(() => {
     const checkAuthentication = async () => {

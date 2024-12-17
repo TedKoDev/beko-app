@@ -54,8 +54,8 @@ export default function CommentItem({
   isQuestionAuthor,
   sortedComments,
 }: CommentItemProps) {
-  console.log('isQuestionAuthorestionAuthor', isQuestionAuthor);
-  console.log('comment.user_id', comment.user_id);
+  // console.log('isQuestionAuthorestionAuthor', isQuestionAuthor);
+  // console.log('comment.user_id', comment.user_id);
 
   const [modalVisible, setModalVisible] = useState(false);
   const fadeAnim = React.useRef(new Animated.Value(0)).current;

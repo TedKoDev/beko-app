@@ -6,13 +6,14 @@ import { View, Alert, Image, Text, TouchableOpacity, SafeAreaView, ScrollView } 
 import { LevelProgressBar } from '~/components/level/LevelProgressBar';
 import { useAuthStore } from '~/store/authStore';
 import { BekoIcon } from '~/assets/icons';
+import GrayLine from '~/components/grayline';
 
 export default function MyPage() {
   const router = useRouter();
 
   const userInfo = useAuthStore((state) => state.userInfo);
 
-  console.log('userInfo from store', JSON.stringify(userInfo, null, 2));
+  // console.log('userInfo from store', JSON.stringify(userInfo, null, 2));
 
   const handleSettings = () => {
     router.push('/setting/settings');
@@ -83,20 +84,25 @@ export default function MyPage() {
           <View
             className="mb-4 flex-row justify-around rounded-xl bg-gray-100 p-4"
             style={{
-              shadowColor: '#000', // 그림자 색상
-              shadowOffset: { width: 2, height: 2 }, // x, y 값으로 그림자 방향 설정
-              shadowOpacity: 0.3, // 그림자 투명도
-              shadowRadius: 1, // 그림자 퍼짐 정도
-              elevation: 5, // Android에서의 그림자 강도
+              shadowColor: '#000',
+              shadowOffset: { width: 2, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 1,
+              elevation: 5,
             }}>
-            <View className="items-center">
+            <TouchableOpacity
+              className="items-center"
+              onPress={() => router.push('/(stack)/my-posts')}>
               <Text className="mb-1 text-lg font-bold">{userInfo?.stats?.postCount || 0}</Text>
               <Text className="text-xs text-gray-500">Posts</Text>
-            </View>
-            <View className="items-center">
+            </TouchableOpacity>
+            <View className="h-full w-px bg-gray-300" />
+            <TouchableOpacity
+              className="items-center"
+              onPress={() => router.push('/(stack)/my-comments')}>
               <Text className="mb-1 text-lg font-bold">{userInfo?.stats?.commentCount || 0}</Text>
               <Text className="text-xs text-gray-500">Comments</Text>
-            </View>
+            </TouchableOpacity>
           </View>
 
           {/* Learning Section */}

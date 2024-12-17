@@ -4,7 +4,14 @@ import axios from 'axios';
 import { commentService, PaginationQueryDto } from '~/services/commentService';
 import { likeService } from '~/services/likeService';
 
-export const useComments = (postId: number, sort: 'latest' | 'oldest' | 'popular' = 'latest') => {
+export const useComments = (
+  postId: number,
+  userId?: number | null,
+  sort: 'latest' | 'oldest' | 'popular' = 'latest'
+) => {
+  console.log('postId', postId);
+  console.log('userId in useComments', userId);
+  console.log('sort', sort);
   return useInfiniteQuery({
     queryKey: ['comments', postId, sort],
     queryFn: async ({ pageParam = 1 }) => {
@@ -14,11 +21,13 @@ export const useComments = (postId: number, sort: 'latest' | 'oldest' | 'popular
           limit: Number(15),
           sort,
           postId: Number(postId),
+          userId: Number(userId),
         };
         console.log('Fetching comments with:', queryDto);
         const response = await commentService.getComments({
           ...queryDto,
           postId: Number(postId),
+          userId: Number(userId),
         });
         console.log('Response:', response);
         return response;

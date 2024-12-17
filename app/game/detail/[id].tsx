@@ -73,10 +73,20 @@ export default function GameDetail() {
   const router = useRouter();
 
   const { data: gameLevelInfo } = useGameLevelInfo(Number(id));
-  const { data: gameProgress } = useGameProgress(Number(id));
+  const { data: gameProgress, isLoading: gameProgressLoading } = useGameProgress(Number(id));
 
-  const currentLevel = gameProgress?.currentLevel || 1;
-  console.log('gameProgress', gameProgress);
+  if (gameProgressLoading) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  console.log('gameProgress', gameProgress?.progress?.current_level);
+
+  const currentLevel = gameProgress?.progress?.current_level;
+  console.log('currentLevel', currentLevel);
 
   const handleLevelSelect = (level: number) => {
     console.log('level', level);
@@ -96,7 +106,7 @@ export default function GameDetail() {
     <View className="flex-1 bg-gray-50">
       <Stack.Screen
         options={{
-          title: gameLevelInfo.game_name,
+          title: gameLevelInfo?.game_name,
           headerTitleAlign: 'center',
         }}
       />
@@ -109,11 +119,11 @@ export default function GameDetail() {
           padding: 20,
           gap: 10,
         }}>
-        {Array.from({ length: gameLevelInfo.level_info.max_level }, (_, index) => (
+        {Array.from({ length: gameLevelInfo?.level_info.max_level || 0 }, (_, index) => (
           <LevelCard
             key={index}
             level={index + 1}
-            isLocked={index + 1 > (gameProgress?.currentLevel || 0)}
+            isLocked={index + 1 > (currentLevel || 0)}
             onPress={() => handleLevelSelect(index + 1)}
           />
         ))}
