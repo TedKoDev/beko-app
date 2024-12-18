@@ -195,6 +195,7 @@ export default function WriteScreen() {
       <Stack.Screen
         options={{
           headerTitle: 'Add Post',
+          headerShadowVisible: true,
         }}
       />
       <ScrollView className="flex-1 bg-white p-4">
@@ -343,7 +344,7 @@ export default function WriteScreen() {
           </View>
 
           {/* Image preview */}
-          <ScrollView horizontal className="mt-2">
+          <ScrollView horizontal className="mb-10 mt-2">
             {selectedImages.map((image, index) => (
               <View key={index} className="mr-2">
                 <View className="relative">
@@ -370,17 +371,16 @@ export default function WriteScreen() {
             ))}
           </ScrollView>
         </View>
-
-        {/* Submit button */}
-        <TouchableOpacity
-          onPress={handleSubmit}
-          className="rounded-lg bg-purple-500 p-4"
-          disabled={addPost.isPending}>
-          <Text className="text-center font-bold text-white">
-            {addPost.isPending ? 'Posting...' : 'Post'}
-          </Text>
-        </TouchableOpacity>
       </ScrollView>
+      {/* Submit button */}
+      <TouchableOpacity
+        onPress={handleSubmit}
+        className="rounded-lg bg-purple-500 p-4 "
+        disabled={addPost.isPending}>
+        <Text className="text-center font-bold text-white">
+          {addPost.isPending ? 'Posting...' : 'Post'}
+        </Text>
+      </TouchableOpacity>
     </>
   );
 }

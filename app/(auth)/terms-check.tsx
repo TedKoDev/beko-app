@@ -91,7 +91,7 @@ export default function TermsCheckScreen() {
             />
             <Text className="ml-3 text-base">Agree to BeraKorean Terms of Use (Required)</Text>
           </View>
-          <TouchableOpacity onPress={() => router.push('/terms/webview')} className="p-2">
+          <TouchableOpacity onPress={() => router.push('/terms/terms')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
           </TouchableOpacity>
         </TouchableOpacity>
@@ -107,7 +107,7 @@ export default function TermsCheckScreen() {
             />
             <Text className="ml-3 text-base">Agree to Privacy Policy (Required)</Text>
           </View>
-          <TouchableOpacity onPress={() => router.push('/terms/webview')} className="p-2">
+          <TouchableOpacity onPress={() => router.push('/terms/privacy')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
           </TouchableOpacity>
         </TouchableOpacity>
@@ -123,7 +123,7 @@ export default function TermsCheckScreen() {
             />
             <Text className="ml-3 text-base">Receive Marketing Information (Optional)</Text>
           </View>
-          <TouchableOpacity onPress={() => router.push('/terms/webview')} className="p-2">
+          <TouchableOpacity onPress={() => router.push('/terms/marketing')} className="p-2">
             <AntDesign name="right" size={16} color="#999" />
           </TouchableOpacity>
         </TouchableOpacity>
