@@ -35,6 +35,11 @@ export default function GamePlay() {
   const [gameState, setGameState] = useState({
     correctAnswers: 0,
     totalQuestions: 0,
+    currentLevel: 1,
+    leveledUp: false,
+    experienceGained: 0,
+    userLeveledUp: false,
+    currentUserLevel: 1,
     lastAnswerCorrect: null,
   });
 
@@ -112,17 +117,22 @@ export default function GamePlay() {
           const finalState = {
             correctAnswers: currentState.correctAnswers,
             totalQuestions: currentState.totalQuestions,
+            currentLevel: currentState.currentLevel,
+            leveledUp: currentState.leveledUp,
+            experienceGained: currentState.experienceGained,
+            userLeveledUp: currentState.userLeveledUp,
+            currentUserLevel: currentState.currentUserLevel,
           };
 
           setTimeout(() => {
             const params = new URLSearchParams({
               correctAnswers: finalState.correctAnswers.toString(),
               totalQuestions: finalState.totalQuestions.toString(),
-              currentLevel: '1',
-              leveledUp: 'false',
-              experienceGained: '0',
-              userLeveledUp: 'false',
-              currentUserLevel: '1',
+              currentLevel: finalState.currentLevel.toString(),
+              leveledUp: finalState.leveledUp.toString(),
+              experienceGained: finalState.experienceGained.toString(),
+              userLeveledUp: finalState.userLeveledUp.toString(),
+              currentUserLevel: finalState.currentUserLevel.toString(),
               gameId: id,
             }).toString();
 
@@ -142,7 +152,6 @@ export default function GamePlay() {
     setCanAnswer(false);
     setIsSubmitting(true);
 
-    // 클릭 애니메이션
     optionScales.value = optionScales.value.map((scale, idx) =>
       idx === optionIndex ? 0.95 : scale
     );
@@ -157,8 +166,10 @@ export default function GamePlay() {
         },
       });
 
+      console.log(' response - play', JSON.stringify(response, null, 2));
+
       setLastResponse(response);
-      updateGameState(response.isCorrect);
+      updateGameState(response.isCorrect, response);
       moveToNextQuestion();
     } catch (error) {
       console.error('Error submitting answer:', error);
@@ -166,19 +177,25 @@ export default function GamePlay() {
       moveToNextQuestion();
     } finally {
       setIsSubmitting(false);
-      // 애니메이션 복구
       optionScales.value = optionScales.value.map(() => 1);
     }
   };
 
-  const updateGameState = (isCorrect: boolean) => {
+  const updateGameState = (isCorrect: boolean, response?: any) => {
     const resultIcon = isCorrect ? 'check-circle' : 'close-circle';
     const color = isCorrect ? 'green' : 'red';
     setScoreHistory((prev) => [...prev, { result: resultIcon, color }]);
-    setGameState((prev) => ({
+
+    setGameState((prev): any => ({
       ...prev,
       correctAnswers: prev.correctAnswers + (isCorrect ? 1 : 0),
       totalQuestions: prev.totalQuestions + 1,
+      lastAnswerCorrect: isCorrect,
+      currentLevel: response?.gameProgress?.currentLevel || prev.currentLevel,
+      leveledUp: response?.gameProgress?.leveledUp || false,
+      experienceGained: response?.userProgress?.experienceGained || 0,
+      userLeveledUp: response?.userProgress?.userLeveledUp || false,
+      currentUserLevel: response?.userProgress?.currentUserLevel || prev.currentUserLevel,
     }));
   };
 

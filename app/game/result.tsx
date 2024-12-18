@@ -1,10 +1,11 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { View, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-import { Pressable, RectButton } from 'react-native-gesture-handler';
-import { Surface } from 'react-native-paper';
-import { UserLevelProgressBar } from '~/components/level/UserLevelProgressBar';
+import { Link } from 'expo-router';
+
+import { LevelProgressBar } from '~/components/level/LevelProgressBar';
 
 export default function GameResult() {
   const router = useRouter();
@@ -19,11 +20,10 @@ export default function GameResult() {
     gameId: string;
   }>();
 
-  console.log('Game Result - Received params:', {
-    correctAnswers: params.correctAnswers,
-    totalQuestions: params.totalQuestions,
-    timestamp: new Date().toISOString(),
-  });
+  console.log('Game Result - Received params:', JSON.stringify(params, null, 2));
+  // 진입할때 'userInfo' 쿼리 무효화
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries({ queryKey: ['userInfo'] });
 
   const correctAnswers = Number(params.correctAnswers);
   const totalQuestions = Number(params.totalQuestions);
@@ -59,11 +59,10 @@ export default function GameResult() {
                   </Text>
                 </View>
               )}
-              <Surface className="mb-4 bg-white px-4 pb-4 pt-4">
-                <View className="mt-4">
-                  <UserLevelProgressBar />
-                </View>
-              </Surface>
+              {/* Level Progress Section */}
+              <View className="mb-4">
+                <LevelProgressBar />
+              </View>
               {params.userLeveledUp === 'true' && (
                 <View className="rounded-lg bg-blue-200 p-5">
                   <Text className="text-center text-lg font-semibold text-blue-900">
@@ -86,15 +85,12 @@ export default function GameResult() {
         <View className="mt-6 space-y-4">
           <TouchableOpacity
             className="rounded-full bg-[#6C47FF] py-3"
-            onPress={() => router.dismissTo('/game')}>
+            onPress={() => {
+              router.dismissAll();
+              router.replace('/game');
+            }}>
             <Text className="text-center text-base font-bold text-white">Game List</Text>
           </TouchableOpacity>
-          {/* 
-          <TouchableOpacity
-            className="rounded-full border-2 border-[#6C47FF] py-3"
-            onPress={handleRetry}>
-            <Text className="text-center text-base font-bold text-[#6C47FF]">다시 도전하기</Text>
-          </TouchableOpacity> */}
         </View>
       </View>
     </SafeAreaView>
