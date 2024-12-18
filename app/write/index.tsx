@@ -11,6 +11,7 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 
 import { useUserInfo } from '~/queries/hooks/auth/useUserinfo';
@@ -38,7 +39,7 @@ export default function WriteScreen() {
 
   // 토픽 목록 가져오기
   const { data: topics = [] } = useTopics();
-  console.log('topics', JSON.stringify(topics, null, 2));
+  // console.log('topics', JSON.stringify(topics, null, 2));
 
   // 선택된 토픽의 카테고리 찾기
   const selectedTopicCategories =
@@ -61,7 +62,6 @@ export default function WriteScreen() {
         return;
       }
 
-      // 권한 체크 추가
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
         Alert.alert('Alert', 'Photo library access is required.');
@@ -71,25 +71,28 @@ export default function WriteScreen() {
       setIsImageLoading(true);
 
       const remainingSlots = MAX_IMAGES - selectedImages.length;
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const options: ImagePicker.ImagePickerOptions = {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsMultipleSelection: true,
-        quality: 0.8, // 품질을 약간 낮춤
-        selectionLimit: remainingSlots,
-        allowsEditing: false, // 편집 비활성화
-        exif: false, // EXIF 데이터 비활성화
-      });
+        quality: 0.8,
+        allowsEditing: false,
+        exif: false,
+        allowsMultipleSelection: Platform.OS === 'android',
+        selectionLimit: Platform.OS === 'android' ? remainingSlots : 1,
+      };
+
+      const result = await ImagePicker.launchImageLibraryAsync(options);
 
       if (!result.canceled) {
         const newImages = result.assets.map((asset) => ({
           uri: asset.uri,
-          type: asset.mimeType || 'image/jpeg',
+          type: 'image/jpeg',
         }));
+
         setSelectedImages((prev) => [...prev, ...newImages].slice(0, MAX_IMAGES));
       }
     } catch (error) {
-      console.error('이미지 선택 오류:', error);
-      Alert.alert('오류', '이미지를 선택하는 중 문제가 발생했습니다. 다시 시도해주세요.');
+      console.error('Image selection error:', error);
+      Alert.alert('Error', 'An error occurred while selecting images. Please try again.');
     } finally {
       setIsImageLoading(false);
     }
