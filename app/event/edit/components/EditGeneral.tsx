@@ -19,7 +19,7 @@ import { queryClient } from '~/queries/queryClient';
 import { UpdatePostDto } from '~/services/postService';
 import { getPresignedUrlApi, uploadFileToS3 } from '~/services/s3Service';
 
-const MAX_IMAGES = 5;
+const MAX_IMAGES = 3;
 
 // 타입 상수 정의
 const POST_TYPES = {

@@ -22,7 +22,7 @@ import { getPresignedUrlApi, uploadFileToS3 } from '~/services/s3Service';
 
 type PostType = 'SENTENCE' | 'COLUMN' | 'QUESTION' | 'GENERAL' | 'CONSULTATION';
 
-const MAX_IMAGES = 5; // 최대 이미지 개수 상수 추가
+const MAX_IMAGES = 3; // 최대 이미지 개수 상수 추가
 
 export default function WriteScreen() {
   const [title, setTitle] = useState('');
@@ -57,14 +57,14 @@ export default function WriteScreen() {
   const pickImages = async () => {
     try {
       if (selectedImages.length >= MAX_IMAGES) {
-        Alert.alert('알림', '최대 5개의 이미지만 업로드할 수 있습니다.');
+        Alert.alert('Alert', 'You can only upload up to 3 images.');
         return;
       }
 
       // 권한 체크 추가
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
-        Alert.alert('권한 필요', '사진 라이브러리 접근 권한이 필요합니다.');
+        Alert.alert('Alert', 'Photo library access is required.');
         return;
       }
 

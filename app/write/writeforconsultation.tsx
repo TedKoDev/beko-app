@@ -21,7 +21,7 @@ import { queryClient } from '~/queries/queryClient';
 import { CreateMediaDto, CreatePostDto } from '~/services/postService';
 import { getPresignedUrlApi, uploadFileToS3 } from '~/services/s3Service';
 
-const MAX_IMAGES = 5;
+const MAX_IMAGES = 3;
 
 export default function WriteForConsultationScreen() {
   const [title, setTitle] = useState('');
@@ -48,14 +48,14 @@ export default function WriteForConsultationScreen() {
   const pickImages = async () => {
     try {
       if (selectedImages.length >= MAX_IMAGES) {
-        Alert.alert('알림', '최대 5개의 이미지만 업로드할 수 있습니다.');
+        Alert.alert('Alert', 'You can only upload up to 3 images.');
         return;
       }
 
       // 권한 체크 추가
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
-        Alert.alert('권한 필요', '사진 라이브러리 접근 권한이 필요합니다.');
+        Alert.alert('Alert', 'Photo library access is required.');
         return;
       }
 

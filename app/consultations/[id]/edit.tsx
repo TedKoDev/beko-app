@@ -65,7 +65,7 @@ export default function EditConsultation() {
 
   const [isImageLoading, setIsImageLoading] = useState(false);
 
-  const MAX_IMAGES = 5;
+  const MAX_IMAGES = 3;
 
   const consultationCategories = topics.find((topic) => topic.topic_id === 1)?.category || [];
 
