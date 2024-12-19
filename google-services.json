@@ -14,14 +14,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "559142701209-h2fcbipt5s9cm9tjp6n8010668os7g0k.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ordihong.beko",
-            "certificate_hash": "29116da53f298f580fc624fdf3b037dbb08c461d"
-          }
-        },
-        {
           "client_id": "559142701209-0f9pqkgf7228tl4kmt2g9oshu16tv1b7.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -48,7 +48,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "사진을 선택하기 위해 접근 권한이 필요합니다.",
@@ -57,20 +59,9 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
-      "bundleIdentifier": "com.ordihong.beko",
-      "usesNonExemptEncryption": false,
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.1036338973947-dpfemgoahom2r6e9qm2flsbog29c8me0"
-        }
-      }
+      "bundleIdentifier": "com.ordihong.beko"
     },
     "android": {
-      "config": {
-        "googleSignIn": {
-          "apiKey": "1036338973947-erb05ec0s3ithcs81qhj5juv0kkvro4n.apps.googleusercontent.com"
-        }
-      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -85,7 +76,23 @@
               "scheme": "beko"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        },
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "beko"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ]
     },
@@ -98,13 +105,11 @@
       }
     },
     "owner": "ordihong",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
     "updates": {
-      "enabled": true,
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/your-project-id",
-      "runtimeVersion": {
-        "policy": "sdkVersion"
-      }
+      "url": "https://u.expo.dev/fd62690b-c7b1-4850-a014-8fd3746a89ea"
     }
   }
 }
