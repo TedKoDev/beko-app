@@ -18,7 +18,7 @@ export default function InstagramStyleItem({ event }: any) {
               <Image
                 source={{ uri: event.user_profile_picture_url }}
                 style={{ width: 32, height: 32, borderRadius: 16 }}
-                contentFit="cover"
+                contentFit="contain"
                 transition={200}
               />
             ) : (
@@ -44,11 +44,11 @@ export default function InstagramStyleItem({ event }: any) {
         </View>
 
         {activeMedia.length > 0 && (
-          <View className="relative">
+          <View className="relative border border-gray-200 shadow-sm">
             <Image
               source={{ uri: activeMedia[0].media_url }}
               style={{ width: '100%', height: 384 }}
-              contentFit="cover"
+              contentFit="contain"
               transition={200}
             />
             {activeMedia.length > 1 && (

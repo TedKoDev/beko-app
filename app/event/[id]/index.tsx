@@ -96,7 +96,7 @@ export default function EventPage() {
                     renderItem={({ item }) => (
                       <TouchableOpacity onPress={() => setSelectedImage(item.media_url)}>
                         <Image
-                          contentFit="cover"
+                          contentFit="contain"
                           source={{ uri: item.media_url }}
                           style={{ width, height: 300 }}
                           className="mb-4 rounded-lg"
