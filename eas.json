@@ -29,7 +29,8 @@
       "autoIncrement": true,
       "distribution": "store",
       "android": {
-        "buildType": "app-bundle"
+        "buildType": "app-bundle",
+        "googleServicesFile": "./android/app/google-services.json"
       },
       "channel": "production"
     }

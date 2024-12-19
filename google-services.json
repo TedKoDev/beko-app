@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "559142701209",
+    "project_id": "beko-944f0",
+    "storage_bucket": "beko-944f0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559142701209:android:2554160f0bf25d95c99008",
+        "android_client_info": {
+          "package_name": "com.ordihong.beko"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559142701209-h2fcbipt5s9cm9tjp6n8010668os7g0k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ordihong.beko",
+            "certificate_hash": "29116da53f298f580fc624fdf3b037dbb08c461d"
+          }
+        },
+        {
+          "client_id": "559142701209-0f9pqkgf7228tl4kmt2g9oshu16tv1b7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc4ASP_MhFpHHWqSXXBQOHOKh4K3CzvDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559142701209-0f9pqkgf7228tl4kmt2g9oshu16tv1b7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "559142701209-t1ddk7opdbhkm816r6djfvu9bqt7uluu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ordihong.beko"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
