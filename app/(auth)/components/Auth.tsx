@@ -2,6 +2,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Image, Text } from 'react-native';
+
 import { useAuthStore } from '~/store/authStore';
 
 export default function Auth() {
@@ -12,7 +13,8 @@ export default function Auth() {
     scopes: ['https://www.googleapis.com/auth/drive.readonly'],
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
     iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
-  });
+    // androidStandaloneAppClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+  } as any);
 
   const handleGoogleLogin = async () => {
     try {

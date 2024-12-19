@@ -68,7 +68,10 @@
     },
     "android": {
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713"
+        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713",
+        "googleSignIn": {
+          "apiKey": "1036338973947-erb05ec0s3ithcs81qhj5juv0kkvro4n.apps.googleusercontent.com"
+        }
       },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
