@@ -42,7 +42,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#D812DC',
+        tabBarActiveTintColor: 'black',
         tabBarInactiveTintColor: 'gray',
       }}>
       <Tabs.Screen
@@ -62,7 +62,7 @@ export default function TabLayout() {
           headerRight: () => (
             <View className="mr-2 flex-row items-center gap-4">
               <Link href="/search" asChild>
-                <Feather name="search" size={24} color="#D812DC" />
+                <Feather name="search" size={24} color="black" />
               </Link>
               <Link href="/modal" asChild>
                 <HeaderButton />

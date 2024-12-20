@@ -23,7 +23,7 @@ export default function StackLayout() {
           headerTitleStyle: {
             fontSize: 18,
             fontWeight: '600',
-            color: '#6C47FF',
+            color: 'black',
           },
           headerTitleAlign: 'center',
           headerShadowVisible: false,
@@ -31,7 +31,7 @@ export default function StackLayout() {
           headerLeft: ({ canGoBack }) =>
             canGoBack ? (
               <TouchableOpacity onPress={() => router.back()}>
-                <Ionicons name="chevron-back" size={24} color="#6C47FF" />
+                <Ionicons name="chevron-back" size={24} color="black" />
               </TouchableOpacity>
             ) : null,
         }}

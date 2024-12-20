@@ -30,8 +30,8 @@ export default function KoreanSchoolsScreen() {
   const renderItem = ({ item }: { item: School }) => (
     <View className="mb-4 rounded-2xl bg-white p-5 shadow-sm">
       <View className="mb-1 flex-row items-center">
-        <View className="mr-2 h-2 w-2 rounded-full bg-violet-500" />
-        <Text className="text-xs font-medium text-violet-500">
+        <View className="bg-purple-custom mr-2 h-2 w-2 rounded-full" />
+        <Text className="text-purple-custom text-xs font-medium">
           {item.region}, {item.country_code}
         </Text>
       </View>
@@ -43,8 +43,8 @@ export default function KoreanSchoolsScreen() {
         <TouchableOpacity
           className="flex-row items-center self-start rounded-lg bg-violet-50 px-4 py-2"
           onPress={() => handleOpenWebsite(item.website_url)}>
-          <Feather name="globe" size={16} color="#8B5CF6" />
-          <Text className="ml-2 text-sm font-medium text-violet-600">Visit Website</Text>
+          <Feather name="globe" size={16} color="purple-custom" />
+          <Text className="text-purple-custom ml-2 text-sm font-medium">Visit Website</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -55,7 +55,7 @@ export default function KoreanSchoolsScreen() {
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center">
-        <ActivityIndicator size="large" color="#8B5CF6" />
+        <ActivityIndicator size="large" color="#purple-custom" />
       </View>
     );
   }
@@ -84,7 +84,7 @@ export default function KoreanSchoolsScreen() {
         onEndReachedThreshold={0.3}
         refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
         ListFooterComponent={
-          isFetchingNextPage ? <ActivityIndicator className="py-4" color="#8B5CF6" /> : null
+          isFetchingNextPage ? <ActivityIndicator className="py-4" color="purple-custom" /> : null
         }
         ListEmptyComponent={
           <View className="flex-1 items-center justify-center p-4">

@@ -10,7 +10,7 @@ export const HeaderButton = forwardRef<typeof Pressable, { onPress?: () => void 
           <FontAwesome
             name="dollar"
             size={25}
-            color="#D812DC"
+            color="black"
             style={[
               styles.headerRight,
               {
