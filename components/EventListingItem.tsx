@@ -22,7 +22,7 @@ export default function EventListItem({ event }: any) {
                 transition={200}
               />
             ) : (
-              <FontAwesome name="user-circle" size={24} color="#B227D4" />
+              <FontAwesome name="user-circle" size={24} color="#7b33ff" />
             )}
             <Text className="ml-2 text-sm text-gray-500">{event.username || ''}</Text>
 

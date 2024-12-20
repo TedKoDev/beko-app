@@ -195,7 +195,7 @@ export default function EditConsultation() {
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center">
-        <ActivityIndicator size="large" color="#B227D4" />
+        <ActivityIndicator size="large" color="#7b33ff" />
       </View>
     );
   }
@@ -208,7 +208,7 @@ export default function EditConsultation() {
           headerTitleAlign: 'center',
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()} className="ml-4">
-              <Ionicons name="chevron-back" size={24} color="#B227D4" />
+              <Ionicons name="chevron-back" size={24} color="#7b33ff" />
             </TouchableOpacity>
           ),
         }}
@@ -239,7 +239,7 @@ export default function EditConsultation() {
                 }`}>
                 <View className="flex-row items-center">
                   {selectedCategory === category.category_id && (
-                    <Ionicons name="checkmark-circle" size={16} color="#B227D4" className="mr-1" />
+                    <Ionicons name="checkmark-circle" size={16} color="#7b33ff" className="mr-1" />
                   )}
                   <Text
                     className={

@@ -52,10 +52,10 @@ export function BoardTabs() {
           <TouchableOpacity
             key={tab.id}
             onPress={() => setActiveTab(tab.id)}
-            className={`px-4 py-3 ${activeTab === tab.id ? 'border-b-2 border-[#B227D4]' : ''}`}>
+            className={`px-4 py-3 ${activeTab === tab.id ? 'border-b-2 border-[#7b33ff]' : ''}`}>
             <Text
               className={`text-base ${
-                activeTab === tab.id ? 'font-bold text-[#B227D4]' : 'text-gray-600'
+                activeTab === tab.id ? 'font-bold text-[#7b33ff]' : 'text-gray-600'
               }`}>
               {tab.title}
             </Text>

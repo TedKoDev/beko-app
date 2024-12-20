@@ -38,7 +38,7 @@ export default function MyPage() {
                   className="h-20 w-20 rounded-full"
                 />
               ) : (
-                <FontAwesome name="user-circle" size={80} color="#B227D4" />
+                <FontAwesome name="user-circle" size={80} color="#7b33ff" />
               )}
               <TouchableOpacity
                 className="absolute right-0 top-0 rounded-full bg-white p-1 shadow-md"

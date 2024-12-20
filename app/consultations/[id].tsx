@@ -52,7 +52,7 @@ export default function ConsultationDetailScreen() {
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center">
-        <ActivityIndicator size="large" color="#B227D4" />
+        <ActivityIndicator size="large" color="#7b33ff" />
       </View>
     );
   }
@@ -169,17 +169,17 @@ export default function ConsultationDetailScreen() {
           headerTitleAlign: 'center',
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()} className="ml-4">
-              <Ionicons name="chevron-back" size={24} color="#B227D4" />
+              <Ionicons name="chevron-back" size={24} color="#7b33ff" />
             </TouchableOpacity>
           ),
           headerRight: isAuthor
             ? () => (
                 <View className="mr-4 flex-row">
                   <TouchableOpacity onPress={() => router.push(`/consultations/${id}/edit`)}>
-                    <MaterialIcons name="edit" size={24} color="#B227D4" />
+                    <MaterialIcons name="edit" size={24} color="#7b33ff" />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={handlePostDelete} className="ml-4">
-                    <MaterialIcons name="delete" size={24} color="#B227D4" />
+                    <MaterialIcons name="delete" size={24} color="#7b33ff" />
                   </TouchableOpacity>
                 </View>
               )

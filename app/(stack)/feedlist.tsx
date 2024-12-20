@@ -64,7 +64,7 @@ export default function FeedList() {
                   style={{
                     padding: 8,
                   }}>
-                  <Feather name="edit" size={24} color="#B227D4" />
+                  <Feather name="edit" size={24} color="#7b33ff" />
                 </View>
               </GestureDetector>
             </View>

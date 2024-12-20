@@ -50,7 +50,7 @@ export default function PointHistoryScreen() {
   if (isLoading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color="#B227D4" />
+        <ActivityIndicator size="large" color="#7b33ff" />
       </View>
     );
   }
@@ -77,7 +77,7 @@ export default function PointHistoryScreen() {
         onEndReachedThreshold={0.3}
         refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
         ListFooterComponent={
-          isFetchingNextPage ? <ActivityIndicator style={styles.loader} color="#B227D4" /> : null
+          isFetchingNextPage ? <ActivityIndicator style={styles.loader} color="#7b33ff" /> : null
         }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   totalPointsValue: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#B227D4',
+    color: '#7b33ff',
     marginTop: 5,
   },
   historyItem: {

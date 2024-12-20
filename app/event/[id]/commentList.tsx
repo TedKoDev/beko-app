@@ -97,7 +97,7 @@ export default function CommentListPage() {
             ListFooterComponent={() =>
               isFetchingNextPage ? (
                 <View className="py-4">
-                  <ActivityIndicator color="#B227D4" />
+                  <ActivityIndicator color="#7b33ff" />
                 </View>
               ) : null
             }

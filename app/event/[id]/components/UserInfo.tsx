@@ -140,7 +140,7 @@ export default function UserInfo({
             className="h-10 w-10 rounded-full"
           />
         ) : (
-          <FontAwesome name="user-circle" size={40} color="#B227D4" />
+          <FontAwesome name="user-circle" size={40} color="#7b33ff" />
         )}
         <View className="ml-3 flex-1">
           <View className="flex-row items-center">

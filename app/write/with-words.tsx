@@ -97,7 +97,7 @@ export default function WriteWithWordsScreen() {
                     padding: 16,
                   }}>
                   <View className="flex-row items-center justify-between">
-                    <Text className="text-lg font-bold text-[#B227D4]">{word.word}</Text>
+                    <Text className="text-lg font-bold text-[#7b33ff]">{word.word}</Text>
                     <Text className="text-sm text-gray-500">{word.part_of_speech}</Text>
                   </View>
                   <View className="mt-2">
@@ -162,7 +162,7 @@ export default function WriteWithWordsScreen() {
               style={{
                 borderRadius: 8,
                 padding: 16,
-                backgroundColor: isSubmitDisabled ? '#e2e2e2' : '#B227D4',
+                backgroundColor: isSubmitDisabled ? '#e2e2e2' : '#7b33ff',
               }}
               disabled={isSubmitDisabled}
               onPress={handleSubmit}>

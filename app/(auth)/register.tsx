@@ -218,7 +218,7 @@ export default function RegisterScreen() {
                 autoCapitalize="none"
               />
               <Pressable
-                className={`rounded-lg bg-[#B227D4] px-4 py-2.5 ${
+                className={`rounded-lg bg-[#7b33ff] px-4 py-2.5 ${
                   isCheckingEmail ? 'opacity-70' : ''
                 }`}
                 onPress={() => checkEmail(email)}
@@ -258,7 +258,7 @@ export default function RegisterScreen() {
           <Pressable
             className={`mt-4 h-[50px] w-full items-center justify-center rounded-lg ${
               isLoading ? 'opacity-70' : ''
-            } bg-[#B227D4]`}
+            } bg-[#7b33ff]`}
             onPress={handleRegister}
             disabled={isLoading}>
             <Text className="text-lg font-semibold text-white">

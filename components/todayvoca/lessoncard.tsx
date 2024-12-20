@@ -49,7 +49,7 @@ export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: 
   if (postsLoading || isLoading) {
     return (
       <View className="items-center justify-center rounded-lg bg-white p-5" style={{ height: 300 }}>
-        <ActivityIndicator size="large" color="#B227D4" />
+        <ActivityIndicator size="large" color="#7b33ff" />
       </View>
     );
   }
@@ -84,7 +84,7 @@ export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: 
             style={{ width: 50, height: 50, borderRadius: 25 }}
           />
         ) : (
-          <FontAwesome name="user-circle" size={50} color="#B227D4" />
+          <FontAwesome name="user-circle" size={50} color="#7b33ff" />
         )}
 
         {/* 참여 횟수, 내가 쓴 문장 보러가기, 보유 포인트 */}
@@ -96,9 +96,9 @@ export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: 
             <TouchableOpacity
               onPress={() => router.push('/(tabs)/mypage')}
               className="flex-row items-center">
-              <Text className="text-sm text-[#B227D4]">See my works</Text>
+              <Text className="text-sm text-[#7b33ff]">See my works</Text>
               <View className="ml-2 mt-0.5">
-                <AngleRightIcon width={10} height={10} color="#B227D4" />
+                <AngleRightIcon width={10} height={10} color="#7b33ff" />
               </View>
             </TouchableOpacity>
           </View>
@@ -108,7 +108,7 @@ export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: 
         </View>
       </View>
 
-      <View className="mb-4 rounded-lg bg-[#B227D4]/80 p-4">
+      <View className="mb-4 rounded-lg bg-[#7b33ff]/80 p-4">
         <View className="mb-3 flex-row justify-between">
           <View>
             <View className="flex-row items-center gap-2">
@@ -126,7 +126,7 @@ export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: 
               className={`flex-1 items-center justify-center rounded-md bg-white/90 p-3 ${
                 index !== todayWords.length - 1 ? 'mr-2' : 'mr-0'
               }`}>
-              <Text className="text-lg font-bold text-[#B227D4]">{wordData.word}</Text>
+              <Text className="text-lg font-bold text-[#7b33ff]">{wordData.word}</Text>
             </View>
           ))}
         </View>
@@ -134,11 +134,11 @@ export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: 
         {/* 최근 참여한 사람의 문장 */}
         <View className="mb-3 rounded-md bg-white/90 p-3">
           {postsLoading ? (
-            <ActivityIndicator size="small" color="#B227D4" />
+            <ActivityIndicator size="small" color="#7b33ff" />
           ) : (
             posts?.pages[0]?.data?.map((post: any, index: number) => (
               <View key={index} className="mb-2 flex-row items-center justify-between">
-                <Text className="flex-1 text-sm text-[#B227D4]">{post.post_content?.content}</Text>
+                <Text className="flex-1 text-sm text-[#7b33ff]">{post.post_content?.content}</Text>
                 <View className="ml-2 flex-row gap-3">
                   <View className="flex-row items-center gap-1">
                     <FontAwesome name="heart" size={12} color="#666666" />
@@ -155,7 +155,7 @@ export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: 
 
           <GrayLine thickness={1} marginTop={5} marginBottom={5} />
           <TouchableOpacity onPress={() => router.push('/(stack)/feedlist')}>
-            <Text className="text-center font-bold text-[#B227D4]">See More . . .</Text>
+            <Text className="text-center font-bold text-[#7b33ff]">See More . . .</Text>
           </TouchableOpacity>
         </View>
 
@@ -163,7 +163,7 @@ export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: 
         <TouchableOpacity
           className="items-center justify-center rounded-md bg-white py-3"
           onPress={onMorePress}>
-          <Text className="text-lg font-bold text-[#B227D4]">Let's go</Text>
+          <Text className="text-lg font-bold text-[#7b33ff]">Let's go</Text>
         </TouchableOpacity>
       </View>
     </View>

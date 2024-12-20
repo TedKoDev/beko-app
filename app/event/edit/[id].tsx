@@ -16,7 +16,7 @@ export default function EditPostScreen() {
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center">
-        <ActivityIndicator size="large" color="#B227D4" />
+        <ActivityIndicator size="large" color="#7b33ff" />
       </View>
     );
   }

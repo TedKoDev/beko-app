@@ -30,7 +30,7 @@ export default function HotList() {
       <View className="mb-4 flex-row items-center justify-between px-4">
         <View className="flex-row items-center">
           <Text className="text-xl font-bold">Hot Posts</Text>
-          <Text className="ml-2 text-xl text-[#B227D4]">🔥</Text>
+          <Text className="ml-2 text-xl text-[#7b33ff]">🔥</Text>
         </View>
         <Link href="/board/hot" asChild>
           <TouchableOpacity>

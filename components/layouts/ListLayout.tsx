@@ -95,7 +95,7 @@ export default function ListLayout({
       <View className="mr-4 flex-row items-center gap-4">
         {showSearchButton && (
           <Link href="/search" asChild>
-            <Feather name="search" size={24} color="#B227D4" />
+            <Feather name="search" size={24} color="#7b33ff" />
           </Link>
         )}
         {showWriteButton && (
@@ -104,12 +104,12 @@ export default function ListLayout({
               console.log('write button pressed');
               router.push(writeRoute as any);
             }}>
-            <Feather name="edit" size={24} color="#B227D4" />
+            <Feather name="edit" size={24} color="#7b33ff" />
           </Pressable>
         )}
         {showViewToggle && (
           <Pressable onPress={toggleViewMode}>
-            <Feather name={viewMode === 'list' ? 'grid' : 'list'} size={24} color="#B227D4" />
+            <Feather name={viewMode === 'list' ? 'grid' : 'list'} size={24} color="#7b33ff" />
           </Pressable>
         )}
       </View>
@@ -145,7 +145,7 @@ export default function ListLayout({
                   elevation: 2,
                   position: 'relative',
                 })}>
-                <Ionicons name="chevron-back" size={24} color="#B227D4" />
+                <Ionicons name="chevron-back" size={24} color="#7b33ff" />
               </Pressable>
             ),
           headerRight: () => (

@@ -40,7 +40,7 @@ export function BelaPick() {
       <View className="mb-4 flex-row items-center justify-between px-4">
         <View className="flex-row items-center">
           <Text className="text-xl font-bold">Bera's Pick</Text>
-          <Text className="ml-2 text-xl text-[#B227D4]">✓</Text>
+          <Text className="ml-2 text-xl text-[#7b33ff]">✓</Text>
         </View>
         <Link href="/board/bella-picks" asChild>
           <TouchableOpacity>

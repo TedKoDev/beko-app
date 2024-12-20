@@ -53,7 +53,7 @@ export default function CommentInput({
           disabled={createCommentMutation.isPending || !content.trim()}
           className="rounded-full p-2"
           style={{ opacity: content.trim() ? 1 : 0.5 }}>
-          <Feather name="send" size={24} color="#B227D4" />
+          <Feather name="send" size={24} color="#7b33ff" />
         </Pressable>
       </View>
     </TouchableWithoutFeedback>
