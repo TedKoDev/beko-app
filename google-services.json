@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "559142701209-m6l2hl3brcv73qd2lf813r47e37000lj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ordihong.beko",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "559142701209-0f9pqkgf7228tl4kmt2g9oshu16tv1b7.apps.googleusercontent.com",
           "client_type": 3
         }
