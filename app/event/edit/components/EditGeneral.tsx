@@ -179,7 +179,7 @@ export default function EditGeneral({ post }) {
                 key={type}
                 onPress={() => setSelectedType(type)}
                 className={`rounded-full px-4 py-2 ${
-                  selectedType === type ? 'bg-purple-500' : 'bg-gray-200'
+                  selectedType === type ? 'bg-purple-custom' : 'bg-gray-200'
                 }`}>
                 <Text className={selectedType === type ? 'text-white' : 'text-gray-700'}>
                   {type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()}
@@ -229,7 +229,7 @@ export default function EditGeneral({ post }) {
                   setSelectedCategory(null);
                 }}
                 className={`rounded-full px-4 py-2 ${
-                  selectedTopic === topic.topic_id ? 'bg-purple-500' : 'bg-gray-200'
+                  selectedTopic === topic.topic_id ? 'bg-purple-custom' : 'bg-gray-200'
                 }`}>
                 <Text className={selectedTopic === topic.topic_id ? 'text-white' : 'text-gray-700'}>
                   {topic.title}
@@ -253,7 +253,7 @@ export default function EditGeneral({ post }) {
                     key={category.category_id}
                     onPress={() => setSelectedCategory(category.category_id)}
                     className={`rounded-full px-4 py-2 ${
-                      selectedCategory === category.category_id ? 'bg-purple-500' : 'bg-gray-200'
+                      selectedCategory === category.category_id ? 'bg-purple-custom' : 'bg-gray-200'
                     }`}>
                     <Text
                       className={
@@ -323,7 +323,7 @@ export default function EditGeneral({ post }) {
       {/* Submit Button */}
       <TouchableOpacity
         onPress={handleSubmit}
-        className="mt-4 rounded-lg bg-purple-500 p-4"
+        className="bg-purple-custom mt-4 rounded-lg p-4"
         disabled={updatePost.isPending}>
         <Text className="text-center font-bold text-white">
           {updatePost.isPending ? 'Updating...' : 'Update Post'}

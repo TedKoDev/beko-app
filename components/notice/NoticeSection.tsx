@@ -26,7 +26,7 @@ const NoticeSection: React.FC<NoticeSectionProps> = ({ title, categoryId, items 
               params: { categoryId },
             })
           }>
-          <Text className="text-purple-600">See more</Text>
+          <Text className="text-purple-custom">See more</Text>
         </TouchableOpacity>
       </View>
       <View>

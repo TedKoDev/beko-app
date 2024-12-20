@@ -53,7 +53,7 @@ export default function ConsultationListItem({ consultation }: any) {
         {/* 하단: 카테고리, 가격, 댓글 수 */}
         <View className="mt-2 flex-row items-center justify-between">
           <View className="flex-row items-center">
-            <Text className="text-sm text-purple-500">{consultation.category_name}</Text>
+            <Text className="text-purple-custom text-sm">{consultation.category_name}</Text>
             <Text className="ml-2 text-sm font-semibold text-green-600">{content.price}P</Text>
           </View>
 

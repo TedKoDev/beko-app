@@ -70,7 +70,7 @@ export default function WriteWithWordsScreen() {
             options={{
               headerTitle: '3 Words Writing',
               headerTitleAlign: 'center',
-              headerTintColor: '#D812DC',
+              headerTintColor: '#7b33ff',
               headerStyle: {
                 backgroundColor: 'white',
               },

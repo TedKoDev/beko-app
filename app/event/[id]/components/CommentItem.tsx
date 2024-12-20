@@ -247,7 +247,7 @@ export default function CommentItem({
               !sortedComments?.some((c) => c.isSelected) && (
                 <TouchableOpacity
                   onPress={() => onSelectAnswer?.(comment.comment_id)}
-                  className="mt-2 self-end rounded-lg bg-purple-500 px-3 py-1">
+                  className="bg-purple-custom mt-2 self-end rounded-lg px-3 py-1">
                   <Text className="text-white">답변 채택하기</Text>
                 </TouchableOpacity>
               )}

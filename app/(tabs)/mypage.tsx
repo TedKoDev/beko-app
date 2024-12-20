@@ -50,7 +50,7 @@ export default function MyPage() {
                   shadowRadius: 3.84,
                   elevation: 5,
                 }}>
-                <Feather name="edit-2" size={16} color="#6C47FF" />
+                <Feather name="edit-2" size={16} color="#7b33ff" />
               </TouchableOpacity>
             </View>
             <View className="flex-1">
@@ -109,7 +109,7 @@ export default function MyPage() {
             <TouchableOpacity
               className="flex-row items-center py-3"
               onPress={() => router.push('/consultations')}>
-              <Feather name="message-square" size={24} color="#9333ea" />
+              <Feather name="message-square" size={24} color="#7b33ff" />
               <Text className="ml-3 text-base">My Consultation History</Text>
             </TouchableOpacity>
             {/* <TouchableOpacity className="flex-row items-center py-3">
@@ -128,23 +128,23 @@ export default function MyPage() {
             <TouchableOpacity
               className="flex-row items-center py-3"
               onPress={() => router.push('/board/notice')}>
-              <Feather name="bell" size={24} color="#9333ea" />
+              <Feather name="bell" size={24} color="#7b33ff" />
               <Text className="ml-3 text-base">Announcements</Text>
             </TouchableOpacity>
             <TouchableOpacity
               className="flex-row items-center py-3"
               onPress={() => router.push('/(stack)/support')}>
-              <Feather name="help-circle" size={24} color="#9333ea" />
+              <Feather name="help-circle" size={24} color="#7b33ff" />
               <Text className="ml-3 text-base">Support</Text>
             </TouchableOpacity>
             <TouchableOpacity
               className="flex-row items-center py-3"
               onPress={() => Alert.alert('Coming Soon', 'This feature is coming soon!')}>
-              <Feather name="user-plus" size={24} color="#9333ea" />
+              <Feather name="user-plus" size={24} color="#7b33ff" />
               <Text className="ml-3 text-base">Become a Teacher</Text>
             </TouchableOpacity>
             <TouchableOpacity className="flex-row items-center py-3" onPress={handleSettings}>
-              <Feather name="settings" size={24} color="#9333ea" />
+              <Feather name="settings" size={24} color="#7b33ff" />
               <Text className="ml-3 text-base">Settings</Text>
             </TouchableOpacity>
           </View>

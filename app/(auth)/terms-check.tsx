@@ -68,7 +68,7 @@ export default function TermsCheckScreen() {
         </View>
 
         <TouchableOpacity
-          className="mb-8 flex-row items-center justify-center rounded-lg border border-[#6C47FF] py-4"
+          className="mb-8 flex-row items-center justify-center rounded-lg border border-[#7b33ff] py-4"
           onPress={() => {
             setAgreements({
               terms: true,
@@ -76,8 +76,8 @@ export default function TermsCheckScreen() {
               marketing: true,
             });
           }}>
-          <AntDesign name="check" size={20} color="#6C47FF" />
-          <Text className="ml-2 text-base text-[#6C47FF]">Agree All</Text>
+          <AntDesign name="check" size={20} color="#7b33ff" />
+          <Text className="ml-2 text-base text-[#7b33ff]">Agree All</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -87,7 +87,7 @@ export default function TermsCheckScreen() {
             <AntDesign
               name={agreements.terms ? 'checkcircle' : 'checkcircleo'}
               size={22}
-              color={agreements.terms ? '#6C47FF' : '#E8E8E8'}
+              color={agreements.terms ? '#7b33ff' : '#E8E8E8'}
             />
             <Text className="ml-3 text-base">Agree to BeraKorean Terms of Use (Required)</Text>
           </View>
@@ -103,7 +103,7 @@ export default function TermsCheckScreen() {
             <AntDesign
               name={agreements.privacy ? 'checkcircle' : 'checkcircleo'}
               size={22}
-              color={agreements.privacy ? '#6C47FF' : '#E8E8E8'}
+              color={agreements.privacy ? '#7b33ff' : '#E8E8E8'}
             />
             <Text className="ml-3 text-base">Agree to Privacy Policy (Required)</Text>
           </View>
@@ -119,7 +119,7 @@ export default function TermsCheckScreen() {
             <AntDesign
               name={agreements.marketing ? 'checkcircle' : 'checkcircleo'}
               size={22}
-              color={agreements.marketing ? '#6C47FF' : '#E8E8E8'}
+              color={agreements.marketing ? '#7b33ff' : '#E8E8E8'}
             />
             <Text className="ml-3 text-base">Receive Marketing Information (Optional)</Text>
           </View>
@@ -132,7 +132,7 @@ export default function TermsCheckScreen() {
       <View className="p-4">
         <TouchableOpacity
           className={`h-12 items-center justify-center rounded-lg ${
-            agreements.terms && agreements.privacy ? 'bg-[#6C47FF]' : 'bg-gray-200'
+            agreements.terms && agreements.privacy ? 'bg-[#7b33ff]' : 'bg-gray-200'
           }`}
           onPress={handleSubmit}
           disabled={!agreements.terms || !agreements.privacy || isUpdating}>

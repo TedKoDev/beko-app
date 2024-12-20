@@ -36,20 +36,20 @@ export default function VocaPage() {
       <View className="flex-row border-b border-gray-200">
         <TouchableOpacity
           onPress={() => setActiveTab('WordList')}
-          className={`flex-1 p-4 ${activeTab === 'WordList' ? 'border-b-2 border-purple-600' : ''}`}>
+          className={`flex-1 p-4 ${activeTab === 'WordList' ? 'border-purple-custom border-b-2' : ''}`}>
           <Text
             className={`text-center font-medium ${
-              activeTab === 'WordList' ? 'text-purple-600' : 'text-gray-600'
+              activeTab === 'WordList' ? 'text-purple-custom' : 'text-gray-600'
             }`}>
             Voca List
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setActiveTab('UserWordList')}
-          className={`flex-1 p-4 ${activeTab === 'UserWordList' ? 'border-b-2 border-purple-600' : ''}`}>
+          className={`flex-1 p-4 ${activeTab === 'UserWordList' ? 'border-purple-custom border-b-2' : ''}`}>
           <Text
             className={`text-center font-medium ${
-              activeTab === 'UserWordList' ? 'text-purple-600' : 'text-gray-600'
+              activeTab === 'UserWordList' ? 'text-purple-custom' : 'text-gray-600'
             }`}>
             My Voca
           </Text>

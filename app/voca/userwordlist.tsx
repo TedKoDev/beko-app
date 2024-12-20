@@ -39,7 +39,7 @@ export default function UserWordListPage() {
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center">
-        <ActivityIndicator size="large" color="#6C47FF" />
+        <ActivityIndicator size="large" color="#7b33ff" />
       </View>
     );
   }
@@ -68,7 +68,7 @@ export default function UserWordListPage() {
           ListFooterComponent={
             isFetchingNextPage ? (
               <View className="py-4">
-                <ActivityIndicator color="#6C47FF" />
+                <ActivityIndicator color="#7b33ff" />
               </View>
             ) : null
           }

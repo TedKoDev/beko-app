@@ -68,7 +68,7 @@ export default function InquiryModal({ isVisible, onClose }: InquiryModalProps) 
               <TouchableOpacity
                 onPress={handleSubmit}
                 disabled={isLoading}
-                className="rounded-lg bg-purple-600 px-4 py-2">
+                className="bg-purple-custom rounded-lg px-4 py-2">
                 <Text className="text-base text-white">
                   {isLoading ? 'Processing...' : 'Submit'}
                 </Text>

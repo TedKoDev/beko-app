@@ -180,7 +180,7 @@ export default function WriteForConsultationScreen() {
                   key={category.category_id}
                   onPress={() => setSelectedCategory(category.category_id)}
                   className={`rounded-full px-4 py-2 ${
-                    selectedCategory === category.category_id ? 'bg-purple-500' : 'bg-gray-200'
+                    selectedCategory === category.category_id ? 'bg-purple-custom' : 'bg-gray-200'
                   }`}>
                   <Text
                     className={
@@ -199,7 +199,9 @@ export default function WriteForConsultationScreen() {
           <View className="mb-4 rounded-lg bg-gray-100 p-4">
             <View className="mb-2 flex-row items-center justify-between">
               <Text className="text-gray-600">Consultation Cost</Text>
-              <Text className="text-lg font-bold text-purple-500">{selectedCategoryPrice} P</Text>
+              <Text className="text-purple-custom text-lg font-bold">
+                {selectedCategoryPrice} P
+              </Text>
             </View>
             <View className="flex-row items-center justify-between">
               <Text className="text-gray-600">Points</Text>
@@ -280,7 +282,7 @@ export default function WriteForConsultationScreen() {
         {/* Submit button */}
         <TouchableOpacity
           onPress={handleSubmit}
-          className="rounded-lg bg-purple-500 p-4"
+          className="bg-purple-custom rounded-lg p-4"
           disabled={addPost.isPending}>
           <Text className="text-center font-bold text-white">
             {addPost.isPending ? 'Writing...' : 'Write consultation'}

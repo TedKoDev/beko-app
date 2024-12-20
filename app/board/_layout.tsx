@@ -11,12 +11,12 @@ export default function BoardLayout() {
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#6C47FF',
+            backgroundColor: '#7b33ff',
           },
           headerTitleStyle: {
             fontSize: 18,
             fontWeight: '600',
-            color: '#D812DC',
+            color: '#7b33ff',
           },
           headerTitleAlign: 'center',
           headerShadowVisible: true,
@@ -24,7 +24,7 @@ export default function BoardLayout() {
           headerLeft: ({ canGoBack }) =>
             canGoBack ? (
               <TouchableOpacity onPress={() => router.back()}>
-                <Ionicons name="chevron-back" size={24} color="#D812DC" />
+                <Ionicons name="chevron-back" size={24} color="#7b33ff" />
               </TouchableOpacity>
             ) : null,
         }}

@@ -30,7 +30,7 @@ export const SortModal: React.FC<SortModalProps> = ({
               onPress={() => onSelect(option.value)}>
               <Text
                 className={`text-center text-lg ${
-                  selectedSort === option.value ? 'font-bold text-purple-500' : 'text-gray-700'
+                  selectedSort === option.value ? 'text-purple-custom font-bold' : 'text-gray-700'
                 }`}>
                 {option.label}
               </Text>

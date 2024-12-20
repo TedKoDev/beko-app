@@ -127,7 +127,7 @@ export default function Feed() {
               }}
               className="flex-row items-center justify-between border-b border-gray-100 px-4 py-3 last:border-b-0">
               <Text className="text-gray-700">{label}</Text>
-              {sortBy === value && <Ionicons name="checkmark" size={20} color="#9333ea" />}
+              {sortBy === value && <Ionicons name="checkmark" size={20} color="#7b33ff" />}
             </TouchableOpacity>
           ))}
         </View>

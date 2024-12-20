@@ -215,7 +215,7 @@ export default function EditProfile() {
               <AntDesign
                 name={agreements.terms ? 'checkcircle' : 'checkcircleo'}
                 size={20}
-                color={agreements.terms ? '#6C47FF' : '#DDD'}
+                color={agreements.terms ? '#7b33ff' : '#DDD'}
               />
               <Text className="ml-2 text-base">Agree to Berakorean Terms (Required)</Text>
             </View>
@@ -231,7 +231,7 @@ export default function EditProfile() {
               <AntDesign
                 name={agreements.privacy ? 'checkcircle' : 'checkcircleo'}
                 size={20}
-                color={agreements.privacy ? '#6C47FF' : '#DDD'}
+                color={agreements.privacy ? '#7b33ff' : '#DDD'}
               />
               <Text className="ml-2 text-base">Privacy Policy (Required)</Text>
             </View>
@@ -247,7 +247,7 @@ export default function EditProfile() {
               <AntDesign
                 name={agreements.marketing ? 'checkcircle' : 'checkcircleo'}
                 size={20}
-                color={agreements.marketing ? '#6C47FF' : '#DDD'}
+                color={agreements.marketing ? '#7b33ff' : '#DDD'}
               />
               <Text className="ml-2 text-base">
                 Agree to receive marketing information (Optional)
@@ -263,7 +263,7 @@ export default function EditProfile() {
         <View className="p-4">
           <TouchableOpacity
             className={`h-12 items-center justify-center rounded-lg ${
-              !isUpdating ? 'bg-[#6C47FF]' : 'bg-gray-200'
+              !isUpdating ? 'bg-[#7b33ff]' : 'bg-gray-200'
             }`}
             onPress={handleSubmit}
             disabled={isUpdating}>

@@ -46,7 +46,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
                 setSelectedCategoryId(undefined);
               }}
               className={`rounded-full px-4 py-2 ${
-                selectedTopicId === undefined ? 'bg-purple-500' : 'bg-gray-200'
+                selectedTopicId === undefined ? 'bg-purple-custom' : 'bg-gray-200'
               }`}>
               <Text className={selectedTopicId === undefined ? 'text-white' : 'text-gray-700'}>
                 All
@@ -62,7 +62,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
                     setSelectedCategoryId(undefined);
                   }}
                   className={`rounded-full px-4 py-2 ${
-                    selectedTopicId === topic.topic_id ? 'bg-purple-500' : 'bg-gray-200'
+                    selectedTopicId === topic.topic_id ? 'bg-purple-custom' : 'bg-gray-200'
                   }`}>
                   <Text
                     className={selectedTopicId === topic.topic_id ? 'text-white' : 'text-gray-700'}>
@@ -84,7 +84,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
               <TouchableOpacity
                 onPress={() => setSelectedCategoryId(undefined)}
                 className={`rounded-full px-4 py-2 ${
-                  selectedCategoryId === undefined ? 'bg-purple-500' : 'bg-gray-200'
+                  selectedCategoryId === undefined ? 'bg-purple-custom' : 'bg-gray-200'
                 }`}>
                 <Text className={selectedCategoryId === undefined ? 'text-white' : 'text-gray-700'}>
                   All
@@ -95,7 +95,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
                   key={category.category_id}
                   onPress={() => setSelectedCategoryId(category.category_id)}
                   className={`rounded-full px-4 py-2 ${
-                    selectedCategoryId === category.category_id ? 'bg-purple-500' : 'bg-gray-200'
+                    selectedCategoryId === category.category_id ? 'bg-purple-custom' : 'bg-gray-200'
                   }`}>
                   <Text
                     className={
@@ -120,7 +120,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
         <Ionicons
           name="help-circle-outline"
           size={20}
-          color={showQuestionsOnly ? '#9333ea' : '#666'}
+          color={showQuestionsOnly ? '#7b33ff' : '#7b33ff'}
         />
         <Text className="ml-2 text-gray-700">{showQuestionsOnly ? 'All' : 'Questions only'}</Text>
       </TouchableOpacity>

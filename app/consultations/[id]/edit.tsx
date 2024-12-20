@@ -234,7 +234,7 @@ export default function EditConsultation() {
                 onPress={() => setSelectedCategory(category.category_id)}
                 className={`mr-2 rounded-full border px-4 py-2 ${
                   selectedCategory === category.category_id
-                    ? 'border-purple-500 bg-purple-50'
+                    ? 'border-purple-custom bg-purple-50'
                     : 'border-gray-300'
                 }`}>
                 <View className="flex-row items-center">
@@ -244,7 +244,7 @@ export default function EditConsultation() {
                   <Text
                     className={
                       selectedCategory === category.category_id
-                        ? 'text-purple-500'
+                        ? 'text-purple-custom'
                         : 'text-gray-600'
                     }>
                     {category.category_name}
@@ -269,7 +269,7 @@ export default function EditConsultation() {
         <View className="mb-4 rounded-lg bg-gray-100 p-4">
           <View className="mb-2 flex-row items-center justify-between">
             <Text className="text-gray-600">Consultation Cost</Text>
-            <Text className="text-lg font-bold text-purple-500">{selectedCategoryPrice} P</Text>
+            <Text className="text-purple-custom text-lg font-bold">{selectedCategoryPrice} P</Text>
           </View>
           <View className="flex-row items-center justify-between">
             <Text className="text-gray-600">Owned Points</Text>
@@ -348,7 +348,7 @@ export default function EditConsultation() {
         {/* 수정 버튼 */}
         <TouchableOpacity
           onPress={handleSubmit}
-          className="rounded-lg bg-purple-500 p-4"
+          className="bg-purple-custom rounded-lg p-4"
           disabled={updatePost.isPending}>
           <Text className="text-center font-bold text-white">
             {updatePost.isPending ? '수정 중...' : '수정하기'}

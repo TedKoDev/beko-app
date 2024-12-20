@@ -47,7 +47,9 @@ export default function EditCommentModal({
             <TouchableOpacity onPress={onClose} className="rounded-lg bg-gray-200 px-4 py-2">
               <Text>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleSubmit} className="rounded-lg bg-purple-500 px-4 py-2">
+            <TouchableOpacity
+              onPress={handleSubmit}
+              className="bg-purple-custom rounded-lg px-4 py-2">
               <Text className="text-white">Save</Text>
             </TouchableOpacity>
           </View>

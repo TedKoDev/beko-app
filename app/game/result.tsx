@@ -84,7 +84,7 @@ export default function GameResult() {
 
         <View className="mt-6 space-y-4">
           <TouchableOpacity
-            className="rounded-full bg-[#6C47FF] py-3"
+            className="rounded-full bg-[#7b33ff] py-3"
             onPress={() => {
               router.dismissAll();
               router.replace('/game');

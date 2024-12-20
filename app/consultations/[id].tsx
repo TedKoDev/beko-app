@@ -226,7 +226,9 @@ export default function ConsultationDetailScreen() {
             </View>
             <View className="mt-2 flex-row items-center justify-between">
               <Text className="text-gray-600">상담 비용</Text>
-              <Text className="font-bold text-purple-500">{consultation.post_content.price} P</Text>
+              <Text className="text-purple-custom font-bold">
+                {consultation.post_content.price} P
+              </Text>
             </View>
           </View>
 
@@ -269,7 +271,7 @@ export default function ConsultationDetailScreen() {
                       <View
                         key={index}
                         className={`mx-1 h-2 w-2 rounded-full ${
-                          index === activeIndex ? 'bg-purple-500' : 'bg-gray-300'
+                          index === activeIndex ? 'bg-purple-custom' : 'bg-gray-300'
                         }`}
                       />
                     ))}
@@ -335,7 +337,7 @@ export default function ConsultationDetailScreen() {
           <View className="flex-row justify-between">
             <TouchableOpacity
               onPress={handleCommentSubmit}
-              className="mr-2 flex-1 rounded-lg bg-purple-500 p-3">
+              className="bg-purple-custom mr-2 flex-1 rounded-lg p-3">
               <Text className="text-center font-medium text-white">답변 작성</Text>
             </TouchableOpacity>
           </View>

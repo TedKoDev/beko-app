@@ -48,7 +48,7 @@ export default function EditSentence({ post }) {
 
       <TouchableOpacity
         onPress={handleSubmit}
-        className="rounded-lg bg-purple-500 p-4"
+        className="bg-purple-custom rounded-lg p-4"
         disabled={updatePost.isPending}>
         <Text className="text-center font-bold text-white">
           {updatePost.isPending ? 'Updating...' : 'Update Post'}

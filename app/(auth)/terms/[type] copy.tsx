@@ -39,7 +39,7 @@ export default function TermsDetailScreen() {
         startInLoadingState
         renderLoading={() => (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size="large" color="#6C47FF" />
+            <ActivityIndicator size="large" color="#7b33ff" />
           </View>
         )}
         javaScriptEnabled

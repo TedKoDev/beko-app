@@ -51,7 +51,7 @@ export default function AgreementScreen() {
 
         {/* 모두 동의하기 버튼 */}
         <TouchableOpacity
-          className="mb-8 flex-row items-center justify-center rounded-lg border border-[#6C47FF] py-4"
+          className="mb-8 flex-row items-center justify-center rounded-lg border border-[#7b33ff] py-4"
           onPress={() => {
             setAgreements({
               terms: true,
@@ -59,8 +59,8 @@ export default function AgreementScreen() {
               marketing: true,
             });
           }}>
-          <AntDesign name="check" size={20} color="#6C47FF" />
-          <Text className="ml-2 text-base text-[#6C47FF]">Agree All and Start</Text>
+          <AntDesign name="check" size={20} color="#7b33ff" />
+          <Text className="ml-2 text-base text-[#7b33ff]">Agree All and Start</Text>
         </TouchableOpacity>
 
         {/* 개별 동의 항목들 */}
@@ -71,7 +71,7 @@ export default function AgreementScreen() {
             <AntDesign
               name={agreements.terms ? 'checkcircle' : 'checkcircleo'}
               size={22}
-              color={agreements.terms ? '#6C47FF' : '#E8E8E8'}
+              color={agreements.terms ? '#7b33ff' : '#E8E8E8'}
             />
             <Text className="ml-3 text-base">Agree to BeraKorean Terms of Use (Required)</Text>
           </View>
@@ -87,7 +87,7 @@ export default function AgreementScreen() {
             <AntDesign
               name={agreements.privacy ? 'checkcircle' : 'checkcircleo'}
               size={22}
-              color={agreements.privacy ? '#6C47FF' : '#E8E8E8'}
+              color={agreements.privacy ? '#7b33ff' : '#E8E8E8'}
             />
             <Text className="ml-3 text-base">Agree to Privacy Policy (Required)</Text>
           </View>
@@ -103,7 +103,7 @@ export default function AgreementScreen() {
             <AntDesign
               name={agreements.marketing ? 'checkcircle' : 'checkcircleo'}
               size={22}
-              color={agreements.marketing ? '#6C47FF' : '#E8E8E8'}
+              color={agreements.marketing ? '#7b33ff' : '#E8E8E8'}
             />
             <Text className="ml-3 text-base">Receive Marketing Information (Optional)</Text>
           </View>
@@ -117,7 +117,7 @@ export default function AgreementScreen() {
       <View className="p-4">
         <TouchableOpacity
           className={`h-12 items-center justify-center rounded-lg ${
-            agreements.terms && agreements.privacy ? 'bg-[#6C47FF]' : 'bg-gray-200'
+            agreements.terms && agreements.privacy ? 'bg-[#7b33ff]' : 'bg-gray-200'
           }`}
           onPress={handleNext}
           disabled={!agreements.terms || !agreements.privacy}>

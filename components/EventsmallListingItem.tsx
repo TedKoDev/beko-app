@@ -57,7 +57,7 @@ export default function EventSmallListItem({ event }: any) {
 
         {/* Bottom Row */}
         <View className="mt-2 flex-row items-center justify-between">
-          <Text className="text-xs text-purple-500">{event.category_name}</Text>
+          <Text className="text-purple-custom text-xs">{event.category_name}</Text>
 
           <View className="flex-row items-center">
             <View className="flex-row items-center">

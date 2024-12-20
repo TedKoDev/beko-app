@@ -38,7 +38,7 @@ export const UserLevelProgressBar = () => {
             className="h-20 w-20 rounded-full"
           />
         ) : (
-          <FontAwesome name="user-circle" size={48} color="#6C47FF" />
+          <FontAwesome name="user-circle" size={48} color="#7b33ff" />
         )}
         <View className="flex-row items-center">
           <View className="ml-3">
@@ -63,7 +63,7 @@ export const UserLevelProgressBar = () => {
           </View>
         </View>
         <View className="items-end">
-          <Text className="text-lg font-bold text-[#6C47FF]">
+          <Text className="text-lg font-bold text-[#7b33ff]">
             {Math.round(progressPercentage)}%
           </Text>
           <Text className="text-xs text-gray-500">총 {currentXP.toLocaleString()} XP</Text>
@@ -72,7 +72,7 @@ export const UserLevelProgressBar = () => {
 
       <View className="mt-3 h-2 overflow-hidden rounded-full bg-gray-200">
         <View
-          className="h-full rounded-full bg-[#6C47FF]"
+          className="h-full rounded-full bg-[#7b33ff]"
           style={{ width: `${progressPercentage}%` }}
         />
       </View>

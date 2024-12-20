@@ -13,7 +13,9 @@ export default function EventListItem({ event }: any) {
       <Pressable className="border-b border-gray-200 bg-white p-4">
         <View className="mb-2 flex-row items-center">
           <View className="flex-1 flex-row items-center">
-            {event.type === 'QUESTION' && <Text className="mr-2 text-lg text-purple-500">Q.</Text>}
+            {event.type === 'QUESTION' && (
+              <Text className="text-purple-custom mr-2 text-lg">Q.</Text>
+            )}
             {event.user_profile_picture_url ? (
               <Image
                 source={{ uri: event.user_profile_picture_url }}
@@ -71,7 +73,7 @@ export default function EventListItem({ event }: any) {
         <View className="mt-3 flex-row items-center justify-between">
           <View className="flex-row items-center gap-2">
             {event.category_name && (
-              <Text className="text-xs text-purple-500">{event.category_name}</Text>
+              <Text className="text-purple-custom text-xs">{event.category_name}</Text>
             )}
             {event.type === 'QUESTION' && (
               <>

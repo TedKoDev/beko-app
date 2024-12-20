@@ -43,7 +43,7 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
             <TouchableOpacity
               onPress={() => setSelectedStatus(undefined)}
               className={`rounded-full px-4 py-2 ${
-                selectedStatus === undefined ? 'bg-purple-500' : 'bg-gray-200'
+                selectedStatus === undefined ? 'bg-purple-custom' : 'bg-gray-200'
               }`}>
               <Text className={selectedStatus === undefined ? 'text-white' : 'text-gray-700'}>
                 All
@@ -54,7 +54,7 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
                 key={status}
                 onPress={() => setSelectedStatus(status)}
                 className={`rounded-full px-4 py-2 ${
-                  selectedStatus === status ? 'bg-purple-500' : 'bg-gray-200'
+                  selectedStatus === status ? 'bg-purple-custom' : 'bg-gray-200'
                 }`}>
                 <Text className={selectedStatus === status ? 'text-white' : 'text-gray-700'}>
                   {getStatusText(status)}
@@ -73,7 +73,7 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
             <TouchableOpacity
               onPress={() => setSelectedCategoryId(undefined)}
               className={`rounded-full px-4 py-2 ${
-                selectedCategoryId === undefined ? 'bg-purple-500' : 'bg-gray-200'
+                selectedCategoryId === undefined ? 'bg-purple-custom' : 'bg-gray-200'
               }`}>
               <Text className={selectedCategoryId === undefined ? 'text-white' : 'text-gray-700'}>
                 All
@@ -84,7 +84,7 @@ export const ConsultationFilterHeader: React.FC<ConsultationFilterHeaderProps> =
                 key={category.category_id}
                 onPress={() => setSelectedCategoryId(category.category_id)}
                 className={`rounded-full px-4 py-2 ${
-                  selectedCategoryId === category.category_id ? 'bg-purple-500' : 'bg-gray-200'
+                  selectedCategoryId === category.category_id ? 'bg-purple-custom' : 'bg-gray-200'
                 }`}>
                 <Text
                   className={

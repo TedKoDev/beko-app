@@ -84,7 +84,7 @@ export default function CommentSection({
         <Text className="text-lg font-bold">Comments ({comment_count})</Text>
         {comment_count > 3 && (
           <TouchableOpacity onPress={() => router.push(`/event/${postId}/commentList`)}>
-            <Text className="text-purple-600">see all</Text>
+            <Text className="text-purple-custom">see all</Text>
           </TouchableOpacity>
         )}
       </View>

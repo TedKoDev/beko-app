@@ -24,7 +24,7 @@ export const UserProfileCard = ({
 
   return (
     <Surface className="mb-4 overflow-hidden bg-white">
-      <View className="bg-[#6C47FF] px-4 pb-8 pt-4">
+      <View className="bg-[#7b33ff] px-4 pb-8 pt-4">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Image
@@ -56,7 +56,7 @@ export const UserProfileCard = ({
             <Text className="ml-2 text-lg font-bold">Level {levelInfo?.currentLevel || 1}</Text>
           </View>
           <View className="flex-row items-center">
-            <MaterialCommunityIcons name="trophy" size={20} color="#6C47FF" />
+            <MaterialCommunityIcons name="trophy" size={20} color="#7b33ff" />
             <Text className="ml-1 text-sm text-gray-600">
               상위 {Math.round(((levelInfo?.currentLevel || 1) / 20) * 100)}%
             </Text>

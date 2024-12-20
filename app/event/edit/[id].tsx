@@ -45,7 +45,7 @@ export default function EditPostScreen() {
         options={{
           headerTitle: 'Edit Post',
           headerTitleAlign: 'center',
-          headerTintColor: '#D812DC',
+          headerTintColor: '#7b33ff',
           headerStyle: { backgroundColor: 'white' },
         }}
       />

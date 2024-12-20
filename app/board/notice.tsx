@@ -39,7 +39,7 @@ export default function NoticeScreen() {
     <TouchableOpacity
       onPress={() => setSort(type)}
       className={`rounded-full px-3 py-1 ${sort === type ? 'bg-purple-100' : 'bg-gray-100'}`}>
-      <Text className={sort === type ? 'text-purple-600' : 'text-gray-600'}>{label}</Text>
+      <Text className={sort === type ? 'text-purple-custom' : 'text-gray-600'}>{label}</Text>
     </TouchableOpacity>
   );
 

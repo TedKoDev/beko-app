@@ -253,7 +253,7 @@ export default function GamePlay() {
           </View>
           <View style={{ marginTop: 8, height: 4, backgroundColor: '#e0e0e0', borderRadius: 2 }}>
             <Animated.View
-              style={[{ height: '100%', backgroundColor: '#6C47FF' }, progressStyle]}
+              style={[{ height: '100%', backgroundColor: '#7b33ff' }, progressStyle]}
             />
           </View>
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Time Left: {timeLeft}s</Text>

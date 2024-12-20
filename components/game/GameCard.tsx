@@ -53,7 +53,7 @@ export const GameCard = ({ game, onPress }: GameCardProps) => {
       className="mb-4 w-[48%]"
       disabled={game.isComingSoon}>
       <View className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md">
-        <View className="h-32 bg-purple-400">
+        <View className="bg-purple-custom h-32">
           {game.isComingSoon ? (
             <View className="flex-1 items-center justify-center">
               <MaterialCommunityIcons name="gamepad-variant" size={40} color="blue" />
