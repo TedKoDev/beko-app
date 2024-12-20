@@ -43,7 +43,8 @@ export default function NotificationSettings() {
             <View>
               <Text className="text-base">Benefit and Event Notifications</Text>
               <Text className="text-sm text-gray-500">
-                We will notify you of useful benefits and various event information.
+                We will notify you of useful benefits {'\n'}
+                and various event information.
               </Text>
             </View>
             <CustomSwitch

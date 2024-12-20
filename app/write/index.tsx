@@ -244,7 +244,7 @@ export default function WriteScreen() {
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View className="flex-row gap-2">
               {topics
-                .filter((topic) => topic.topic_id !== 1)
+                .filter((topic) => topic.topic_id !== 1 && topic.title !== 'Notice')
                 .map((topic) => (
                   <TouchableOpacity
                     key={topic.topic_id}

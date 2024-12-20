@@ -21,6 +21,7 @@ export default function EditProfileImage() {
   const updateProfileMutation = useUpdateProfile();
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(userInfo);
   const pickImage = async () => {
     try {
       setIsLoading(true);
@@ -57,7 +58,7 @@ export default function EditProfileImage() {
           userId: userInfo?.user_id ?? 0,
           username: userInfo?.username ?? '',
           bio: userInfo?.bio ?? '',
-          country_id: Number(userInfo?.country?.country_id),
+          country_id: Number(userInfo?.country?.country_id) || 1,
           terms_agreed: userInfo?.terms_agreed,
           privacy_agreed: userInfo?.privacy_agreed,
           marketing_agreed: userInfo?.marketing_agreed,
