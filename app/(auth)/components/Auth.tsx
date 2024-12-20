@@ -10,8 +10,11 @@ export default function Auth() {
   const router = useRouter();
 
   GoogleSignin.configure({
-    scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+    // scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+    scopes: ['email', 'profile'], // scopes 수정
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+    offlineAccess: true, // 추가
+    // webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
     iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
     androidStandaloneAppClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
   } as any);
