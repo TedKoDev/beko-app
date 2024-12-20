@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "559142701209-73igbu8p2431cr75tl47msf704nv6ei0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ordihong.beko",
+            "certificate_hash": "2bd4c65dcbe620f268b4ec58a0eaa56c9e1011e6"
+          }
+        },
+        {
           "client_id": "559142701209-0f9pqkgf7228tl4kmt2g9oshu16tv1b7.apps.googleusercontent.com",
           "client_type": 3
         }
