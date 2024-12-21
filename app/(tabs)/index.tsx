@@ -29,6 +29,8 @@ export default function Home() {
   });
   const { data: adBannerResponse } = useAdbanner({ limit: 5 });
 
+  console.log('home');
+
   // console.log('adBanners:', JSON.stringify(adBannerResponse, null, 2));
 
   const adBanners = useMemo(() => {

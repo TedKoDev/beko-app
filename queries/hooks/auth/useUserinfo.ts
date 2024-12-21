@@ -23,10 +23,9 @@ export function useUserInfo() {
       return response;
     },
     enabled: !!token,
-    staleTime: 1000,
-    gcTime: 1000 * 60 * 5, // Changed from cacheTime to gcTime
-    refetchOnMount: true,
-    refetchOnWindowFocus: true,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
+    retry: false,
   });
 }
 

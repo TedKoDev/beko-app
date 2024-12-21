@@ -14,6 +14,7 @@ import {
   SafeAreaView,
   Modal,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { Pressable } from 'react-native-gesture-handler';
 
@@ -48,7 +49,7 @@ export default function EventPage() {
 
   const comment_count = data?.pages[0]?.total ?? 0;
 
-  if (isLoading) return <Text>Loading...</Text>;
+  if (isLoading) return <ActivityIndicator size="large" color="#7b33ff" />;
   if (!post) return <Text>Post not found</Text>;
 
   // console.log('post', JSON.stringify(post, null, 2));

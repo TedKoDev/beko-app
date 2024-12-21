@@ -88,7 +88,7 @@ export default function RootLayout() {
     };
 
     checkAuthentication();
-  }, [isAuthenticated, loading, userInfo]);
+  }, [isAuthenticated, loading]);
 
   // expo-notifications 설정 -----------------------------
   useEffect(() => {
