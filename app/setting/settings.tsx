@@ -57,11 +57,15 @@ export default function Settings() {
             <Text className="text-base">Notification Settings</Text>
             <FontAwesome5 name="chevron-right" size={16} color="#999" />
           </TouchableOpacity>
-          <TouchableOpacity className="flex-row items-center justify-between bg-white px-4 py-3">
+          <TouchableOpacity
+            className="flex-row items-center justify-between bg-white px-4 py-3"
+            onPress={() => router.push('/terms/terms')}>
             <Text className="text-base">Terms of Service</Text>
             <FontAwesome5 name="chevron-right" size={16} color="#999" />
           </TouchableOpacity>
-          <TouchableOpacity className="flex-row items-center justify-between bg-white px-4 py-3">
+          <TouchableOpacity
+            className="flex-row items-center justify-between bg-white px-4 py-3"
+            onPress={() => router.push('/terms/privacy')}>
             <Text className="text-base">Privacy Policy</Text>
             <FontAwesome5 name="chevron-right" size={16} color="#999" />
           </TouchableOpacity>

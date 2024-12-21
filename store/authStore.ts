@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { create } from 'zustand';
 
-import { tokenManager } from '../services/api';
+// import { tokenManager } from '../services/api';
 import { getUserInfoApi, loginApi, registerApi, authService } from '../services/authService';
 
 interface UserInfo {
@@ -99,7 +99,11 @@ export const useAuthStore = create<AuthState>((set) => ({
     const data = await loginApi(email, password);
     if (data) {
       await AsyncStorage.setItem('userToken', data.access_token);
-      tokenManager.setToken(data.access_token);
+
+      // tokenManager.setToken(data.access_token);
+      // tokenManager.setToken(data.access_token);
+
+      useAuthStore.setState({ userToken: data.access_token });
 
       const userInfo = await getUserInfoApi(data.access_token);
       await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
@@ -115,7 +119,8 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     await AsyncStorage.removeItem('userToken');
     await AsyncStorage.removeItem('userInfo');
-    tokenManager.setToken(null);
+    // tokenManager.setToken(null);
+    useAuthStore.setState({ userToken: undefined });
     set({ isAuthenticated: false, userInfo: undefined, userToken: undefined });
   },
 

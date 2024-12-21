@@ -45,6 +45,8 @@ export default function EventPage() {
     setActiveIndex(index);
   }, []);
 
+  // console.log('post', post);
+
   // Move the useComments hook call here, but only use it if post is defined
 
   const comment_count = data?.pages[0]?.total ?? 0;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import { api, tokenManager, unauthorizedEventEmitter } from './api';
+import { api, unauthorizedEventEmitter } from './api';
+import { useAuthStore } from '~/store/authStore';
 
 interface CheckResponse {
   available: boolean;
@@ -180,7 +181,7 @@ export const updateUserProfileApi = async (token: string, updateData: any) => {
 
 export const deactivateUserApi = async (userId: number, password: string) => {
   //console.log('deactivateUserApi4', userId, password);
-  const token = tokenManager.getToken();
+  const token = useAuthStore.getState().userToken;
   //console.log('deactivateUserApi5', token);
   if (!token) {
     throw new Error('No token found');
@@ -224,7 +225,9 @@ export const socialLoginApi = async (
 };
 
 export const getNotificationSettings = async (userId: number) => {
-  const token = tokenManager.getToken();
+  // console.log('getNotificationSettings', userId);
+  const token = useAuthStore.getState().userToken;
+  // console.log('getNotificationSettings2', token);
   try {
     const response = await api.get(`/users/notification-settings`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -237,7 +240,7 @@ export const getNotificationSettings = async (userId: number) => {
 };
 export const updatePasswordApi = async (currentPassword: string, newPassword: string) => {
   //console.log('updatePasswordApi', currentPassword, newPassword);
-  const token = tokenManager.getToken();
+  const token = useAuthStore.getState().userToken;
   try {
     const response = await api.patch(
       '/users/update-password',
@@ -259,7 +262,7 @@ export const updatePasswordApi = async (currentPassword: string, newPassword: st
 export const updateNotificationSettings = async (userId: number, settings: any) => {
   //console.log('sss', userId, settings);
   try {
-    const token = tokenManager.getToken();
+    const token = useAuthStore.getState().userToken;
     const response = await api.patch(`/users/notification-settings`, settings, {
       headers: { Authorization: `Bearer ${token}` },
     });

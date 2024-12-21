@@ -4,9 +4,16 @@ import { View, Text, SafeAreaView } from 'react-native';
 
 import CustomSwitch from '~/components/common/CustomSwitch';
 import { useNotificationSettings } from '~/queries/hooks/notification/useNotification';
+import { useAuthStore } from '~/store/authStore';
 
 export default function NotificationSettings() {
-  const userId = 1;
+  // const userId = 1;
+
+  const { userInfo } = useAuthStore();
+  const userId = userInfo?.user_id;
+
+  // console.log('userId', userId);
+
   const { settings, updateSettings } = useNotificationSettings(userId);
   const [allNotifications, setAllNotifications] = useState(false);
 

@@ -21,16 +21,16 @@ export const unauthorizedEventEmitter = {
   },
 };
 
-// 토큰 관리를 위한 유틸리티
-export const tokenManager = {
-  token: null as string | null,
-  setToken(newToken: string | null) {
-    this.token = newToken;
-  },
-  getToken() {
-    return this.token;
-  },
-};
+// // 토큰 관리를 위한 유틸리티
+// export const tokenManager = {
+//   token: null as string | null,
+//   setToken(newToken: string | null) {
+//     this.token = newToken;
+//   },
+//   getToken() {
+//     return this.token;
+//   },
+// };
 
 api.interceptors.response.use(
   (response) => response,
