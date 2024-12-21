@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Stack, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
+import { Stack, useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -13,7 +13,6 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
-
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useUpdateProfile } from '~/queries/hooks/auth/useUpdateProfile';

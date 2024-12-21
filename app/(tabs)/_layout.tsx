@@ -16,20 +16,20 @@ export default function TabLayout() {
   const router = useRouter();
   const { isAuthenticated } = useAuthStore();
 
-  useEffect(() => {
-    // 마이크로태스크 큐에 넣어서 마운트 이후에 실행되도록 함
-    setTimeout(() => {
-      if (!isAuthenticated) {
-        router.replace('/login');
-      } else if (
-        isAuthenticated &&
-        userInfo &&
-        (!userInfo.terms_agreed || !userInfo.privacy_agreed)
-      ) {
-        router.replace('/terms-check');
-      }
-    }, 0);
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   // 마이크로태스크 큐에 넣어서 마운트 이후에 실행되도록 함
+  //   setTimeout(() => {
+  //     if (!isAuthenticated) {
+  //       router.replace('/login');
+  //     } else if (
+  //       isAuthenticated &&
+  //       userInfo &&
+  //       (!userInfo.terms_agreed || !userInfo.privacy_agreed)
+  //     ) {
+  //       router.replace('/terms-check');
+  //     }
+  //   }, 0);
+  // }, [isAuthenticated]);
 
   useEffect(() => {
     // 탭 레이아웃이 마운트되면(로그인 성공 후) 푸시 토큰 등록

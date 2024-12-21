@@ -1,27 +1,19 @@
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import * as Notifications from 'expo-notifications';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import {
-  View,
-  ActivityIndicator,
-  Animated,
-  Image,
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Animated, KeyboardAvoidingView } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   useSharedValue,
-  withSpring,
   configureReanimatedLogger,
   ReanimatedLogLevel,
-  withTiming,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import * as Notifications from 'expo-notifications';
 
 import { useAuthStore } from '../store/authStore';
+import { useOnboardingStore } from '../store/onboarding';
 
 import '../global.css';
 
@@ -65,14 +57,27 @@ export default function RootLayout() {
   const userInfo = useAuthStore((state) => state.userInfo);
   // console.log('userInfo', userInfo);
 
+  const hasSeenOnboarding = useOnboardingStore((state) => state.hasSeenOnboarding);
+  console.log('hasSeenOnboarding', hasSeenOnboarding);
+
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
         await checkAuth();
-        // 인증은 되어있지만 약관 동의가 안된 경우
-        if (isAuthenticated && userInfo && (!userInfo.terms_agreed || !userInfo.privacy_agreed)) {
-          console.log('약관 동의 안됨');
-          router.replace('/terms-check');
+
+        if (isAuthenticated && userInfo) {
+          // 약관 동의 체크
+          if (!userInfo.terms_agreed || !userInfo.privacy_agreed) {
+            console.log('약관 동의 안됨');
+            router.replace('/terms-check');
+          }
+        } else if (!loading && isAuthenticated === false) {
+          console.log('인증 실패');
+          if (hasSeenOnboarding) {
+            router.replace('/login');
+          } else {
+            router.replace('/first');
+          }
         }
       } catch (error) {
         console.log('인증 실패');
@@ -83,19 +88,11 @@ export default function RootLayout() {
     };
 
     checkAuthentication();
-  }, []);
-
-  // 인증되지 않았을 경우 로그인 페이지로 이동
-  useEffect(() => {
-    if (!loading && isAuthenticated === false) {
-      //console.log('Not authenticated');
-      router.replace('/login'); // /auth/login이 아니라 /login으로
-    }
-  }, [isAuthenticated, loading]);
+  }, [isAuthenticated, loading, userInfo]);
 
   // expo-notifications 설정 -----------------------------
   useEffect(() => {
-    // 알� 수신 리스너 설정
+    // 알림 수신 리스너 설정
     const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
       console.log('Notification received:', notification);
     });
@@ -137,6 +134,7 @@ export default function RootLayout() {
         <BottomSheetModalProvider>
           <QueryClientProvider client={queryClient}>
             <Stack>
+              <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
               <Stack.Screen name="(auth)" options={{ headerShown: false }} />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen name="(stack)" options={{ headerShown: false }} />

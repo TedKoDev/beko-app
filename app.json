@@ -4,6 +4,7 @@
     "slug": "beko",
     "version": "1.0.0",
     "scheme": "beko",
+    "jsEngine": "hermes",
     "web": {
       "bundler": "metro",
       "output": "static",

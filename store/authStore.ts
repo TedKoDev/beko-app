@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
 import { create } from 'zustand';
 
+import { tokenManager } from '../services/api';
 import { getUserInfoApi, loginApi, registerApi, authService } from '../services/authService';
-import { router } from 'expo-router';
 
 interface UserInfo {
   account_status: string;
@@ -107,6 +108,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     const data = await loginApi(email, password);
     if (data) {
       await AsyncStorage.setItem('userToken', data.access_token);
+      tokenManager.setToken(data.access_token);
 
       const userInfo = await getUserInfoApi(data.access_token);
       await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
@@ -122,27 +124,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     await AsyncStorage.removeItem('userToken');
     await AsyncStorage.removeItem('userInfo');
+    tokenManager.setToken(null);
     set({ isAuthenticated: false, userInfo: undefined, userToken: undefined });
   },
 
-  // checkAuth: async () => {
-  //   const token = await AsyncStorage.getItem('userToken');
-
-  //   set({
-  //     isAuthenticated: !!token,
-  //     userToken: token || undefined,
-  //   });
-
-  //   if (token) {
-  //     try {
-  //       const userInfo = await getUserInfoApi(token);
-  //       set({ userInfo });
-  //     } catch (error) {
-  //       router.replace('/login');
-  //       console.error('Failed to fetch user info during checkAuth:', error);
-  //     }
-  //   }
-  // },
   checkAuth: async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
@@ -152,9 +137,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         return;
       }
 
-      // 토큰이 있는 경우 사용자 정보를 가져와서 유효성 검증
       const userInfo = await getUserInfoApi(token);
-
       if (userInfo) {
         set({
           isAuthenticated: true,
@@ -162,18 +145,14 @@ export const useAuthStore = create<AuthState>((set) => ({
           userInfo,
         });
       } else {
-        // 사용자 정보를 가져오지 못한 경우
         await AsyncStorage.removeItem('userToken');
         await AsyncStorage.removeItem('userInfo');
         set({ isAuthenticated: false, userToken: undefined, userInfo: undefined });
-        router.replace('/login');
       }
     } catch (error) {
-      // 에러 발생 시 로그아웃 처리
       await AsyncStorage.removeItem('userToken');
       await AsyncStorage.removeItem('userInfo');
       set({ isAuthenticated: false, userToken: undefined, userInfo: undefined });
-      router.replace('/login');
     }
   },
 

@@ -1,8 +1,6 @@
-import { api } from './api';
-
-import { useAuthStore } from '../store/authStore';
-import { router } from 'expo-router';
 import axios from 'axios';
+
+import { api, tokenManager, unauthorizedEventEmitter } from './api';
 
 interface CheckResponse {
   available: boolean;
@@ -152,9 +150,7 @@ export const getUserInfoApi = async (token: string) => {
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 401) {
-        // 토큰이 만료되었거나 유효하지 않은 경우
-        useAuthStore.getState().logout();
-        router.replace('/login');
+        unauthorizedEventEmitter.emit();
       }
     }
     throw error;
@@ -184,7 +180,7 @@ export const updateUserProfileApi = async (token: string, updateData: any) => {
 
 export const deactivateUserApi = async (userId: number, password: string) => {
   console.log('deactivateUserApi4', userId, password);
-  const token = useAuthStore.getState().userToken;
+  const token = tokenManager.getToken();
   console.log('deactivateUserApi5', token);
   if (!token) {
     throw new Error('No token found');
@@ -228,7 +224,7 @@ export const socialLoginApi = async (
 };
 
 export const getNotificationSettings = async (userId: number) => {
-  const token = useAuthStore.getState().userToken;
+  const token = tokenManager.getToken();
   try {
     const response = await api.get(`/users/notification-settings`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -241,7 +237,7 @@ export const getNotificationSettings = async (userId: number) => {
 };
 export const updatePasswordApi = async (currentPassword: string, newPassword: string) => {
   console.log('updatePasswordApi', currentPassword, newPassword);
-  const token = useAuthStore.getState().userToken;
+  const token = tokenManager.getToken();
   try {
     const response = await api.patch(
       '/users/update-password',
@@ -263,7 +259,7 @@ export const updatePasswordApi = async (currentPassword: string, newPassword: st
 export const updateNotificationSettings = async (userId: number, settings: any) => {
   console.log('sss', userId, settings);
   try {
-    const token = useAuthStore.getState().userToken;
+    const token = tokenManager.getToken();
     const response = await api.patch(`/users/notification-settings`, settings, {
       headers: { Authorization: `Bearer ${token}` },
     });
