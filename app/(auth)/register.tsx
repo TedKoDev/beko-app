@@ -153,7 +153,7 @@ export default function RegisterScreen() {
         agreements.privacy,
         agreements.marketing
       );
-      alert('Registration successful! Please login.');
+      alert('Register success, Please verify your email');
       router.push('/login');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';

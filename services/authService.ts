@@ -41,7 +41,7 @@ export const getCountryListApi = async () => {
 export const loginApi = async (email: string, password: string) => {
   try {
     const response = await api.post('/auth/login', { email, password });
-    //console.log('Login success', response.data);
+    console.log('Login success', response.data);
     return response.data;
   } catch (error) {
     console.error('Login failed', error);

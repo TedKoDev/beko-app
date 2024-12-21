@@ -19,7 +19,7 @@ export default function ManageAccount() {
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const { logout } = useAuthStore();
   const handleDeactivate = async () => {
     if (!password.trim()) {
       setError('Please enter your password.');
@@ -33,6 +33,8 @@ export default function ManageAccount() {
           onSuccess: () => {
             setShowModal(false);
             alert('Account has been successfully withdrawn.');
+            //토큰 제거
+            logout();
             router.replace('/login');
           },
           onError: (error: any) => {
