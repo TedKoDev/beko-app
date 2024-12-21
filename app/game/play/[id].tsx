@@ -43,7 +43,7 @@ export default function GamePlay() {
     lastAnswerCorrect: null,
   });
 
-  console.log('gameState', gameState);
+  //console.log('gameState', gameState);
 
   const [scoreHistory, setScoreHistory] = useState<{ result: string; color: string }[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -111,7 +111,7 @@ export default function GamePlay() {
         setCanAnswer(true);
       }, 1000);
     } else {
-      console.log('moveToNextQuestion');
+      //console.log('moveToNextQuestion');
       setTimeout(() => {
         setGameState((currentState) => {
           const finalState = {
@@ -166,7 +166,7 @@ export default function GamePlay() {
         },
       });
 
-      console.log(' response - play', JSON.stringify(response, null, 2));
+      //console.log(' response - play', JSON.stringify(response, null, 2));
 
       setLastResponse(response);
       updateGameState(response.isCorrect, response);

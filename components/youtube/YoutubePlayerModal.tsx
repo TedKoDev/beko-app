@@ -25,7 +25,7 @@ export default function YoutubePlayerModal({ videoId, onClose }: Props) {
 
   useEffect(() => {
     if (videoId) {
-      console.log('Video ID changed:', videoId);
+      //console.log('Video ID changed:', videoId);
       setIsLoading(true);
       setIsError(false);
       setKey(Date.now());
@@ -33,23 +33,23 @@ export default function YoutubePlayerModal({ videoId, onClose }: Props) {
   }, [videoId]);
 
   const onError = useCallback((error: any) => {
-    console.log('YouTube Player Error:', error);
+    //console.log('YouTube Player Error:', error);
     setIsError(true);
     setIsLoading(false);
   }, []);
 
   const onReady = useCallback(() => {
-    console.log('YouTube Player Ready');
+    //console.log('YouTube Player Ready');
     setPlayerReady(true);
     setIsLoading(false);
     setIsError(false);
   }, []);
 
   const handleWebViewLoad = useCallback(() => {
-    console.log('WebView Load Complete');
+    //console.log('WebView Load Complete');
     setTimeout(() => {
       if (!playerReady) {
-        console.log('Retrying player initialization...');
+        //console.log('Retrying player initialization...');
         setKey(Date.now());
       }
     }, 1500);
@@ -85,7 +85,7 @@ export default function YoutubePlayerModal({ videoId, onClose }: Props) {
                 onReady={onReady}
                 onError={onError}
                 onChangeState={(state) => {
-                  console.log('Player State:', state);
+                  //console.log('Player State:', state);
                 }}
                 initialPlayerParams={{
                   preventFullScreen: false,
@@ -105,14 +105,14 @@ export default function YoutubePlayerModal({ videoId, onClose }: Props) {
                   allowsInlineMediaPlayback: true,
                   mediaPlaybackRequiresUserAction: false,
                   onLoadStart: () => {
-                    console.log('WebView LoadStart');
+                    //console.log('WebView LoadStart');
                     if (!playerReady) {
                       setIsLoading(true);
                     }
                   },
                   onLoad: handleWebViewLoad,
                   onError: (syntheticEvent) => {
-                    console.log('WebView Error:', syntheticEvent.nativeEvent);
+                    //console.log('WebView Error:', syntheticEvent.nativeEvent);
                     setIsError(true);
                     setIsLoading(false);
                   },

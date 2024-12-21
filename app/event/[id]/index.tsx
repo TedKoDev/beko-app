@@ -33,7 +33,7 @@ export default function EventPage() {
   const { data: post, isLoading } = useGetPostById(Number(id));
   const { data } = useComments(Number(id), null, 'latest');
 
-  // console.log('post', post);
+  //console.log('post', post);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const togglePostLikeMutation = useTogglePostLike();
@@ -52,7 +52,7 @@ export default function EventPage() {
   if (isLoading) return <ActivityIndicator size="large" color="#7b33ff" />;
   if (!post) return <Text>Post not found</Text>;
 
-  // console.log('post', JSON.stringify(post, null, 2));
+  //console.log('post', JSON.stringify(post, null, 2));
   return (
     <SafeAreaView className="flex-1 bg-white">
       <KeyboardAvoidingView

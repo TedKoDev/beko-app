@@ -27,7 +27,7 @@ export const likeService = {
     if (!token) {
       throw new Error('No token found');
     }
-    console.log('toggleCommentLike111', commentId);
+    //console.log('toggleCommentLike111', commentId);
 
     const response = await api.post(
       `/likes/comment/${commentId}`,
@@ -38,7 +38,7 @@ export const likeService = {
         },
       }
     );
-    console.log('response', response.data);
+    //console.log('response', response.data);
     return response.data;
   },
 };

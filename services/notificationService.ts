@@ -5,7 +5,7 @@ export const notificationService = {
   registerPushToken: async (token: string) => {
     try {
       const userToken = useAuthStore.getState().userToken;
-      console.log('userToken', userToken);
+      //console.log('userToken', userToken);
       if (!userToken) {
         throw new Error('No token found');
       }

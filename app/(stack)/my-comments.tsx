@@ -18,7 +18,7 @@ export default function MyCommentsScreen() {
   const deleteComment = useDeleteComment();
   const updateComment = useUpdateComment();
 
-  console.log('userInfo', userInfo?.user_id);
+  //console.log('userInfo', userInfo?.user_id);
 
   const { data, fetchNextPage, hasNextPage, isLoading } = useComments(
     0,

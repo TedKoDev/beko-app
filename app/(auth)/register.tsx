@@ -23,14 +23,14 @@ export default function RegisterScreen() {
     marketing_agreement: string;
   }>();
 
-  console.log('params', params);
+  //console.log('params', params);
   const agreements = {
     terms: Boolean(Number(params.term_agreement)), // '1' -> true, '0' -> false
     privacy: Boolean(Number(params.privacy_agreement)),
     marketing: Boolean(Number(params.marketing_agreement)),
   };
 
-  console.log('agreements', agreements);
+  //console.log('agreements', agreements);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -57,7 +57,7 @@ export default function RegisterScreen() {
   const [showCountryModal, setShowCountryModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { data: countries } = useCountry();
-  console.log('countries', countries);
+  //console.log('countries', countries);
 
   const filteredCountries = countries?.filter(
     (country: Country) =>

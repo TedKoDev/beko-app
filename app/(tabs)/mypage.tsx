@@ -14,8 +14,8 @@ export default function MyPage() {
   const userInfo = useAuthStore((state) => state.userInfo);
 
   // const { data: userInfodd, isLoading } = useUserInfo();
-  // console.log('userInfodd', JSON.stringify(userInfodd, null, 2));
-  // console.log('userInfo from store', JSON.stringify(userInfo, null, 2));
+  //console.log('userInfodd', JSON.stringify(userInfodd, null, 2));
+  //console.log('userInfo from store', JSON.stringify(userInfo, null, 2));
 
   const handleSettings = () => {
     router.push('/setting/settings');

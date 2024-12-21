@@ -153,7 +153,7 @@ export const wordListService = {
     const token = useAuthStore.getState().userToken;
     if (!token) throw new Error('No token found');
 
-    console.log('updateUserWord called with wordId:', wordId, 'notes:', notes);
+    //console.log('updateUserWord called with wordId:', wordId, 'notes:', notes);
     const response = await api.patch(
       `/word/user-word/${wordId}`,
       { notes },

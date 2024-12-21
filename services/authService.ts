@@ -24,11 +24,11 @@ interface UpdateAgreementsDto {
 
 export const getCountryListApi = async () => {
   try {
-    console.log('getCountryListApi1');
+    //console.log('getCountryListApi1');
 
     const response = await api.get('/country/list'); // 또는 '/country'
 
-    console.log('getCountryListApi', response.data);
+    //console.log('getCountryListApi', response.data);
     if (response.data.status === 'success') {
       return response.data.data; // 실제 국가 데이터 배열 반환
     }
@@ -68,7 +68,7 @@ export const registerApi = async (
       privacy_agreement,
       marketing_agreement,
     });
-    console.log('Register success', response.data);
+    //console.log('Register success', response.data);
     return response.data;
   } catch (error: any) {
     console.error('Register failed', error);
@@ -159,14 +159,14 @@ export const getUserInfoApi = async (token: string) => {
 
 export const updateUserProfileApi = async (token: string, updateData: any) => {
   try {
-    // console.log('API request data:', updateData);
+    //console.log('API request data:', updateData);
     const response = await api.post('/users/update-profile', updateData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     });
-    // console.log('API response:', response.data);
+    //console.log('API response:', response.data);
     return response.data;
   } catch (error: any) {
     console.error('Update profile API error:', {
@@ -179,9 +179,9 @@ export const updateUserProfileApi = async (token: string, updateData: any) => {
 };
 
 export const deactivateUserApi = async (userId: number, password: string) => {
-  console.log('deactivateUserApi4', userId, password);
+  //console.log('deactivateUserApi4', userId, password);
   const token = tokenManager.getToken();
-  console.log('deactivateUserApi5', token);
+  //console.log('deactivateUserApi5', token);
   if (!token) {
     throw new Error('No token found');
   }
@@ -236,7 +236,7 @@ export const getNotificationSettings = async (userId: number) => {
   }
 };
 export const updatePasswordApi = async (currentPassword: string, newPassword: string) => {
-  console.log('updatePasswordApi', currentPassword, newPassword);
+  //console.log('updatePasswordApi', currentPassword, newPassword);
   const token = tokenManager.getToken();
   try {
     const response = await api.patch(
@@ -249,7 +249,7 @@ export const updatePasswordApi = async (currentPassword: string, newPassword: st
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    console.log('updatePasswordApi response', response.data);
+    //console.log('updatePasswordApi response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error updating password:', error);
@@ -257,7 +257,7 @@ export const updatePasswordApi = async (currentPassword: string, newPassword: st
   }
 };
 export const updateNotificationSettings = async (userId: number, settings: any) => {
-  console.log('sss', userId, settings);
+  //console.log('sss', userId, settings);
   try {
     const token = tokenManager.getToken();
     const response = await api.patch(`/users/notification-settings`, settings, {
@@ -290,7 +290,7 @@ export const updateInitialAgreementsApi = async (
 
 export const healthCheckApi = async () => {
   const response = await api.get('/health-check');
-  console.log('healthCheckApi', response.data);
+  //console.log('healthCheckApi', response.data);
   return response.data;
 };
 

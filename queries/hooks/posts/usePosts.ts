@@ -170,7 +170,7 @@ export const useUpdateConsultation = () => {
 
       // 일반 post와 동일한 패턴으로 변경
       await Promise.all([
-        console.log('ssconsultationsinvalidateQueries'),
+        //console.log('ssconsultationsinvalidateQueries'),
         queryClient.invalidateQueries({
           queryKey: ['ssconsultations'],
           exact: true,
@@ -179,7 +179,7 @@ export const useUpdateConsultation = () => {
           queryKey: ['consultation', variables.postId],
           exact: true,
         }),
-        console.log('ssconsultationsrefetchQueries'),
+        //console.log('ssconsultationsrefetchQueries'),
         queryClient.refetchQueries({
           queryKey: ['ssconsultations'],
           exact: true,

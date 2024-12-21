@@ -101,7 +101,7 @@ export default function ListLayout({
         {showWriteButton && (
           <Pressable
             onPress={() => {
-              console.log('write button pressed');
+              //console.log('write button pressed');
               router.push(writeRoute as any);
             }}>
             <Feather name="edit" size={24} color="#7b33ff" />
@@ -134,7 +134,7 @@ export default function ListLayout({
             hideButton ? null : (
               <Pressable
                 onPress={() => {
-                  console.log('back pressed');
+                  //console.log('back pressed');
                   router.back();
                 }}
                 style={({ pressed }) => ({

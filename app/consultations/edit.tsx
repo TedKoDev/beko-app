@@ -69,7 +69,7 @@ export default function EditConsultation() {
 
   const consultationCategories = topics.find((topic) => topic.topic_id === 1)?.category || [];
 
-  // console.log('consultationCategories', consultationCategories);
+  //console.log('consultationCategories', consultationCategories);
 
   const pickImages = async () => {
     try {
@@ -149,7 +149,7 @@ export default function EditConsultation() {
         ],
       };
 
-      // console.log('updateData', JSON.stringify(updateData, null, 2));
+      //console.log('updateData', JSON.stringify(updateData, null, 2));
 
       // Convert mediaType from string to 'IMAGE' | 'VIDEO' type
       const formattedUpdateData = {

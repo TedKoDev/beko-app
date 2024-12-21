@@ -10,7 +10,7 @@ export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { userInfo } = useAuthStore();
-  console.log('userInfo', userInfo);
+  //console.log('userInfo', userInfo);
 
   // 소셜 로그인 사용자인지 확인
   const isSocialUser = userInfo?.social_login && userInfo.social_login.length > 0;

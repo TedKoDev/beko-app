@@ -34,15 +34,15 @@ export function LessonCard({ onMorePress, participationCount = 0, points = 0 }: 
     type: 'SENTENCE',
   });
 
-  // console.log('posts', posts);
-  // console.log('participationLogs', participationLogs);
+  //console.log('posts', posts);
+  //console.log('participationLogs', participationLogs);
 
-  //console.log('Current Auth Store:', useAuthStore.getState());
-  //console.log('Current userInfo in LessonCard:', userInfo);
+  ////console.log('Current Auth Store:', useAuthStore.getState());
+  ////console.log('Current userInfo in LessonCard:', userInfo);
 
   // 사용자 데이터 구조 통일
   const userData = userInfo;
-  console.log('User data in LessonCard:', userData);
+  //console.log('User data in LessonCard:', userData);
 
   const router = useRouter();
 

@@ -33,9 +33,9 @@ export const gameService = {
 
   // 게임 문제 조회
   getQuestions: async (gameTypeId: number, level: number = 1, limit: number = 10) => {
-    console.log('gameTypeId', gameTypeId);
-    console.log('level', level);
-    console.log('limit', limit);
+    //console.log('gameTypeId', gameTypeId);
+    //console.log('level', level);
+    //console.log('limit', limit);
 
     const token = useAuthStore.getState().userToken;
     if (!token) throw new Error('No token found');

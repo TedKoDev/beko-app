@@ -81,18 +81,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     privacy_agreed: boolean,
     marketing_agreed: boolean
   ) => {
-    console.log(
-      'register',
-      name,
-      email,
-      password,
-      country_id,
-      terms_agreed,
-      privacy_agreed,
-      marketing_agreed
-    );
+    console.log('register');
 
-    const response = await registerApi(
+    await registerApi(
       name,
       email,
       password,
@@ -101,7 +92,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       privacy_agreed,
       marketing_agreed
     );
-    console.log('register response', response);
+    //console.log('register response', response);
   },
 
   login: async (email: string, password: string) => {
@@ -169,7 +160,7 @@ export const useAuthStore = create<AuthState>((set) => ({
             points: newData.points,
             stats: {
               ...state.userInfo.stats,
-              ...newData._count,
+              ...newData.stats,
             },
           }
         : undefined,

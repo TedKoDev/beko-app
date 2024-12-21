@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 
-import {WordItem} from './components/worditem';
+import { WordItem } from './components/worditem';
 
 import { useAddWordToUserWordList, useWordList } from '~/queries/hooks/word/useWords';
 
@@ -17,16 +17,16 @@ export default function WordListPage() {
     isLoading,
   } = useWordList();
 
-  console.log('wordList', JSON.stringify(wordList, null, 2));
+  //console.log('wordList', JSON.stringify(wordList, null, 2));
 
   const toggleWordInList = useAddWordToUserWordList(wordId, notes);
 
   const handleToggleWord = async (wordId: number, currentState: boolean) => {
-    console.log('handleToggleWord called with wordId:', wordId, 'current state:', currentState);
+    //console.log('handleToggleWord called with wordId:', wordId, 'current state:', currentState);
     setWordId(wordId);
     try {
       await toggleWordInList.mutateAsync();
-      console.log('Toggle completed successfully');
+      //console.log('Toggle completed successfully');
     } catch (error) {
       console.error('단어 목록 토글 실패:', error);
     }
@@ -40,9 +40,9 @@ export default function WordListPage() {
 
   // 중복 제거와 함께 데이터 정렬
   const allWords = useMemo(() => {
-    console.log('Recalculating allWords');
+    //console.log('Recalculating allWords');
     if (!wordList?.pages) {
-      console.log('No pages in wordList');
+      //console.log('No pages in wordList');
       return [];
     }
 
@@ -50,15 +50,15 @@ export default function WordListPage() {
       return [...acc, ...page.wordList];
     }, [] as any[]);
 
-    console.log('Total words:', words.length);
+    //console.log('Total words:', words.length);
 
     const uniqueWords = Array.from(new Map(words.map((word) => [word.word_id, word])).values());
 
-    console.log('Unique words:', uniqueWords.length);
+    //console.log('Unique words:', uniqueWords.length);
     return uniqueWords;
   }, [wordList?.pages]);
 
-  console.log('allWords', JSON.stringify(allWords, null, 2));
+  //console.log('allWords', JSON.stringify(allWords, null, 2));
 
   const renderFooter = () => {
     if (!isFetchingNextPage) return null;
@@ -83,7 +83,7 @@ export default function WordListPage() {
         data={allWords}
         keyExtractor={(item, index) => `${item.word_id}-${index}`}
         renderItem={({ item }) => {
-          // console.log('Rendering word:', item.word_id, item.isInUserWordList);
+          //console.log('Rendering word:', item.word_id, item.isInUserWordList);
           return (
             <WordItem
               item={item}

@@ -38,7 +38,7 @@ export default function SearchResultsScreen() {
 
   const { data: searchData } = useSearch(q as string);
 
-  console.log('searchData', JSON.stringify(searchData, null, 2));
+  //console.log('searchData', JSON.stringify(searchData, null, 2));
 
   const renderItem = (item: SearchResult) => {
     switch (item.type) {

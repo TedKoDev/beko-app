@@ -25,7 +25,7 @@ export default function ConsultationsScreen() {
   // const selectedTopic = topicsData?.find((topic) => topic.topic_id === filters.topic_id);
 
   useEffect(() => {
-    console.log('Current filters:', filters);
+    //console.log('Current filters:', filters);
   }, [filters]);
 
   const { data, fetchNextPage, hasNextPage, isLoading, refetch, isRefetching } = useMyConsultations(

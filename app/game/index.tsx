@@ -14,7 +14,7 @@ export default function GameHome() {
   const isLoading = gameTypesLoading || gameProgressLoading;
 
   const handleGameSelect = (gameTypeId: number) => {
-    console.log('gameTypeId', gameTypeId);
+    //console.log('gameTypeId', gameTypeId);
     router.push(`/game/detail/${gameTypeId}`);
   };
 

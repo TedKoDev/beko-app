@@ -102,7 +102,7 @@ const content = {
 };
 export default function AdPage() {
   const { type } = useLocalSearchParams<{ type: string }>();
-  console.log('type', type);
+  //console.log('type', type);
   const [language, setLanguage] = useState<Language>('ko');
   const [activeTab, setActiveTab] = useState<TabType>(type === 'ads' ? 'ads' : 'teacher');
   const currentContent = content[language];

@@ -143,7 +143,7 @@ export default function EditGeneral({ post }) {
         ],
       };
 
-      console.log('updateData', JSON.stringify(updateData, null, 2));
+      //console.log('updateData', JSON.stringify(updateData, null, 2));
 
       await updatePost.mutateAsync({
         postId: post.post_id,
@@ -323,7 +323,7 @@ export default function EditGeneral({ post }) {
       {/* Submit Button */}
       <TouchableOpacity
         onPress={handleSubmit}
-        className="bg-purple-custom mt-4 rounded-lg p-4"
+        className="mt-4 rounded-lg bg-purple-custom p-4"
         disabled={updatePost.isPending}>
         <Text className="text-center font-bold text-white">
           {updatePost.isPending ? 'Updating...' : 'Update Post'}

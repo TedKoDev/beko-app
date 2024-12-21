@@ -54,8 +54,8 @@ export default function CommentItem({
   isQuestionAuthor,
   sortedComments,
 }: CommentItemProps) {
-  // console.log('isQuestionAuthorestionAuthor', isQuestionAuthor);
-  // console.log('comment.user_id', comment.user_id);
+  //console.log('isQuestionAuthorestionAuthor', isQuestionAuthor);
+  //console.log('comment.user_id', comment.user_id);
 
   const [modalVisible, setModalVisible] = useState(false);
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
@@ -117,7 +117,7 @@ export default function CommentItem({
   };
 
   const handleDelete = useCallback(() => {
-    console.log('handleDelete');
+    //console.log('handleDelete');
     handleCloseMenu();
     Alert.alert(
       'Delete Comment',
@@ -247,7 +247,7 @@ export default function CommentItem({
               !sortedComments?.some((c) => c.isSelected) && (
                 <TouchableOpacity
                   onPress={() => onSelectAnswer?.(comment.comment_id)}
-                  className="bg-purple-custom mt-2 self-end rounded-lg px-3 py-1">
+                  className="mt-2 self-end rounded-lg bg-purple-custom px-3 py-1">
                   <Text className="text-white">답변 채택하기</Text>
                 </TouchableOpacity>
               )}

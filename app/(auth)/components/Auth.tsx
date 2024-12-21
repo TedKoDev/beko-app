@@ -24,7 +24,7 @@ export default function Auth() {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
 
-      console.log('userInfo', JSON.stringify(userInfo, null, 2));
+      //console.log('userInfo', JSON.stringify(userInfo, null, 2));
       await socialLogin(
         'GOOGLE',
         userInfo?.data?.user?.id || '',
@@ -34,13 +34,13 @@ export default function Auth() {
       router.replace('/');
     } catch (error: any) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('User cancelled the login flow');
+        //console.log('User cancelled the login flow');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('Sign in is in progress');
+        //console.log('Sign in is in progress');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('Play services not available or outdated');
+        //console.log('Play services not available or outdated');
       } else {
-        console.log('Something went wrong', error);
+        //console.log('Something went wrong', error);
         alert('Google login failed. Please try again.');
       }
     }

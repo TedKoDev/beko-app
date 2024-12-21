@@ -16,7 +16,7 @@ type WordItemProps = {
   };
 };
 
-export function WordItem({ item }: WordItemProps) {
+export default function WordItem({ item }: WordItemProps) {
   const router = useRouter();
 
   const handlePress = () => {

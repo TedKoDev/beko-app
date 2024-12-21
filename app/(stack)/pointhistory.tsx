@@ -19,11 +19,11 @@ import { PointHistory } from '~/types/point';
 export default function PointHistoryScreen() {
   const userInfo = useAuthStore((state) => state.userInfo);
 
-  console.log(userInfo?.user_id);
+  //console.log(userInfo?.user_id);
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage, refetch, isRefetching } =
     useGetPointHistory(userInfo?.user_id || 0);
 
-  console.log(JSON.stringify(data, null, 2));
+  //console.log(JSON.stringify(data, null, 2));
 
   const renderItem = ({ item }: { item: PointHistory }) => (
     <View style={styles.historyItem}>

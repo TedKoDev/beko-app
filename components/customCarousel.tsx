@@ -29,7 +29,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const windowWidth = Dimensions.get('window').width;
 
-  // console.log('items', items);
+  //console.log('items', items);
 
   const carouselWidth = width || windowWidth;
   const carouselHeight = height || 170;

@@ -31,10 +31,10 @@ export default function ConsultationDetailScreen() {
   const router = useRouter();
   // app/consultations/[id].tsx
   const { data: consultation, isLoading } = useConsultationById(Number(id));
-  console.log('123consultation', JSON.stringify(consultation, null, 2));
+  //console.log('123consultation', JSON.stringify(consultation, null, 2));
 
   const { userInfo } = useAuthStore();
-  console.log('userInfo', userInfo);
+  //console.log('userInfo', userInfo);
   const createCommentMutation = useCreateComment();
   const updateCommentMutation = useUpdateComment();
   const answerConsultationMutation = useAnswerConsultation();

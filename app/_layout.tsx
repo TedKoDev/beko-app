@@ -55,10 +55,10 @@ export default function RootLayout() {
   });
 
   const userInfo = useAuthStore((state) => state.userInfo);
-  // console.log('userInfo', userInfo);
+  //console.log('userInfo', userInfo);
 
   const hasSeenOnboarding = useOnboardingStore((state) => state.hasSeenOnboarding);
-  console.log('hasSeenOnboarding', hasSeenOnboarding);
+  //console.log('hasSeenOnboarding', hasSeenOnboarding);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -68,11 +68,11 @@ export default function RootLayout() {
         if (isAuthenticated && userInfo) {
           // 약관 동의 체크
           if (!userInfo.terms_agreed || !userInfo.privacy_agreed) {
-            console.log('약관 동의 안됨');
+            //console.log('약관 동의 안됨');
             router.replace('/terms-check');
           }
         } else if (!loading && isAuthenticated === false) {
-          console.log('인증 실패');
+          //console.log('인증 실패');
           if (hasSeenOnboarding) {
             router.replace('/login');
           } else {
@@ -80,7 +80,7 @@ export default function RootLayout() {
           }
         }
       } catch (error) {
-        console.log('인증 실패');
+        //console.log('인증 실패');
         router.replace('/login');
       } finally {
         setLoading(false);
@@ -94,12 +94,12 @@ export default function RootLayout() {
   useEffect(() => {
     // 알림 수신 리스너 설정
     const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
-      console.log('Notification received:', notification);
+      //console.log('Notification received:', notification);
     });
 
     // 알림 응답 리스너 설정 (사용자가 알림을 탭했을 때)
     const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
-      console.log('Notification response:', response);
+      //console.log('Notification response:', response);
     });
 
     return () => {
@@ -153,7 +153,8 @@ export default function RootLayout() {
               <Stack.Screen name="board" options={{ headerShown: false }} />
               <Stack.Screen name="setting" options={{ headerShown: false }} />
               <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-              <Stack.Screen name="consultations/[id]" options={{ headerShown: false }} />
+
+              {/* <Stack.Screen name="consultations" options={{ headerShown: false }} /> */}
             </Stack>
           </QueryClientProvider>
         </BottomSheetModalProvider>

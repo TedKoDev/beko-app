@@ -28,7 +28,7 @@ export default function SearchScreen() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data: popularSearches } = usePopularSearches();
-  // console.log('popularSearches', JSON.stringify(popularSearches, null, 2));
+  //console.log('popularSearches', JSON.stringify(popularSearches, null, 2));
 
   const { searches: recentSearches, removeSearch } = useRecentSearchStore();
   const { data: topics } = useTopics();

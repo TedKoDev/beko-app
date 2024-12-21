@@ -35,14 +35,14 @@ export default function CommentSection({
   const selectAnswerMutation = useSelectAnswer();
   const { userInfo } = useAuthStore();
 
-  // console.log('post_user_id', post_user_id);
-  // console.log('userInfo', userInfo);
+  //console.log('post_user_id', post_user_id);
+  //console.log('userInfo', userInfo);
 
-  console.log('authorId', authorId);
+  //console.log('authorId', authorId);
 
   // userId를 null로 전달하면 백엔드의 whereClause에서 조건이 추가되지 않음
   const { data } = useComments(postId, undefined, 'latest');
-  console.log('data', JSON.stringify(data, null, 2));
+  //console.log('data', JSON.stringify(data, null, 2));
   const comments = data?.pages[0]?.data.slice(0, 5) ?? [];
   const comment_count = data?.pages[0]?.total ?? 0;
 
@@ -56,7 +56,7 @@ export default function CommentSection({
   }, [data]);
 
   const handleToggleLike = (commentId: number) => {
-    console.log('commentIdfor like', commentId);
+    //console.log('commentIdfor like', commentId);
     toggleCommentLikeMutation.mutate(commentId);
   };
 
@@ -70,7 +70,7 @@ export default function CommentSection({
 
   const handleSelectAnswer = async (commentId: number) => {
     try {
-      console.log('commentId', commentId);
+      //console.log('commentId', commentId);
       await selectAnswerMutation.mutateAsync(commentId);
       Alert.alert('성공', '답변이 채택되었습니다.');
     } catch (error: any) {

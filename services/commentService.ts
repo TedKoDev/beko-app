@@ -28,7 +28,7 @@ export const commentService = {
         throw new Error('No token found');
       }
 
-      console.log('Request data:', data);
+      //console.log('Request data:', data);
       const response = await api.post(
         '/comments',
         {
@@ -43,7 +43,7 @@ export const commentService = {
           },
         }
       );
-      // console.log('Response:', response.data);
+      //console.log('Response:', response.data);
       return response.data;
     } catch (error) {
       console.error('Create comment failed:', error);
@@ -87,7 +87,7 @@ export const commentService = {
 
   // 댓글 삭제
   deleteComment: async (commentId: number) => {
-    console.log('deleteComment', commentId);
+    //console.log('deleteComment', commentId);
     const token = useAuthStore.getState().userToken;
     if (!token) {
       throw new Error('No token found');
@@ -141,7 +141,7 @@ export const commentService = {
 };
 
 export const answerConsultationApi = async (postId: number, content: string, commentId: number) => {
-  console.log('answerConsultationApi', postId, content, commentId);
+  //console.log('answerConsultationApi', postId, content, commentId);
   try {
     const token = useAuthStore.getState().userToken;
     const response = await api.post(

@@ -22,12 +22,12 @@ export default function TermsDetailScreen() {
   const { type } = useLocalSearchParams<{ type: string }>();
 
   // 디버깅을 위한 로그 추가
-  console.log('Received type:', type);
-  console.log('Type of received type:', typeof type);
-  console.log('Available types:', Object.keys(TERMS_LINKS));
+  //console.log('Received type:', type);
+  //console.log('Type of received type:', typeof type);
+  //console.log('Available types:', Object.keys(TERMS_LINKS));
 
   if (!type || !TERMS_LINKS[type as keyof typeof TERMS_LINKS]) {
-    console.log('Invalid type received:', type);
+    //console.log('Invalid type received:', type);
     return <ActivityIndicator />;
   }
 

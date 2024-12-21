@@ -29,9 +29,9 @@ export default function Home() {
   });
   const { data: adBannerResponse } = useAdbanner({ limit: 5 });
 
-  console.log('home');
+  //console.log('home');
 
-  // console.log('adBanners:', JSON.stringify(adBannerResponse, null, 2));
+  //console.log('adBanners:', JSON.stringify(adBannerResponse, null, 2));
 
   const adBanners = useMemo(() => {
     if (!adBannerResponse?.pages) return [];
@@ -42,7 +42,7 @@ export default function Home() {
     );
   }, [adBannerResponse]);
 
-  // console.log('adBanners1111:', JSON.stringify(adBanners, null, 2));
+  //console.log('adBanners1111:', JSON.stringify(adBanners, null, 2));
 
   const onRefresh = async () => {
     await Promise.all([

@@ -37,7 +37,7 @@ export function useWords() {
     enabled: !!token,
 
     onSuccess: (data: Word[]) => {
-      console.log('API 응답:', data);
+      //console.log('API 응답:', data);
     },
     onError: (error: any) => {
       console.error('API 에러:', error);
@@ -103,7 +103,7 @@ export const useAddWordToUserWordList = (wordId: number, notes?: string) => {
       return { previousWordList, previousUserWordList };
     },
     onError: (err, variables, context: any) => {
-      console.log('onError', err, variables, context);
+      //console.log('onError', err, variables, context);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['wordList'] });

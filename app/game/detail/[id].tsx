@@ -83,13 +83,13 @@ export default function GameDetail() {
     );
   }
 
-  console.log('gameProgress', gameProgress?.progress?.current_level);
+  //console.log('gameProgress', gameProgress?.progress?.current_level);
 
   const currentLevel = gameProgress?.progress?.current_level;
-  console.log('currentLevel', currentLevel);
+  //console.log('currentLevel', currentLevel);
 
   const handleLevelSelect = (level: number) => {
-    console.log('level', level);
+    //console.log('level', level);
 
     router.replace(`/game/play/${id}?level=${level}`);
   };

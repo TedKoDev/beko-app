@@ -21,7 +21,7 @@ export default function EditProfileImage() {
   const updateProfileMutation = useUpdateProfile();
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(userInfo);
+  //console.log(userInfo);
   const pickImage = async () => {
     try {
       setIsLoading(true);

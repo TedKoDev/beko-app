@@ -98,7 +98,7 @@ export const addPostApi = async (createPostDto: CreatePostDto) => {
 
     if (!token) {
     }
-    console.log('add postpayload', createPostDto);
+    //console.log('add postpayload', createPostDto);
 
     const response = await api.post('/posts/', createPostDto, {
       headers: {
@@ -246,7 +246,7 @@ export class PostService {
           return obj;
         }, {});
 
-      console.log('Final Payload:', JSON.stringify(payload, null, 2));
+      //console.log('Final Payload:', JSON.stringify(payload, null, 2));
 
       const response = await api.patch(`/posts/${postId}`, payload, {
         headers: {
@@ -305,7 +305,7 @@ export const getConsultationsApi = async ({
     // undefined 값 제거
     Object.keys(params).forEach((key) => params[key] === undefined && delete params[key]);
 
-    console.log('params', params);
+    //console.log('params', params);
 
     const response = await api.get('/posts/consultations', {
       params,

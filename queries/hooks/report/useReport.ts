@@ -1,4 +1,3 @@
-
 import { useMutation } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
@@ -33,7 +32,7 @@ export const useReport = ({ onSuccess, onError }: UseReportParams = {}) => {
     reportedUserId: number;
     reason: string;
   }) => {
-    console.log('createReport', targetType, targetId, reportedUserId, reason);
+    //console.log('createReport', targetType, targetId, reportedUserId, reason);
     try {
       await createReportMutation.mutateAsync({
         target_type: targetType,

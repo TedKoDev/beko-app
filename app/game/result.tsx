@@ -20,7 +20,7 @@ export default function GameResult() {
     gameId: string;
   }>();
 
-  console.log('Game Result - Received params:', JSON.stringify(params, null, 2));
+  //console.log('Game Result - Received params:', JSON.stringify(params, null, 2));
   // 진입할때 'userInfo' 쿼리 무효화
   const queryClient = useQueryClient();
   queryClient.invalidateQueries({ queryKey: ['userInfo'] });

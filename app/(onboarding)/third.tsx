@@ -60,8 +60,8 @@ const ThirdScreen = () => {
           <View className="px-4 pb-5">
             <View className="mb-4 flex-row justify-center gap-5">
               <View className="h-5 w-5 rounded-full bg-gray-300" />
-              <View className="h-5 w-5 rounded-full bg-[#7b33ff]" />
               <View className="h-5 w-5 rounded-full bg-gray-300" />
+              <View className="h-5 w-5 rounded-full bg-[#7b33ff]" />
             </View>
 
             <TouchableOpacity className="h-14 w-full rounded-xl bg-black" onPress={handleNext}>

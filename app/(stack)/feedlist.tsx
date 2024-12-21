@@ -33,7 +33,7 @@ export default function FeedList() {
 
   const allPosts = postsData?.pages?.flatMap((page) => page.data) ?? [];
   const handlePress = () => {
-    console.log('write button pressed');
+    //console.log('write button pressed');
     router.push('/write/with-words');
   };
 

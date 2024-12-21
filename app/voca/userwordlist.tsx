@@ -8,7 +8,7 @@ export default function UserWordListPage() {
   const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage, refetch, isRefetching } =
     useGetUserWordList();
 
-  console.log('data', JSON.stringify(data, null, 2));
+  //console.log('data', JSON.stringify(data, null, 2));
   const loadMore = () => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -34,7 +34,7 @@ export default function UserWordListPage() {
         }));
     }) || [];
 
-  console.log('allWords', JSON.stringify(allWords, null, 2));
+  //console.log('allWords', JSON.stringify(allWords, null, 2));
 
   if (isLoading) {
     return (

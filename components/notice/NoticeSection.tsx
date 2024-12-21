@@ -48,7 +48,7 @@ const NoticeCategories: React.FC = () => {
     categoryId: undefined,
   });
 
-  console.log('posts§12312312:', JSON.stringify(posts, null, 2));
+  //console.log('posts§12312312:', JSON.stringify(posts, null, 2));
 
   const noticeTopic = topics?.find((topic) => topic.title === 'Notice');
   const noticePosts = posts?.pages[0]?.data || [];

@@ -13,18 +13,18 @@ export const useOnboardingStore = create<OnboardingState>()(
     (set, get) => ({
       hasSeenOnboarding: false,
       setHasSeenOnboarding: (value) => {
-        console.log('Setting hasSeenOnboarding to:', value);
+        //console.log('Setting hasSeenOnboarding to:', value);
         set({ hasSeenOnboarding: value });
-        console.log('Current state after set:', get().hasSeenOnboarding);
+        //console.log('Current state after set:', get().hasSeenOnboarding);
       },
     }),
     {
       name: 'onboarding-storage',
       storage: createJSONStorage(() => AsyncStorage),
       onRehydrateStorage: () => (state) => {
-        console.log('Rehydrated state in onboarding store:', state);
+        //console.log('Rehydrated state in onboarding store:', state);
         if (state?.hasSeenOnboarding) {
-          console.log('Onboarding state rehydrated as true');
+          //console.log('Onboarding state rehydrated as true');
         }
       },
     }

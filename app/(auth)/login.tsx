@@ -32,7 +32,7 @@ export default function LoginScreen() {
       try {
         await login(email, password);
       } catch (error: any) {
-        //console.log('Error details:', error);
+        ////console.log('Error details:', error);
         const statusCode = error.response?.status;
         const errorMessage = error.response?.data?.message;
 
@@ -59,7 +59,7 @@ export default function LoginScreen() {
 
   const handleAppleLogin = async () => {
     try {
-      console.log('Apple login started');
+      //console.log('Apple login started');
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
@@ -72,18 +72,18 @@ export default function LoginScreen() {
       const decodedPayload = decodeBase64(payload);
       const decodedToken = JSON.parse(decodedPayload);
 
-      console.log('decodedToken', decodedToken);
+      //console.log('decodedToken', decodedToken);
       // 이메일 정보 추출
       const email = decodedToken.email;
 
       await socialLogin('APPLE', credential.user, email, '');
 
-      console.log('Apple login success');
+      //console.log('Apple login success');
       router.replace('/');
     } catch (error: any) {
-      console.log('Apple login error:', error);
+      //console.log('Apple login error:', error);
       if (error.code === 'ERR_CANCELED') {
-        console.log('User cancelled Apple login');
+        //console.log('User cancelled Apple login');
       } else {
         console.error('Apple login error:', error);
         alert('Apple login failed. Please try again.');

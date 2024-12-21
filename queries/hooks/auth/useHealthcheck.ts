@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { healthCheckApi } from '~/services/authService';
 
 export const useHealthcheck = () => {
-  console.log('useHealthcheck');
+  //console.log('useHealthcheck');
   const { data, isLoading, error } = useQuery({
     queryKey: ['healthcheck'],
     queryFn: healthCheckApi,

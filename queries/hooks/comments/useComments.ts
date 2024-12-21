@@ -9,9 +9,9 @@ export const useComments = (
   userId?: number | null,
   sort: 'latest' | 'oldest' | 'popular' = 'latest'
 ) => {
-  console.log('postId', postId);
-  console.log('userId in useComments', userId);
-  console.log('sort', sort);
+  //console.log('postId', postId);
+  //console.log('userId in useComments', userId);
+  //console.log('sort', sort);
   return useInfiniteQuery({
     queryKey: ['comments', postId, sort],
     queryFn: async ({ pageParam = 1 }) => {
@@ -23,13 +23,13 @@ export const useComments = (
           postId: Number(postId),
           userId: Number(userId),
         };
-        console.log('Fetching comments with:', queryDto);
+        //console.log('Fetching comments with:', queryDto);
         const response = await commentService.getComments({
           ...queryDto,
           postId: Number(postId),
           userId: Number(userId),
         });
-        console.log('Response:', response);
+        //console.log('Response:', response);
         return response;
       } catch (error) {
         console.error('Error fetching comments:', error);
@@ -106,7 +106,7 @@ export const useToggleCommentLike = () => {
       // 댓글이 속한 게시물의 ID를 알아야 정확한 쿼리 무효화가 가능합니다
       // 현재 캐시된 데이터에서 해당 댓글의 게시물 ID를 찾습니다
       const queries = queryClient.getQueriesData<any>({ queryKey: ['comments'] });
-      console.log('queries', queries);
+      //console.log('queries', queries);
 
       for (const [queryKey] of queries) {
         const [_, postId] = queryKey;

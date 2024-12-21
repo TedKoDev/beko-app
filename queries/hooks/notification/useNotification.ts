@@ -86,12 +86,12 @@ export const useNotificationSettings = (userId: number) => {
   }, [userId]);
 
   const updateSettings = async (newSettings: any) => {
-    console.log('updateSettings', newSettings);
+    //console.log('updateSettings', newSettings);
     const filteredSettings = Object.fromEntries(
       Object.entries(newSettings).filter(([key, _]) => !key.endsWith('_at'))
     );
 
-    console.log('Filtered Settings', filteredSettings);
+    //console.log('Filtered Settings', filteredSettings);
 
     try {
       await updateNotificationSettings(userId, filteredSettings);
