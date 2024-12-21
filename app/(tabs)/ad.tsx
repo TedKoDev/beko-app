@@ -185,7 +185,7 @@ export default function AdPage() {
                   {currentContent.intro.closing}
                 </Text>
               </View>
-              <AdBanner />
+              {/* <AdBanner /> */}
               {/* Call-to-Action Section */}
               <View className="mb-8 rounded-lg bg-purple-100 p-6">
                 <Text className="mb-4 text-xl font-bold text-purple-custom">

@@ -31,6 +31,8 @@ export default function TabLayout() {
   //   }, 0);
   // }, [isAuthenticated]);
 
+  console.log('tabs layout');
+
   useEffect(() => {
     // 탭 레이아웃이 마운트되면(로그인 성공 후) 푸시 토큰 등록
     registerForPushNotifications().catch(console.error);

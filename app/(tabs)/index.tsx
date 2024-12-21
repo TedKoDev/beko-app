@@ -63,7 +63,7 @@ export default function Home() {
           title: 'HOME',
         }}
       />
-      <View>
+      <View className="border-b border-gray-200">
         <CustomCarousel items={adBanners} />
       </View>
       <View className="flex-row justify-around">

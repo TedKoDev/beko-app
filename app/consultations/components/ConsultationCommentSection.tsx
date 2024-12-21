@@ -26,7 +26,7 @@ export default function ConsultationCommentSection({
 }: ConsultationCommentSectionProps) {
   const { userInfo } = useAuthStore();
   console.log('userInfo', userInfo);
-  const isTeacher = userInfo?.role === 'TEACHER';
+  const isTeacher = userInfo?.role === 'TEACHER' || userInfo?.role === 'ADMIN';
   console.log('isTeacher', isTeacher);
   const deleteCommentMutation = useDeleteComment();
   const { data } = useComments(postId, 'latest');

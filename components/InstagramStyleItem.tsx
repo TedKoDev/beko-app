@@ -20,7 +20,7 @@ export default function InstagramStyleItem({ event }: any) {
               <Image
                 source={{ uri: event.user_profile_picture_url }}
                 style={{ width: 32, height: 32, borderRadius: 16 }}
-                contentFit="contain"
+                contentFit="cover"
                 transition={200}
               />
             ) : (

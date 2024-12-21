@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import {
   HandlerStateChangeEvent,
   PanGestureHandler,
@@ -22,10 +22,10 @@ export default function First() {
 
   return (
     <PanGestureHandler onHandlerStateChange={handleSwipe}>
-      <View className="flex-1 bg-blue-600 p-5">
+      <SafeAreaView className="flex-1 bg-blue-600 p-5">
         <View className="flex-1">
           {/* 메인 컨테이너 */}
-          <View className="mx-4 mt-28 h-[400px] rounded-3xl bg-red-500 px-5 pt-5">
+          <View className="mx-4  h-[400px] rounded-3xl bg-red-500 px-5 pt-5">
             {/* 임시 이미지/비디오 영역 */}
             <View className="mt-20 h-[300px] w-full rounded-xl bg-gray-100">
               {/* 여기에 실제 컨텐츠가 들어갈 예정 */}
@@ -57,7 +57,7 @@ export default function First() {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     </PanGestureHandler>
   );
 }

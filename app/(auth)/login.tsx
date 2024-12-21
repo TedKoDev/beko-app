@@ -181,9 +181,9 @@ export default function LoginScreen() {
             <Text style={styles.registerLinkText}>Don't have an account? Register</Text>
           </Pressable>
 
-          {/* <Pressable className="mt-10" onPress={() => resetOnboarding()}>
+          <Pressable className="mt-10" onPress={() => resetOnboarding()}>
             <Text className="text-white">onboding reset </Text>
-          </Pressable> */}
+          </Pressable>
         </View>
       </View>
     </>
