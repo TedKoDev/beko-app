@@ -30,3 +30,7 @@ export const useOnboardingStore = create<OnboardingState>()(
     }
   )
 );
+
+export const resetOnboarding = () => {
+  useOnboardingStore.persist.clearStorage();
+};

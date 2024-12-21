@@ -17,6 +17,7 @@ import {
 import Auth from './components/Auth';
 
 import { useAuthStore } from '~/store/authStore';
+import { resetOnboarding } from '~/store/onboarding';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -179,6 +180,10 @@ export default function LoginScreen() {
           <Pressable style={styles.registerLink} onPress={() => router.push('/agreement')}>
             <Text style={styles.registerLinkText}>Don't have an account? Register</Text>
           </Pressable>
+
+          {/* <Pressable className="mt-10" onPress={() => resetOnboarding()}>
+            <Text className="text-white">onboding reset </Text>
+          </Pressable> */}
         </View>
       </View>
     </>
