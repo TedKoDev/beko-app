@@ -208,7 +208,7 @@ export default function EditConsultation() {
           headerTitleAlign: 'center',
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()} className="ml-4">
-              <Ionicons name="chevron-back" size={24} color="#7b33ff" />
+              <Ionicons name="chevron-back" size={24} color="black" />
             </TouchableOpacity>
           ),
         }}
@@ -269,7 +269,7 @@ export default function EditConsultation() {
         <View className="mb-4 rounded-lg bg-gray-100 p-4">
           <View className="mb-2 flex-row items-center justify-between">
             <Text className="text-gray-600">Consultation Cost</Text>
-            <Text className="text-purple-custom text-lg font-bold">{selectedCategoryPrice} P</Text>
+            <Text className="text-lg font-bold text-purple-custom">{selectedCategoryPrice} P</Text>
           </View>
           <View className="flex-row items-center justify-between">
             <Text className="text-gray-600">Owned Points</Text>
@@ -348,7 +348,7 @@ export default function EditConsultation() {
         {/* 수정 버튼 */}
         <TouchableOpacity
           onPress={handleSubmit}
-          className="bg-purple-custom rounded-lg p-4"
+          className="rounded-lg bg-purple-custom p-4"
           disabled={updatePost.isPending}>
           <Text className="text-center font-bold text-white">
             {updatePost.isPending ? '수정 중...' : '수정하기'}

@@ -37,7 +37,7 @@ export default function AgreementScreen() {
         options={{
           headerShown: true,
           headerTitle: '',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
         }}
       />
 

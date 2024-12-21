@@ -26,7 +26,7 @@ export default function StackLayout() {
             color: 'black',
           },
           headerTitleAlign: 'center',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
           headerBackVisible: false,
           headerLeft: ({ canGoBack }) =>
             canGoBack ? (

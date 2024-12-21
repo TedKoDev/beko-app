@@ -25,10 +25,10 @@ export default function MyPage() {
     <SafeAreaView className="flex-1 bg-white">
       <Stack.Screen options={{ title: 'My Page' }} />
       <ScrollView
-        className="m-4 flex-1 "
+        className="mx-4 flex-1 pt-4 "
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}>
-        <View className="mb-4">
+        contentContainerStyle={{ paddingBottom: 0 }}>
+        <View className="">
           {/* Profile Section */}
           <View className="mb-4 flex-row items-center">
             <View className="relative mr-3">

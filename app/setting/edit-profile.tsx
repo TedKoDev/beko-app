@@ -11,6 +11,7 @@ import {
   Modal,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 
 import { useUpdateProfile } from '~/queries/hooks/auth/useUpdateProfile';
@@ -134,7 +135,7 @@ export default function EditProfile() {
       <Stack.Screen
         options={{
           headerTitle: 'Edit Profile',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
         }}
       />
 
@@ -210,7 +211,15 @@ export default function EditProfile() {
           <Text className="mb-4 text-sm">Terms and Marketing Agreement</Text>
           <TouchableOpacity
             className="flex-row items-center justify-between py-3"
-            onPress={() => toggleAgreement('terms')}>
+            onPress={() => {
+              if (agreements.terms) {
+                Alert.alert('Required', 'BeraKorean Terms is required.', [
+                  // { text: '확인' },
+                ]);
+              } else {
+                toggleAgreement('terms');
+              }
+            }}>
             <View className="flex-row items-center">
               <AntDesign
                 name={agreements.terms ? 'checkcircle' : 'checkcircleo'}
@@ -226,7 +235,15 @@ export default function EditProfile() {
 
           <TouchableOpacity
             className="flex-row items-center justify-between py-3"
-            onPress={() => toggleAgreement('privacy')}>
+            onPress={() => {
+              if (agreements.privacy) {
+                Alert.alert('Required', 'Privacy Policy is required.', [
+                  // { text: '확인' },
+                ]);
+              } else {
+                // toggleAgreement('privacy');
+              }
+            }}>
             <View className="flex-row items-center">
               <AntDesign
                 name={agreements.privacy ? 'checkcircle' : 'checkcircleo'}
@@ -250,7 +267,8 @@ export default function EditProfile() {
                 color={agreements.marketing ? '#7b33ff' : '#DDD'}
               />
               <Text className="ml-2 text-base">
-                Agree to receive marketing information (Optional)
+                Agree to receive marketing information {'\n'}
+                (Optional)
               </Text>
             </View>
             <TouchableOpacity onPress={() => router.push('/terms/marketing')} className="p-2">

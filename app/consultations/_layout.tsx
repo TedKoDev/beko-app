@@ -14,15 +14,15 @@ export default function ConsultationLayout() {
           headerTitleStyle: {
             fontSize: 18,
             fontWeight: '600',
-            color: '#7b33ff',
+            color: 'black',
           },
           headerTitleAlign: 'center',
-          headerShadowVisible: false,
-          headerBackVisible: false,
+          headerShadowVisible: true,
+          headerBackVisible: true,
           headerLeft: ({ canGoBack }) =>
             canGoBack ? (
               <TouchableOpacity onPress={() => router.back()}>
-                <Ionicons name="chevron-back" size={24} color="#7b33ff" />
+                <Ionicons name="chevron-back" size={24} color="black" />
               </TouchableOpacity>
             ) : null,
         }}

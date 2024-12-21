@@ -169,17 +169,17 @@ export default function ConsultationDetailScreen() {
           headerTitleAlign: 'center',
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()} className="ml-4">
-              <Ionicons name="chevron-back" size={24} color="#7b33ff" />
+              <Ionicons name="chevron-back" size={24} color="black" />
             </TouchableOpacity>
           ),
           headerRight: isAuthor
             ? () => (
                 <View className="mr-4 flex-row">
                   <TouchableOpacity onPress={() => router.push(`/consultations/${id}/edit`)}>
-                    <MaterialIcons name="edit" size={24} color="#7b33ff" />
+                    <MaterialIcons name="edit" size={24} color="black" />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={handlePostDelete} className="ml-4">
-                    <MaterialIcons name="delete" size={24} color="#7b33ff" />
+                    <MaterialIcons name="delete" size={24} color="black" />
                   </TouchableOpacity>
                 </View>
               )
@@ -226,7 +226,7 @@ export default function ConsultationDetailScreen() {
             </View>
             <View className="mt-2 flex-row items-center justify-between">
               <Text className="text-gray-600">상담 비용</Text>
-              <Text className="text-purple-custom font-bold">
+              <Text className="font-bold text-purple-custom">
                 {consultation.post_content.price} P
               </Text>
             </View>
@@ -337,7 +337,7 @@ export default function ConsultationDetailScreen() {
           <View className="flex-row justify-between">
             <TouchableOpacity
               onPress={handleCommentSubmit}
-              className="bg-purple-custom mr-2 flex-1 rounded-lg p-3">
+              className="mr-2 flex-1 rounded-lg bg-purple-custom p-3">
               <Text className="text-center font-medium text-white">답변 작성</Text>
             </TouchableOpacity>
           </View>

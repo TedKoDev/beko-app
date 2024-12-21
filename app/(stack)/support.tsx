@@ -35,7 +35,7 @@ export default function SupportScreen() {
           <Text className="mb-2 text-base font-medium text-gray-800">Email Inquiry</Text>
           <TouchableOpacity onPress={handleEmailPress} className="flex-row items-center">
             <Feather name="mail" size={20} color="#4b5563" />
-            <Text className="ml-2 text-base text-purple-600 underline">ordihong@naver.com</Text>
+            <Text className="ml-2 text-base text-purple-custom underline">ordihong@naver.com</Text>
           </TouchableOpacity>
           <Text className="mt-2 text-sm text-gray-500">
             We will respond to your inquiry as soon as possible.

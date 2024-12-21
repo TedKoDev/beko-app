@@ -50,7 +50,7 @@ export default function ManageAccount() {
       <Stack.Screen
         options={{
           headerTitle: 'User Info',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
         }}
       />
 

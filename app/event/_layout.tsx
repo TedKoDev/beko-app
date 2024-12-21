@@ -19,7 +19,7 @@ export default function EventLayout() {
             color: '#7b33ff',
           },
           headerTitleAlign: 'center',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
           headerBackVisible: false,
           headerLeft: ({ canGoBack }) =>
             canGoBack ? (

@@ -169,7 +169,7 @@ export default function RegisterScreen() {
         options={{
           headerShown: true,
           headerTitle: '',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
         }}
       />
 

@@ -45,7 +45,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
                 setSelectedTopicId(undefined);
                 setSelectedCategoryId(undefined);
               }}
-              className={`rounded-full px-4 py-2 ${
+              className={` rounded-xl px-4 py-2 ${
                 selectedTopicId === undefined ? 'bg-purple-custom' : 'bg-gray-200'
               }`}>
               <Text className={selectedTopicId === undefined ? 'text-white' : 'text-gray-700'}>
@@ -61,7 +61,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
                     setSelectedTopicId(topic.topic_id);
                     setSelectedCategoryId(undefined);
                   }}
-                  className={`rounded-full px-4 py-2 ${
+                  className={` rounded-xl px-4 py-2 ${
                     selectedTopicId === topic.topic_id ? 'bg-purple-custom' : 'bg-gray-200'
                   }`}>
                   <Text
@@ -83,7 +83,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
             <View className="flex-row gap-2">
               <TouchableOpacity
                 onPress={() => setSelectedCategoryId(undefined)}
-                className={`rounded-full px-4 py-2 ${
+                className={` rounded-xl px-4 py-2 ${
                   selectedCategoryId === undefined ? 'bg-purple-custom' : 'bg-gray-200'
                 }`}>
                 <Text className={selectedCategoryId === undefined ? 'text-white' : 'text-gray-700'}>
@@ -94,7 +94,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
                 <TouchableOpacity
                   key={category.category_id}
                   onPress={() => setSelectedCategoryId(category.category_id)}
-                  className={`rounded-full px-4 py-2 ${
+                  className={` rounded-xl px-4 py-2 ${
                     selectedCategoryId === category.category_id ? 'bg-purple-custom' : 'bg-gray-200'
                   }`}>
                   <Text

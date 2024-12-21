@@ -209,7 +209,7 @@ export default function WriteScreen() {
                   key={type}
                   onPress={() => handleTypeSelect(type)}
                   className={`rounded-full px-4 py-2 ${
-                    selectedType === type ? 'bg-purple-500' : 'bg-gray-200'
+                    selectedType === type ? 'bg-purple-custom' : 'bg-gray-200'
                   }`}>
                   <Text className={selectedType === type ? 'text-white' : 'text-gray-700'}>
                     {label}
@@ -253,7 +253,7 @@ export default function WriteScreen() {
                       setSelectedCategory(null);
                     }}
                     className={`rounded-full px-4 py-2 ${
-                      selectedTopic === topic.topic_id ? 'bg-purple-500' : 'bg-gray-200'
+                      selectedTopic === topic.topic_id ? 'bg-purple-custom' : 'bg-gray-200'
                     }`}>
                     <Text
                       className={selectedTopic === topic.topic_id ? 'text-white' : 'text-gray-700'}>
@@ -276,7 +276,7 @@ export default function WriteScreen() {
                     key={category.category_id}
                     onPress={() => setSelectedCategory(category.category_id)}
                     className={`rounded-full px-4 py-2 ${
-                      selectedCategory === category.category_id ? 'bg-purple-500' : 'bg-gray-200'
+                      selectedCategory === category.category_id ? 'bg-purple-custom' : 'bg-gray-200'
                     }`}>
                     <Text
                       className={
@@ -298,7 +298,7 @@ export default function WriteScreen() {
               <Text className="text-gray-600">Set Points</Text>
               <Text className="text-gray-600">
                 Your points:{' '}
-                <Text className="font-bold text-purple-600">{userInfo?.points || 0}P</Text>
+                <Text className="font-bold text-purple-custom">{userInfo?.points || 0}P</Text>
               </Text>
             </View>
             <View className="flex-row items-center">
@@ -375,7 +375,7 @@ export default function WriteScreen() {
       {/* Submit button */}
       <TouchableOpacity
         onPress={handleSubmit}
-        className="rounded-lg bg-purple-500 p-4 "
+        className="rounded-lg bg-purple-custom p-4 "
         disabled={addPost.isPending}>
         <Text className="text-center font-bold text-white">
           {addPost.isPending ? 'Posting...' : 'Post'}

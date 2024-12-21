@@ -20,7 +20,7 @@ export default function Settings() {
         options={{
           headerShown: true,
           headerTitle: 'Settings',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
         }}
       />
 

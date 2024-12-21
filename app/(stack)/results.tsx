@@ -38,6 +38,8 @@ export default function SearchResultsScreen() {
 
   const { data: searchData } = useSearch(q as string);
 
+  console.log('searchData', JSON.stringify(searchData, null, 2));
+
   const renderItem = (item: SearchResult) => {
     switch (item.type) {
       case PostType.GENERAL:
@@ -46,7 +48,7 @@ export default function SearchResultsScreen() {
           <TouchableOpacity
             key={item.post_id}
             className="mb-4 border-b border-gray-100 p-4"
-            onPress={() => router.push(`/event/${item.post_id}/index`)}>
+            onPress={() => router.push(`/event/${item.post_id}`)}>
             <Text className="mb-2 text-lg">{item.post_content.title}</Text>
             <View className="flex-row space-x-4">
               <Text className="text-gray-500">좋아요 {item.likes}</Text>
@@ -105,34 +107,34 @@ export default function SearchResultsScreen() {
       <View className="flex-row border-b border-gray-200">
         <TouchableOpacity
           onPress={() => setActiveTab('all')}
-          className={`flex-1 p-4 ${activeTab === 'all' ? 'border-b-2 border-purple-600' : ''}`}>
+          className={`flex-1 p-4 ${activeTab === 'all' ? 'border-b-2 border-purple-custom' : ''}`}>
           <Text
-            className={`text-center ${activeTab === 'all' ? 'font-bold text-purple-600' : 'text-gray-500'}`}>
+            className={`text-center ${activeTab === 'all' ? 'font-bold text-purple-custom' : 'text-gray-500'}`}>
             All
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setActiveTab(PostType.GENERAL)}
-          className={`flex-1 p-4 ${activeTab === PostType.GENERAL ? 'border-b-2 border-purple-600' : ''}`}>
+          className={`flex-1 p-4 ${activeTab === PostType.GENERAL ? 'border-b-2 border-purple-custom' : ''}`}>
           <Text
-            className={`text-center ${activeTab === PostType.GENERAL ? 'font-bold text-purple-600' : 'text-gray-500'}`}>
+            className={`text-center ${activeTab === PostType.GENERAL ? 'font-bold text-purple-custom' : 'text-gray-500'}`}>
             General
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => setActiveTab(PostType.QUESTION)}
-          className={`flex-1 p-4 ${activeTab === PostType.QUESTION ? 'border-b-2 border-purple-600' : ''}`}>
+          className={`flex-1 p-4 ${activeTab === PostType.QUESTION ? 'border-b-2 border-purple-custom' : ''}`}>
           <Text
-            className={`text-center ${activeTab === PostType.QUESTION ? 'font-bold text-purple-600' : 'text-gray-500'}`}>
+            className={`text-center ${activeTab === PostType.QUESTION ? 'font-bold text-purple-custom' : 'text-gray-500'}`}>
             Question
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setActiveTab(PostType.COLUMN)}
-          className={`flex-1 p-4 ${activeTab === PostType.COLUMN ? 'border-b-2 border-purple-600' : ''}`}>
+          className={`flex-1 p-4 ${activeTab === PostType.COLUMN ? 'border-b-2 border-purple-custom' : ''}`}>
           <Text
-            className={`text-center ${activeTab === PostType.COLUMN ? 'font-bold text-purple-600' : 'text-gray-500'}`}>
+            className={`text-center ${activeTab === PostType.COLUMN ? 'font-bold text-purple-custom' : 'text-gray-500'}`}>
             Notice
           </Text>
         </TouchableOpacity>

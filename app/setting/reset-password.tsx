@@ -77,7 +77,7 @@ export default function ResetPassword() {
           options={{
             headerShown: true,
             headerTitle: 'Reset Password',
-            headerShadowVisible: false,
+            headerShadowVisible: true,
           }}
         />
         <View className="flex-1 items-center justify-center px-4">
@@ -95,7 +95,7 @@ export default function ResetPassword() {
         options={{
           headerShown: true,
           headerTitle: 'Reset Password',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
         }}
       />
 

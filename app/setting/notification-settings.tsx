@@ -29,7 +29,7 @@ export default function NotificationSettings() {
         options={{
           headerShown: true,
           headerTitle: 'Notification Settings',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
         }}
       />
 

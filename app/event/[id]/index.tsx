@@ -110,7 +110,7 @@ export default function EventPage() {
                       <View
                         key={index}
                         className={`mx-1 h-2 w-2 rounded-full ${
-                          index === activeIndex ? 'bg-purple-500' : 'bg-gray-300'
+                          index === activeIndex ? 'bg-purple-custom' : 'bg-gray-300'
                         }`}
                       />
                     ))}
@@ -124,7 +124,7 @@ export default function EventPage() {
               )}
               {/* 토픽 카테고리 */}
               <View className="ml-4 flex-row items-center gap-2">
-                <Text className="text-sm font-bold text-purple-500">Category:</Text>
+                <Text className="text-sm font-bold text-purple-custom">Category:</Text>
                 <Text className="text-sm text-gray-500">{post.category_name}</Text>
               </View>
 

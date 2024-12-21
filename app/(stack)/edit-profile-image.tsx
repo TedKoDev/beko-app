@@ -81,7 +81,7 @@ export default function EditProfileImage() {
       <Stack.Screen
         options={{
           headerTitle: 'Edit Profile Image',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
         }}
       />
 

@@ -57,8 +57,14 @@ export default function EventListItem({ event }: any) {
             <View className="relative flex-1">
               <Image
                 source={{ uri: activeMedia[0].media_url }}
-                style={{ width: '100%', height: 80, borderRadius: 6 }}
-                contentFit="cover"
+                style={{
+                  width: '100%',
+                  height: 80,
+                  borderRadius: 6,
+                  borderWidth: 2,
+                  borderColor: '#f4f4f4',
+                }}
+                contentFit="fill"
                 transition={200}
               />
               {activeMedia.length > 1 && (

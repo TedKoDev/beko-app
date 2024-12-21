@@ -62,7 +62,7 @@ export default function TabLayout() {
           headerRight: () => (
             <View className="mr-2 flex-row items-center gap-4">
               <Link href="/search" asChild>
-                <Feather name="search" size={24} color="black" />
+                <Feather name="search" size={24} color="#7b33ff" />
               </Link>
               <Link href="/modal" asChild>
                 <HeaderButton />

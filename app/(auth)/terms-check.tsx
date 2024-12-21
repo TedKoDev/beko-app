@@ -55,7 +55,7 @@ export default function TermsCheckScreen() {
         options={{
           headerShown: true,
           headerTitle: '',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
         }}
       />
 

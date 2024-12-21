@@ -154,8 +154,8 @@ export default function AdPage() {
                 <TouchableOpacity
                   key={lang}
                   onPress={() => setLanguage(lang)}
-                  className={`mr-2 rounded-full px-4 py-2 ${
-                    language === lang ? 'bg-purple-600' : 'bg-gray-200'
+                  className={`mr-2 rounded-xl px-4 py-2 ${
+                    language === lang ? 'bg-purple-custom' : 'bg-gray-200'
                   }`}>
                   <Text
                     className={`font-medium ${language === lang ? 'text-white' : 'text-gray-600'}`}>
@@ -175,20 +175,20 @@ export default function AdPage() {
 
               {/* Introduction Section */}
               <View className="mb-8 rounded-lg bg-purple-50 p-6">
-                <Text className="mb-3 text-xl font-bold text-purple-800">
+                <Text className=" mb-3 text-xl font-bold text-purple-custom">
                   {currentContent.intro.title}
                 </Text>
                 <Text className="text-base leading-7 text-gray-700">
                   {currentContent.intro.content}
                 </Text>
-                <Text className="mt-4 text-base font-bold text-purple-700">
+                <Text className="mt-4 text-base font-bold text-purple-custom">
                   {currentContent.intro.closing}
                 </Text>
               </View>
               <AdBanner />
               {/* Call-to-Action Section */}
               <View className="mb-8 rounded-lg bg-purple-100 p-6">
-                <Text className="mb-4 text-xl font-bold text-purple-800">
+                <Text className="mb-4 text-xl font-bold text-purple-custom">
                   {links[language].cta}
                 </Text>
                 <TouchableOpacity
@@ -197,7 +197,7 @@ export default function AdPage() {
                       'https://cafetalk.com/tutor/profile/?c=eJzLrwp09s7R9tNPCSqrTM7KdkwuSE1Kt7UFAGnjCHY.&lang=en'
                     )
                   }
-                  className="mb-3 rounded-full bg-purple-600 px-6 py-3">
+                  className="mb-3 rounded-full bg-purple-custom px-6 py-3">
                   <Text className="text-center text-white">{links[language].cafetalk}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -220,7 +220,7 @@ export default function AdPage() {
                 </Text>
                 {currentContent.recommended.items.map((text, index) => (
                   <View key={index} className="mb-2 flex-row items-center last:mb-0">
-                    <Text className="mr-2 text-purple-600">•</Text>
+                    <Text className="purple-custom mr-2">•</Text>
                     <Text className="text-base leading-7 text-gray-700">{text}</Text>
                   </View>
                 ))}
@@ -233,7 +233,7 @@ export default function AdPage() {
                 </Text>
                 {currentContent.background.items.map((text, index) => (
                   <View key={index} className="mb-2 flex-row items-center last:mb-0">
-                    <Text className="mr-2 text-purple-600">•</Text>
+                    <Text className="purple-custom mr-2">•</Text>
                     <Text className="text-base leading-7 text-gray-700">{text}</Text>
                   </View>
                 ))}
@@ -250,22 +250,22 @@ export default function AdPage() {
       <View className="flex-row border-b border-gray-200">
         <TouchableOpacity
           onPress={() => setActiveTab('teacher')}
-          className={`flex-1 p-4 ${activeTab === 'teacher' ? 'border-b-2 border-purple-600' : ''}`}>
+          className={`flex-1 p-4 ${activeTab === 'teacher' ? 'border-b-2 border-purple-custom' : ''}`}>
           <Text
             className={`text-center font-medium ${
-              activeTab === 'teacher' ? 'text-purple-600' : 'text-gray-600'
+              activeTab === 'teacher' ? 'text-purple-custom' : 'text-gray-600'
             }`}>
-            선생님 소개
+            Teacher
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setActiveTab('ads')}
-          className={`flex-1 p-4 ${activeTab === 'ads' ? 'border-b-2 border-purple-600' : ''}`}>
+          className={`flex-1 p-4 ${activeTab === 'ads' ? 'border-b-2 border-purple-custom' : ''}`}>
           <Text
             className={`text-center font-medium ${
-              activeTab === 'ads' ? 'text-purple-600' : 'text-gray-600'
+              activeTab === 'ads' ? 'text-purple-custom' : 'text-gray-600'
             }`}>
-            광고
+            Info
           </Text>
         </TouchableOpacity>
       </View>

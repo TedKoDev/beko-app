@@ -161,7 +161,7 @@ export default function SearchScreen() {
                 <TouchableOpacity
                   key={search.timestamp}
                   onPress={() => handleSearchClick(search.keyword)}
-                  className="mr-3 flex-row items-center rounded-full bg-gray-100 px-4 py-2">
+                  className="mr-3 flex-row items-center rounded-full bg-purple-100 px-4 py-2">
                   <Text>{search.keyword}</Text>
                   <TouchableOpacity
                     onPress={(e) => {
@@ -185,7 +185,7 @@ export default function SearchScreen() {
               <TouchableOpacity
                 key={category.category_id}
                 onPress={() => handleSearchClick(category.category_name)}
-                className="mb-2 mr-2 rounded-full bg-gray-100 px-4 py-2">
+                className="mb-2  mr-2 rounded-full bg-purple-100 px-4 py-2">
                 <Text>{category.category_name}</Text>
               </TouchableOpacity>
             ))}

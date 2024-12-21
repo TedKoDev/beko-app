@@ -13,7 +13,9 @@ export default function InstagramStyleItem({ event }: any) {
       <Pressable className="border-b border-gray-200 bg-white">
         <View className="flex-row items-center p-3">
           <View className="flex-row items-center">
-            {event.type === 'QUESTION' && <Text className="mr-2 text-lg text-purple-500">Q.</Text>}
+            {event.type === 'QUESTION' && (
+              <Text className="mr-2 text-lg text-purple-custom">Q.</Text>
+            )}
             {event.user_profile_picture_url ? (
               <Image
                 source={{ uri: event.user_profile_picture_url }}
@@ -73,7 +75,7 @@ export default function InstagramStyleItem({ event }: any) {
         <View className="mt-2 flex-row items-center justify-between p-3">
           <View className="flex-row items-center gap-2">
             {event.category_name && (
-              <Text className="text-xs text-purple-500">{event.category_name}</Text>
+              <Text className="text-xs text-purple-custom">{event.category_name}</Text>
             )}
             {event.type === 'QUESTION' && event.post_content?.points != null && (
               <Text className="text-xs text-orange-500">{event.post_content.points}P</Text>

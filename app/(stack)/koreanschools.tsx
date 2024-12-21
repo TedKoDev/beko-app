@@ -30,8 +30,8 @@ export default function KoreanSchoolsScreen() {
   const renderItem = ({ item }: { item: School }) => (
     <View className="mb-4 rounded-2xl bg-white p-5 shadow-sm">
       <View className="mb-1 flex-row items-center">
-        <View className="bg-purple-custom mr-2 h-2 w-2 rounded-full" />
-        <Text className="text-purple-custom text-xs font-medium">
+        <View className="mr-2 h-2 w-2 rounded-full bg-purple-custom" />
+        <Text className="text-xs font-medium text-purple-custom">
           {item.region}, {item.country_code}
         </Text>
       </View>
@@ -44,7 +44,7 @@ export default function KoreanSchoolsScreen() {
           className="flex-row items-center self-start rounded-lg bg-violet-50 px-4 py-2"
           onPress={() => handleOpenWebsite(item.website_url)}>
           <Feather name="globe" size={16} color="purple-custom" />
-          <Text className="text-purple-custom ml-2 text-sm font-medium">Visit Website</Text>
+          <Text className="ml-2 text-sm font-medium text-purple-custom">Visit Website</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -67,7 +67,7 @@ export default function KoreanSchoolsScreen() {
         options={{
           title: 'Korean Schools Info',
           headerTitleAlign: 'center',
-          headerShadowVisible: false,
+          headerShadowVisible: true,
           headerStyle: { backgroundColor: '#F9FAFB' },
           headerRight: () => null,
         }}
