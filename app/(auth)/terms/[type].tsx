@@ -10,11 +10,11 @@ const TERMS_LINKS = {
   },
   privacy: {
     title: 'BeraKorean Privacy',
-    url: 'https://flame-mascara-204.notion.site/Policy-15da507c1a62806aa0cbe24c8769c536?pvs=4',
+    url: 'https://flame-mascara-204.notion.site/Policy-15da507c1a62806aa0cbe24c8769c536',
   },
   marketing: {
     title: 'BeraKorean Marketing',
-    url: 'https://flame-mascara-204.notion.site/Marketing-Consent-Policy-15da507c1a6280f4b1c4d12181f1fbdb?pvs=4',
+    url: 'https://flame-mascara-204.notion.site/Marketing-Consent-Policy-15da507c1a6280f4b1c4d12181f1fbdb',
   },
 } as const;
 
