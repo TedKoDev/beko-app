@@ -96,7 +96,10 @@ export const addPostApi = async (createPostDto: CreatePostDto) => {
   try {
     const token = useAuthStore.getState().userToken;
 
+    console.log('add post token', token);
+
     if (!token) {
+      throw new Error('No token found');
     }
     //console.log('add postpayload', createPostDto);
 

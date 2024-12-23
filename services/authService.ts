@@ -217,6 +217,7 @@ export const socialLoginApi = async (
       email,
       name,
     });
+    console.log('social login response', response.data);
     return response.data;
   } catch (error) {
     console.error('Social login API failed:', error);
