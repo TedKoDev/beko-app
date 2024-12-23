@@ -104,8 +104,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       // tokenManager.setToken(data.access_token);
 
       useAuthStore.setState({ userToken: data.access_token });
-
-      const userInfo = await getUserInfoApi(data.access_token);
+      const userInfo = await authService.getUserInfoApi(data.access_token);
       await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
 
       set({

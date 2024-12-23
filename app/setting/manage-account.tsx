@@ -126,25 +126,31 @@ export default function ManageAccount() {
         <View className="flex-1 items-center justify-center bg-black/50">
           <View className="m-5 w-[90%] rounded-lg bg-white p-4">
             <Text className="mb-4 text-center text-lg font-bold">Account Withdrawal</Text>
+            {/* socail login 인 경우 비밀번호 입력 안함 */}
+            {userInfo?.social_login?.length === 0 ? (
+              <Text className="mb-4 text-center text-gray-600">
+                Please enter your password to withdraw your account.{'\n'}
+                After withdrawal, it cannot be recovered.
+              </Text>
+            ) : (
+              <Text className="mb-4 text-center text-gray-600">
+                Are you sure you want to delete your social login account?
+              </Text>
+            )}
 
-            <Text className="mb-4 text-center text-gray-600">
-              Please enter your password to withdraw your account.{'\n'}
-              After withdrawal, it cannot be recovered.
-            </Text>
-
-            <TextInput
-              className="mb-4 h-12 rounded-lg border border-gray-300 px-4"
-              placeholder="Enter your password"
-              secureTextEntry
-              value={password}
-              onChangeText={(text) => {
-                setPassword(text);
-                setError('');
-              }}
-            />
-
+            {userInfo?.social_login?.length === 0 && (
+              <TextInput
+                className="mb-4 h-12 rounded-lg border border-gray-300 px-4"
+                placeholder="Enter your password"
+                secureTextEntry
+                value={password}
+                onChangeText={(text) => {
+                  setPassword(text);
+                  setError('');
+                }}
+              />
+            )}
             {error ? <Text className="mb-4 text-center text-red-500">{error}</Text> : null}
-
             <View className="flex-row justify-end space-x-2">
               <TouchableOpacity
                 className="rounded-lg border border-gray-300 px-4 py-2"
@@ -158,7 +164,7 @@ export default function ManageAccount() {
               </TouchableOpacity>
 
               <TouchableOpacity
-                className="rounded-lg bg-red-500 px-4 py-2"
+                className="ml-6 rounded-lg bg-red-500 px-4  py-2"
                 onPress={handleDeactivate}
                 disabled={isPending}>
                 {isPending ? (

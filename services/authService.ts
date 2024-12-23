@@ -292,8 +292,9 @@ export const updateInitialAgreementsApi = async (
 };
 
 export const healthCheckApi = async () => {
+  console.log('healthCheckApi1');
   const response = await api.get('/health-check');
-  //console.log('healthCheckApi', response.data);
+  console.log('healthCheckApi2', response.data);
   return response.data;
 };
 

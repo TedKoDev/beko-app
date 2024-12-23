@@ -5,10 +5,6 @@ import { TouchableOpacity } from 'react-native';
 import { healthCheckApi } from '~/services/authService';
 
 export default function AuthLayout() {
-  useEffect(() => {
-    healthCheckApi();
-  }, []);
-
   return (
     <Stack
       screenOptions={{

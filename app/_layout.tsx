@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as Notifications from 'expo-notifications';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, Animated, KeyboardAvoidingView } from 'react-native';
+import { View, Animated, KeyboardAvoidingView, Alert, Linking } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   useSharedValue,
@@ -16,6 +16,8 @@ import { useAuthStore } from '../store/authStore';
 import { useOnboardingStore } from '../store/onboarding';
 
 import '../global.css';
+import { healthCheckApi } from '~/services/authService';
+import { checkAppVersion } from '~/services/checkVersionService';
 
 // This is the default configuration
 configureReanimatedLogger({
@@ -37,6 +39,29 @@ export default function RootLayout() {
   const router = useRouter();
   const logoScale = useSharedValue(0);
   const [loading, setLoading] = useState(true); // 로딩 상태
+
+  // 버전 체크 useEffect 추가
+  useEffect(() => {
+    const checkVersion = async () => {
+      const { needsUpdate, storeUrl } = await checkAppVersion();
+
+      if (needsUpdate) {
+        Alert.alert(
+          'Update Required',
+          'There is a new version available. Please update from the store.',
+          [
+            {
+              text: 'Update',
+              onPress: () => Linking.openURL(storeUrl),
+            },
+          ],
+          { cancelable: false } // 사용자가 알림을 무시할 수 없게 설정
+        );
+      }
+    };
+
+    checkVersion();
+  }, []); // 앱 시작시 한번만 실행
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -63,6 +88,7 @@ export default function RootLayout() {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
+        // await healthCheckApi();
         await checkAuth();
 
         if (isAuthenticated && userInfo) {

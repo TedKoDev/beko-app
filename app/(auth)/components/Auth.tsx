@@ -21,30 +21,82 @@ export default function Auth() {
 
   const handleGoogleLogin = async () => {
     try {
+      console.log('handleGoogleLogin1');
+
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+      console.log('handleGoogleLogin2');
+      console.log('userInfo', JSON.stringify(userInfo, null, 2));
+      //       // userInfo {
+      //       //   "type": "cancelled",
+      //       //   "data": null
+      // }
+      if (userInfo.type === 'cancelled') {
+        console.log('handleGoogleLogin3');
+      } else {
+        console.log('handleGoogleLogin4');
+        await socialLogin(
+          'GOOGLE',
+          userInfo?.data?.user?.id || '',
+          userInfo?.data?.user?.email || '',
+          userInfo?.data?.user?.givenName || ''
+        );
+        console.log('handleGoogleLogin5');
 
-      //console.log('userInfo', JSON.stringify(userInfo, null, 2));
-      await socialLogin(
-        'GOOGLE',
-        userInfo?.data?.user?.id || '',
-        userInfo?.data?.user?.email || '',
-        userInfo?.data?.user?.givenName || ''
-      );
-      router.replace('/');
+        router.replace('/');
+      }
     } catch (error: any) {
+      console.log('handleGoogleLogin6');
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('handleGoogleLogin7');
+        // router.dismissAll();
+        router.replace('/login');
         //console.log('User cancelled the login flow');
       } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('handleGoogleLogin6');
+        // router.dismissAll();
+        router.replace('/login');
         //console.log('Sign in is in progress');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log('handleGoogleLogin7');
+        // router.dismissAll();
+        router.replace('/login');
         //console.log('Play services not available or outdated');
       } else {
+        console.log('handleGoogleLogin8');
+        // router.dismissAll();
+        router.replace('/login');
         //console.log('Something went wrong', error);
         alert('Google login failed. Please try again.');
       }
     }
   };
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const userInfo = await GoogleSignin.signIn();
+
+  //     //console.log('userInfo', JSON.stringify(userInfo, null, 2));
+  //     await socialLogin(
+  //       'GOOGLE',
+  //       userInfo?.data?.user?.id || '',
+  //       userInfo?.data?.user?.email || '',
+  //       userInfo?.data?.user?.givenName || ''
+  //     );
+  //     router.replace('/');
+  //   } catch (error: any) {
+  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+  //       //console.log('User cancelled the login flow');
+  //     } else if (error.code === statusCodes.IN_PROGRESS) {
+  //       //console.log('Sign in is in progress');
+  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //       //console.log('Play services not available or outdated');
+  //     } else {
+  //       //console.log('Something went wrong', error);
+  //       alert('Google login failed. Please try again.');
+  //     }
+  //   }
+  // };
 
   return (
     <Pressable style={styles.socialButton} onPress={handleGoogleLogin}>
