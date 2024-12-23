@@ -14,7 +14,7 @@ export function useTopics() {
   return useQuery<TopicWithCategories[]>({
     queryKey: ['topics'],
     queryFn: getTopicsApi,
-    staleTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
+    staleTime: 100 * 60 * 1000, // 100분 동안 캐시 유지
     retry: 2, // 실패시 2번 재시도
   });
 }

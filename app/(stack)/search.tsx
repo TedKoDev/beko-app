@@ -32,6 +32,7 @@ export default function SearchScreen() {
 
   const { searches: recentSearches, removeSearch } = useRecentSearchStore();
   const { data: topics } = useTopics();
+  console.log('topics', JSON.stringify(topics, null, 2));
 
   // 모든 카테고리를 하나의 배열로 만들고 랜덤으로 선택
   const recommendedCategories = React.useMemo(() => {

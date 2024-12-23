@@ -52,6 +52,13 @@ export default function Home() {
       queryClient.invalidateQueries({ queryKey: ['logs'] }),
       queryClient.invalidateQueries({ queryKey: ['posts'] }),
       queryClient.invalidateQueries({ queryKey: ['todayWords'] }),
+      queryClient.invalidateQueries({ queryKey: ['topics'] }),
+      queryClient.invalidateQueries({ queryKey: ['lessons'] }),
+      queryClient.invalidateQueries({ queryKey: ['adBanner'] }),
+      queryClient.invalidateQueries({ queryKey: ['posts'] }),
+      queryClient.invalidateQueries({ queryKey: ['words'] }),
+      queryClient.invalidateQueries({ queryKey: ['logs'] }),
+      queryClient.invalidateQueries({ queryKey: ['todayWords'] }),
     ]);
   };
 
