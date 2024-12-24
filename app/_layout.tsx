@@ -18,6 +18,7 @@ import { useOnboardingStore } from '../store/onboarding';
 import '../global.css';
 import { healthCheckApi } from '~/services/authService';
 import { checkAppVersion } from '~/services/checkVersionService';
+import { useCountryData } from '~/store/countryStore';
 
 // This is the default configuration
 configureReanimatedLogger({

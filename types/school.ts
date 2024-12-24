@@ -5,6 +5,7 @@ export interface School {
   name_ko: string;
   name_en: string;
   website_url: string;
+  description: string;
   created_at: string;
   updated_at: string | null;
   deleted_at: string | null;
@@ -19,8 +20,9 @@ export interface SchoolsResponse {
     totalPages: number;
   };
 }
-
 export interface PaginationParams {
   page?: number;
   limit?: number;
+  country_code?: string; // 추가된 필터
+  region?: string; // 추가된 필터
 }

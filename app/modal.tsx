@@ -1,14 +1,25 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Platform, View, Text, ScrollView } from 'react-native';
+import { Platform, View, Text, ScrollView, TouchableOpacity, Image, Linking } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import { adUnitId } from '~/src/config/ads';
 
 export default function Modal() {
+  const openBuyMeACoffee = async () => {
+    const url = 'https://www.buymeacoffee.com/ordihong';
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      alert("Can't open the URL");
+    }
+  };
+
   return (
     <ScrollView className="flex-1 bg-white">
+      {/* Header 설정 */}
       <Stack.Screen
         options={{
           headerShown: true,
@@ -17,6 +28,7 @@ export default function Modal() {
       />
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
 
+      {/* 상단 설명 */}
       <View className="rounded-b-3xl bg-purple-50 px-4 py-6">
         <Text className="mb-4 text-center text-2xl font-bold text-purple-900">
           Welcome to Bera Korean
@@ -32,7 +44,26 @@ export default function Modal() {
         </Text>
       </View>
 
+      {/* 본문 콘텐츠 */}
       <View className="items-center space-y-6 p-4">
+        {/* Buy Me a Coffee */}
+        <View className="items-center space-y-4">
+          <Text className="text-center text-lg font-bold text-purple-900">
+            Buy Me a Coffee for Developer
+          </Text>
+          <TouchableOpacity
+            onPress={openBuyMeACoffee}
+            style={{ alignItems: 'center', marginBottom: 10 }}>
+            <Image
+              source={{
+                uri: 'https://cdn.buymeacoffee.com/buttons/v2/default-violet.png',
+              }}
+              style={{ width: 217, height: 60 }}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Standard Banner Ad */}
         <View className="items-center space-y-4">
           <Text className="text-center text-lg font-bold text-purple-900">Standard Banner</Text>
           <View className="overflow-hidden rounded-xl bg-white shadow-sm">
@@ -49,9 +80,10 @@ export default function Modal() {
           </Text>
         </View>
 
+        {/* Large Banner Ad */}
         <View className="space-y-4">
           <Text className="text-center text-lg font-bold text-purple-900">Large Banner</Text>
-          <View className="items-center  overflow-hidden rounded-xl bg-white shadow-sm">
+          <View className="items-center overflow-hidden rounded-xl bg-white shadow-sm">
             <BannerAd
               unitId={adUnitId ?? ''}
               size={BannerAdSize.LARGE_BANNER}
@@ -65,6 +97,7 @@ export default function Modal() {
           </Text>
         </View>
 
+        {/* Medium Rectangle Ad */}
         <View className="space-y-4">
           <Text className="text-center text-lg font-bold text-purple-900">Medium Rectangle</Text>
           <View className="items-center overflow-hidden rounded-xl bg-white shadow-sm">
@@ -81,6 +114,7 @@ export default function Modal() {
           </Text>
         </View>
 
+        {/* Full Banner Ad */}
         <View className="space-y-4">
           <Text className="text-center text-lg font-bold text-purple-900">Full Banner</Text>
           <View className="overflow-hidden rounded-xl bg-white shadow-sm">

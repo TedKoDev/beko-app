@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router, Stack } from 'expo-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { healthCheckApi } from '~/services/authService';
+import { useCountryData } from '~/store/countryStore';
 
 export default function AuthLayout() {
   return (

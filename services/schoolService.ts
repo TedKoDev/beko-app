@@ -3,14 +3,19 @@ import { School, SchoolsResponse, PaginationParams } from '~/types/school';
 import { useAuthStore } from '~/store/authStore';
 
 export const schoolService = {
-  getSchools: async ({ page = 1, limit = 20 }: PaginationParams = {}) => {
+  getSchools: async ({ page = 1, limit = 20, country_code, region }: PaginationParams = {}) => {
     const token = useAuthStore.getState().userToken;
     if (!token) {
       throw new Error('No token found');
     }
 
     const response = await api.get<SchoolsResponse>(`/schools`, {
-      params: { page, limit },
+      params: {
+        page,
+        limit,
+        country_code,
+        region,
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },

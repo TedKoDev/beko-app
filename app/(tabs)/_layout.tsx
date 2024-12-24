@@ -8,10 +8,22 @@ import { TabBarIcon } from '../../components/TabBarIcon';
 import { useNotification } from '../../queries/hooks/notification/useNotification';
 
 import { useAuthStore } from '~/store/authStore';
+import { useCountry } from '~/queries/hooks/utils/useCountry';
+import { useCountryStore } from '~/store/countryStore';
 
 export default function TabLayout() {
   const userInfo = useAuthStore((state) => state.userInfo);
   const { registerForPushNotifications } = useNotification();
+
+  const { data: countries, isLoading: isLoadingCountries } = useCountry();
+  const setCountries = useCountryStore((state) => state.setCountries);
+
+  // 국가 데이터가 로드되면 스토어에 저장
+  useEffect(() => {
+    if (countries) {
+      setCountries(countries);
+    }
+  }, [countries]);
 
   const router = useRouter();
   const { isAuthenticated } = useAuthStore();
@@ -38,6 +50,10 @@ export default function TabLayout() {
 
   // userInfo가 중첩 구조인 경우를 처리
   const username = userInfo?.username;
+
+  if (isLoadingCountries) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <Tabs

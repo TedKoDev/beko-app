@@ -8,7 +8,7 @@ import { useCountry } from '~/queries/hooks/utils/useCountry';
 import { authService } from '~/services/authService';
 import { useAuthStore } from '~/store/authStore';
 
-interface Country {
+export interface Country {
   country_id: number;
   country_code: string;
   country_name: string;
