@@ -31,6 +31,10 @@
       "android": {
         "buildType": "app-bundle"
       },
+      "ios": {
+        "buildConfiguration": "Release",
+        "autoIncrement": true
+      },
       "channel": "production"
     }
   }
