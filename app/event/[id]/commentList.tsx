@@ -7,7 +7,6 @@ import {
   Text,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
 } from 'react-native';
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -25,10 +24,7 @@ export default function CommentListPage() {
   const { id } = useLocalSearchParams();
   const [sort, setSort] = useState<'latest' | 'oldest' | 'popular'>('latest');
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useComments(
-    Number(id),
-    sort
-  );
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useComments(Number(id));
 
   const allComments = data?.pages.flatMap((page) => page.data) ?? [];
   const toggleCommentLikeMutation = useToggleCommentLike();
@@ -85,7 +81,13 @@ export default function CommentListPage() {
                 onToggleLike={handleToggleLike}
                 onDelete={handleDeleteComment}
                 onEdit={handleEditComment}
+                isQuestionAuthor={false}
               />
+            )}
+            ListEmptyComponent={() => (
+              <View className="flex-1 items-center justify-center py-8">
+                <Text className="text-gray-500">There is no comment</Text>
+              </View>
             )}
             keyExtractor={(item) => item.comment_id.toString()}
             onEndReached={() => {

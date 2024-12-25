@@ -2,5 +2,5 @@ import { Platform } from 'react-native';
 
 export const adUnitId =
   Platform.OS === 'ios'
-    ? process.env.EXPO_PUBLIC_GOOGLE_AD_UNIT_ID_IOS
-    : process.env.EXPO_PUBLIC_GOOGLE_AD_UNIT_ID_ANDROID;
+    ? 'ca-app-pub-3099985704584658/9722119991'
+    : 'ca-app-pub-3099985704584658/8333016705';

@@ -72,6 +72,11 @@ export default function NoticeScreen() {
         isRefreshing={isRefetching}
         showViewToggle={false}
         // hideButton
+        ListEmptyComponent={
+          <View className="flex-1 items-center justify-center py-8">
+            <Text className="text-gray-500">There is no posts</Text>
+          </View>
+        }
         showWriteButton={false}
       />
     </View>

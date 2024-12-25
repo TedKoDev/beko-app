@@ -16,9 +16,8 @@ import { useAuthStore } from '../store/authStore';
 import { useOnboardingStore } from '../store/onboarding';
 
 import '../global.css';
-import { healthCheckApi } from '~/services/authService';
+
 import { checkAppVersion } from '~/services/checkVersionService';
-import { useCountryData } from '~/store/countryStore';
 
 // This is the default configuration
 configureReanimatedLogger({
@@ -26,14 +25,14 @@ configureReanimatedLogger({
   strict: false, // Reanimated runs in strict mode by default
 });
 
-// 앱 최상단에 알림 핸들러 설정 -----------------------------
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
+// // 앱 최상단에 알림 핸들러 설정 -----------------------------
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldShowAlert: true,
+//     shouldPlaySound: true,
+//     shouldSetBadge: false,
+//   }),
+// });
 // -----------------------------
 export default function RootLayout() {
   const { isAuthenticated, checkAuth } = useAuthStore();
@@ -44,24 +43,57 @@ export default function RootLayout() {
   // 버전 체크 useEffect 추가
   useEffect(() => {
     const checkVersion = async () => {
-      const { needsUpdate, storeUrl } = await checkAppVersion();
+      try {
+        const { needsUpdate, storeUrl } = await checkAppVersion().catch(() => ({
+          needsUpdate: false,
+          storeUrl: '',
+        }));
 
-      if (needsUpdate) {
-        Alert.alert(
-          'Update Required',
-          'There is a new version available. Please update from the store.',
-          [
+        if (needsUpdate && storeUrl) {
+          Alert.alert(
+            'Update Required',
+            'There is a new version available. Please update from the store.',
+            [
+              {
+                text: 'Update',
+                onPress: () => {
+                  try {
+                    Linking.openURL(storeUrl).catch((error) => {
+                      console.log('Failed to open store URL:', error);
+                      // 스토어 열기 실패시 대체 메시지
+                      Alert.alert(
+                        'Store Error',
+                        'Could not open the store. Please update the app manually.',
+                        [{ text: 'OK' }]
+                      );
+                    });
+                  } catch (error) {
+                    console.log('Failed to handle store link:', error);
+                  }
+                },
+              },
+              {
+                text: 'Later',
+                style: 'cancel',
+                // 개발 환경이나 테스트 환경에서는 업데이트를 건너뛸 수 있도록
+                onPress: () => console.log('Update postponed'),
+              },
+            ],
             {
-              text: 'Update',
-              onPress: () => Linking.openURL(storeUrl),
-            },
-          ],
-          { cancelable: false } // 사용자가 알림을 무시할 수 없게 설정
-        );
+              cancelable: __DEV__, // 개발 환경에서만 취소 가능
+            }
+          );
+        }
+      } catch (error) {
+        console.log('Version check failed:', error);
+        // 버전 체크 실패시 조용히 처리
       }
     };
 
-    checkVersion();
+    if (!__DEV__) {
+      // 개발 환경에서는 버전 체크 스킵
+      checkVersion();
+    }
   }, []); // 앱 시작시 한번만 실행
 
   const queryClient = new QueryClient({
@@ -117,24 +149,24 @@ export default function RootLayout() {
     checkAuthentication();
   }, [isAuthenticated, loading]);
 
-  // expo-notifications 설정 -----------------------------
-  useEffect(() => {
-    // 알림 수신 리스너 설정
-    const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
-      //console.log('Notification received:', notification);
-    });
+  // // expo-notifications 설정 -----------------------------
+  // useEffect(() => {
+  //   // 알림 수신 리스너 설정
+  //   const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
+  //     //console.log('Notification received:', notification);
+  //   });
 
-    // 알림 응답 리스너 설정 (사용자가 알림을 탭했을 때)
-    const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
-      //console.log('Notification response:', response);
-    });
+  //   // 알림 응답 리스너 설정 (사용자가 알림을 탭했을 때)
+  //   const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
+  //     //console.log('Notification response:', response);
+  //   });
 
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener);
-      Notifications.removeNotificationSubscription(responseListener);
-    };
-  }, []);
-  // -----------------------------
+  //   return () => {
+  //     Notifications.removeNotificationSubscription(notificationListener);
+  //     Notifications.removeNotificationSubscription(responseListener);
+  //   };
+  // }, []);
+  // // -----------------------------
 
   if (loading || isAuthenticated === null) {
     return (

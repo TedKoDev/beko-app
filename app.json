@@ -28,6 +28,13 @@
         }
       ],
       [
+        "expo-image-picker",
+        {
+          "photosPermission": "사진을 선택하기 위해 접근 권한이 필요합니다.",
+          "cameraPermission": "사진을 찍기 위해 카메라 접근 권한이 필요합니다."
+        }
+      ],
+      [
         "react-native-google-mobile-ads",
         {
           "android": true,
@@ -58,9 +65,11 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
-      "bundleIdentifier": "com.ordihong.beko"
+      "bundleIdentifier": "com.ordihong.beko",
+      "buildNumber": "11"
     },
     "android": {
+      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

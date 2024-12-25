@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import * as Notifications from 'expo-notifications';
 import { Link, Tabs, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
@@ -7,16 +8,43 @@ import { HeaderButton } from '../../components/HeaderButton';
 import { TabBarIcon } from '../../components/TabBarIcon';
 import { useNotification } from '../../queries/hooks/notification/useNotification';
 
-import { useAuthStore } from '~/store/authStore';
 import { useCountry } from '~/queries/hooks/utils/useCountry';
+import { useAuthStore } from '~/store/authStore';
 import { useCountryStore } from '~/store/countryStore';
 
 export default function TabLayout() {
+  // 앱 최상단에 알림 핸들러 설정 -----------------------------
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
+  });
+  // -----------------------------
   const userInfo = useAuthStore((state) => state.userInfo);
   const { registerForPushNotifications } = useNotification();
 
   const { data: countries, isLoading: isLoadingCountries } = useCountry();
   const setCountries = useCountryStore((state) => state.setCountries);
+  // expo-notifications 설정 -----------------------------
+  useEffect(() => {
+    // 알림 수신 리스너 설정
+    const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
+      //console.log('Notification received:', notification);
+    });
+
+    // 알림 응답 리스너 설정 (사용자가 알림을 탭했을 때)
+    const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
+      //console.log('Notification response:', response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
+    };
+  }, []);
+  // -----------------------------
 
   // 국가 데이터가 로드되면 스토어에 저장
   useEffect(() => {

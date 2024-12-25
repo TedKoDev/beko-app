@@ -18,45 +18,68 @@ export const useNotification = () => {
   const registerForPushNotifications = useCallback(async () => {
     try {
       if (!Device.isDevice) {
-        throw new Error('Must use physical device for Push Notifications');
+        console.log('Push notifications are not available in simulator/emulator');
+        return null;
       }
 
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      const { status: existingStatus } = await Notifications.getPermissionsAsync().catch(
+        (error) => {
+          console.log('Permission check failed:', error);
+          return { status: 'error' };
+        }
+      );
+
       let finalStatus = existingStatus;
 
       if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
+        const { status } = await Notifications.requestPermissionsAsync().catch((error) => {
+          console.log('Permission request failed:', error);
+          return { status: 'error' };
+        });
         finalStatus = status;
       }
 
       if (finalStatus !== 'granted') {
-        throw new Error('Failed to get push token for push notification!');
+        console.log('Push notification permission not granted');
+        return null;
       }
 
-      const token = (
-        await Notifications.getExpoPushTokenAsync({
-          projectId: process.env.EXPO_PUBLIC_EXPO_PROJECT_ID, // expo 프로젝트 ID 입력
-        })
-      ).data;
-
-      if (Platform.OS === 'android') {
-        Notifications.setNotificationChannelAsync('default', {
-          name: 'default',
-          importance: Notifications.AndroidImportance.MAX,
-          vibrationPattern: [0, 250, 250, 250],
-          lightColor: '#FF231F7C',
+      try {
+        const tokenResponse = await Notifications.getExpoPushTokenAsync({
+          projectId: 'fd62690b-c7b1-4850-a014-8fd3746a89ea',
         });
+
+        const token = tokenResponse.data;
+
+        if (Platform.OS === 'android') {
+          try {
+            await Notifications.setNotificationChannelAsync('default', {
+              name: 'default',
+              importance: Notifications.AndroidImportance.MAX,
+              vibrationPattern: [0, 250, 250, 250],
+              lightColor: '#FF231F7C',
+            });
+          } catch (error) {
+            console.log('Android channel setup failed:', error);
+          }
+        }
+
+        setPushToken(token);
+
+        try {
+          await notificationService.registerPushToken(token);
+        } catch (error) {
+          console.log('Token registration to server failed:', error);
+        }
+
+        return token;
+      } catch (error) {
+        console.log('Failed to get push token:', error);
+        return null;
       }
-
-      setPushToken(token);
-
-      // 서버에 토큰 등록
-      await notificationService.registerPushToken(token);
-
-      return token;
     } catch (error) {
-      console.error('Error registering for push notifications:', error);
-      throw error;
+      console.log('Push notification registration failed:', error);
+      return null;
     }
   }, []);
 
@@ -78,7 +101,7 @@ export const useNotificationSettings = (userId: number) => {
         const data = await getNotificationSettings(userId);
         setSettings(data);
       } catch (error) {
-        console.error('Failed to fetch notification settings:', error);
+        console.log('Failed to fetch notification settings:', error);
       }
     };
 
@@ -86,18 +109,15 @@ export const useNotificationSettings = (userId: number) => {
   }, [userId]);
 
   const updateSettings = async (newSettings: any) => {
-    //console.log('updateSettings', newSettings);
     const filteredSettings = Object.fromEntries(
       Object.entries(newSettings).filter(([key, _]) => !key.endsWith('_at'))
     );
-
-    //console.log('Filtered Settings', filteredSettings);
 
     try {
       await updateNotificationSettings(userId, filteredSettings);
       setSettings(newSettings);
     } catch (error) {
-      console.error('Failed to update notification settings:', error);
+      console.log('Failed to update notification settings:', error);
     }
   };
 

@@ -103,12 +103,12 @@ export default function EditProfile() {
 
   const handleSubmit = async () => {
     if (!formData.name.trim()) {
-      alert('이름을 입력해주세요.');
+      alert('Please enter a name.');
       return;
     }
 
     if (!isNameValid) {
-      alert('사용할 수 없는 이름입니다.');
+      alert('This name is not available.');
       return;
     }
 
@@ -123,10 +123,10 @@ export default function EditProfile() {
         marketing_agreed: agreements.marketing,
       });
 
-      alert('프로필이 성공적으로 업데이트되었습니다.');
+      alert('Profile updated successfully');
       router.back();
     } catch (error: any) {
-      alert(error.message || '프로필 업데이트에 실패했습니다. 다시 시도해주세요.');
+      alert(error.message || 'Failed to update profile. Please try again.');
     }
   };
 

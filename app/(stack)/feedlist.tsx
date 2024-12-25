@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Platform,
   SafeAreaView,
+  Text,
 } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
@@ -83,6 +84,17 @@ export default function FeedList() {
         }}
         onEndReachedThreshold={0.5}
         refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
+        ListEmptyComponent={
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingVertical: 32,
+            }}>
+            <Text className="text-gray-500">There is no post</Text>
+          </View>
+        }
         ListFooterComponent={() =>
           isLoading ? (
             <View style={{ paddingVertical: 16 }}>

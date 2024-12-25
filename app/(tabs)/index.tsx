@@ -97,13 +97,7 @@ export default function Home() {
         <GrayLine thickness={5} marginTop={10} />
       </View>
       <View className="w-full ">
-        <BannerAd
-          unitId={adUnitId ?? ''}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true,
-          }}
-        />
+        <AdBanner />
       </View>
       <GrayLine thickness={5} marginTop={0} />
       <BoardTabs />

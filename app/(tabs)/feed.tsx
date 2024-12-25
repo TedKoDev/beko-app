@@ -70,6 +70,11 @@ export default function Feed() {
               fetchNextPage();
             }
           }}
+          ListEmptyComponent={
+            <View className="flex-1 items-center justify-center py-8">
+              <Text className="text-gray-500">There is no post</Text>
+            </View>
+          }
           onRefresh={refetch}
           isRefreshing={isRefetching}
           ListHeaderComponent={
@@ -88,11 +93,6 @@ export default function Feed() {
               showQuestionsOnly={showQuestionsOnly}
               setShowQuestionsOnly={setShowQuestionsOnly}
             />
-          }
-          ListEmptyComponent={
-            <View className="flex-1 items-center justify-center py-20">
-              <Text className="text-gray-500">No posts available</Text>
-            </View>
           }
           contentContainerStyle={{
             paddingTop: 0,

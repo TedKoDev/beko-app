@@ -25,20 +25,29 @@ interface UpdateAgreementsDto {
 
 export const getCountryListApi = async () => {
   try {
-    //console.log('getCountryListApi1');
+    const response = await api.get('/country/list');
 
-    const response = await api.get('/country/list'); // 또는 '/country'
-
-    //console.log('getCountryListApi', response.data);
     if (response.data.status === 'success') {
-      return response.data.data; // 실제 국가 데이터 배열 반환
+      return response.data.data;
     }
-    throw new Error(response.data.message || '국가 목록을 가져오는데 실패했습니다');
-  } catch (error) {
-    console.error('국가 목록 조회 실패:', error);
-    throw error;
+    return { error: '국가 목록을 가져오는데 실패했습니다' };
+  } catch (error: any) {
+    // 네트워크 에러 체크
+    if (error.message === 'Network Error') {
+      return {
+        error: '서버에 연결할 수 없습니다. 인터넷 연결을 확인해 주세요.',
+        isNetworkError: true,
+      };
+    }
+
+    // 기타 에러
+    return {
+      error: '서비스에 일시적인 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.',
+      isNetworkError: false,
+    };
   }
 };
+
 export const loginApi = async (email: string, password: string) => {
   try {
     const response = await api.post('/auth/login', { email, password });

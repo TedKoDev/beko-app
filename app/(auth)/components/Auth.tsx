@@ -12,12 +12,22 @@ export default function Auth() {
   GoogleSignin.configure({
     // scopes: ['https://www.googleapis.com/auth/drive.readonly'],
     scopes: ['email', 'profile'], // scopes 수정
-    webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+    webClientId: '559142701209-0f9pqkgf7228tl4kmt2g9oshu16tv1b7.apps.googleusercontent.com',
     offlineAccess: true, // 추가
     // webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
-    iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
-    androidStandaloneAppClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+    iosClientId: '559142701209-t1ddk7opdbhkm816r6djfvu9bqt7uluu.apps.googleusercontent.com',
+    androidStandaloneAppClientId:
+      '559142701209-0f9pqkgf7228tl4kmt2g9oshu16tv1b7.apps.googleusercontent.com',
   } as any);
+  // GoogleSignin.configure({
+  //   // scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+  //   scopes: ['email', 'profile'], // scopes 수정
+  //   webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+  //   offlineAccess: true, // 추가
+  //   // webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+  //   iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
+  //   androidStandaloneAppClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+  // } as any);
 
   const handleGoogleLogin = async () => {
     try {

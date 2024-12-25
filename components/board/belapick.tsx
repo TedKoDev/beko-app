@@ -51,13 +51,15 @@ export function BelaPick() {
 
       {/* Posts List */}
       <View>
-        {[...Array(5)].map((_, index) => {
-          const event = postItems[index];
-          if (event) {
-            return <EventSmallListItem key={`event-${event.post_id}`} event={event} />;
-          }
-          return <View key={`skeleton-${index}`} className="h-[72px] animate-pulse bg-white" />;
-        })}
+        {postItems.length > 0 ? (
+          postItems
+            .slice(0, 5)
+            .map((event: any) => <EventSmallListItem key={event.post_id} event={event} />)
+        ) : (
+          <View className="flex h-[72px] items-center justify-center bg-white">
+            <Text className="text-gray-500">There is no bera's pick</Text>
+          </View>
+        )}
       </View>
     </View>
   );

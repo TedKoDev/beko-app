@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
+// const API_BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
+const API_BASE_URL = 'https://api.berakorean.com/api/v1/';
 
 export const api = axios.create({
   baseURL: API_BASE_URL,

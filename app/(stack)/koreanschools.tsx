@@ -1,3 +1,5 @@
+import { Feather, Ionicons } from '@expo/vector-icons';
+import { Stack } from 'expo-router';
 import React, { useState } from 'react';
 import {
   View,
@@ -13,8 +15,6 @@ import {
   Pressable,
   TextInput,
 } from 'react-native';
-import { Feather, Ionicons } from '@expo/vector-icons';
-import { Stack } from 'expo-router';
 
 import { useGetSchools } from '~/queries/hooks/schools/useSchools';
 import { AdBanner } from '~/src/components/ads/AdBanner';
@@ -148,7 +148,7 @@ export default function KoreanSchoolsScreen() {
             <FlatList
               data={filteredCountries}
               keyExtractor={(item) => item.country_code}
-              renderItem={({ item }) => (
+              renderItem={({ item }: { item: any }) => (
                 <Pressable
                   className="border-b border-gray-100 py-3"
                   onPress={() => {

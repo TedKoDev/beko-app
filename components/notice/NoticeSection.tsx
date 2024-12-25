@@ -8,6 +8,7 @@ import AdList from '../AdList';
 import { usePosts } from '~/queries/hooks/posts/usePosts';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
 import { adUnitId } from '~/src/config/ads';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 interface NoticeSectionProps {
   title: string;
   categoryId: number;
@@ -64,13 +65,7 @@ const NoticeCategories: React.FC = () => {
   return (
     <>
       <View className="w-full ">
-        <BannerAd
-          unitId={adUnitId || ''}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true,
-          }}
-        />
+        <AdBanner />
       </View>
       <ScrollView className="flex-1">
         {noticeTopic.category.map((category) => {

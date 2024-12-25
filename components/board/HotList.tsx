@@ -40,14 +40,15 @@ export default function HotList() {
       </View>
 
       <View>
-        {[...Array(5)].map((_, index) => {
-          const event = postItems[index];
-          return event ? (
-            <EventSmallListItem key={event.post_id} event={event} />
-          ) : (
-            <View key={`skeleton-${index}`} className="h-[72px] animate-pulse bg-white" />
-          );
-        })}
+        {postItems.length > 0 ? (
+          postItems
+            .slice(0, 5)
+            .map((event: any) => <EventSmallListItem key={event.post_id} event={event} />)
+        ) : (
+          <View className="flex h-[72px] items-center justify-center bg-white">
+            <Text className="text-gray-500">There is no hot posts</Text>
+          </View>
+        )}
       </View>
     </View>
   );

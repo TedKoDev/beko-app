@@ -27,14 +27,19 @@ export default function LoginScreen() {
   const router = useRouter();
 
   const handleLogin = async () => {
-    if (email && password) {
-      setIsLoading(true);
-      try {
-        await login(email, password);
-      } catch (error: any) {
-        ////console.log('Error details:', error);
-        const statusCode = error.response?.status;
-        const errorMessage = error.response?.data?.message;
+    if (!email || !password) {
+      alert('Please enter email and password');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await login(email, password);
+    } catch (error) {
+      if (error && typeof error === 'object' && 'response' in error) {
+        const axiosError = error as { response?: { status?: number; data?: { message?: string } } };
+        const statusCode = axiosError.response?.status;
+        const errorMessage = axiosError.response?.data?.message;
 
         switch (statusCode) {
           case 404:
@@ -47,13 +52,14 @@ export default function LoginScreen() {
             alert('Email verification required. Please check your email.');
             break;
           default:
-            alert(errorMessage || 'Login failed. Please try again later.');
+            alert('Login failed. Please try again later.');
         }
-      } finally {
-        setIsLoading(false);
+      } else {
+        console.error('Unexpected error during login:', error);
+        alert('An unexpected error occurred. Please try again later.');
       }
-    } else {
-      alert('Please enter email and password');
+    } finally {
+      setIsLoading(false);
     }
   };
 

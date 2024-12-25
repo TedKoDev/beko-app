@@ -63,6 +63,11 @@ export default function HotScreen() {
         isRefreshing={isRefetching}
         showViewToggle
         // hideButton
+        ListEmptyComponent={
+          <View className="flex-1 items-center justify-center py-8">
+            <Text className="text-gray-500">There is no hot posts</Text>
+          </View>
+        }
         showWriteButton={false}
       />
     </View>

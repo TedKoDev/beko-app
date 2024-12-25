@@ -1,8 +1,10 @@
+import { Stack } from 'expo-router';
 import React from 'react';
 import { View, Text, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
-import { Stack } from 'expo-router';
+
+import WordItem from './components/worditem';
+
 import { useGetUserWordList } from '~/queries/hooks/word/useWords';
-import { WordItem } from './components/worditem';
 
 export default function UserWordListPage() {
   const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage, refetch, isRefetching } =
@@ -25,7 +27,7 @@ export default function UserWordListPage() {
         .map((item) => ({
           word_id: item.word.word_id,
           word: item.word.word,
-          notes: item.notes,
+          notes: item.word.userNotes,
           part_of_speech: item.word.part_of_speech,
           meaning_en: item.word.meaning_en,
           example_sentence: item.word.example_sentence,
