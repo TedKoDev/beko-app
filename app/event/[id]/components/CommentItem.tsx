@@ -211,9 +211,16 @@ export default function CommentItem({
                   className="rounded-lg border border-purple-200 bg-white p-2 text-base text-gray-800"
                   multiline
                   value={editContent}
-                  onChangeText={setEditContent}
+                  onChangeText={(text) => {
+                    if (text.length <= 200) {
+                      setEditContent(text);
+                    }
+                  }}
                   autoFocus
                 />
+                <Text className="mt-1 text-right text-sm text-gray-500">
+                  {editContent.length}/{200}
+                </Text>
                 <View className="mt-2 flex-row justify-end space-x-2">
                   <Pressable
                     onPress={handleCancelEdit}

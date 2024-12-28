@@ -42,13 +42,20 @@ export default function EditSentence({ post }) {
           multiline
           textAlignVertical="top"
           value={sentence}
-          onChangeText={setSentence}
+          onChangeText={(text) => {
+            if (text.length <= 200) {
+              setSentence(text);
+            }
+          }}
         />
+        <Text className="mt-1 text-right text-sm text-gray-500">
+          {sentence.length}/{200}
+        </Text>
       </View>
 
       <TouchableOpacity
         onPress={handleSubmit}
-        className="bg-purple-custom rounded-lg p-4"
+        className="rounded-lg bg-purple-custom p-4"
         disabled={updatePost.isPending}>
         <Text className="text-center font-bold text-white">
           {updatePost.isPending ? 'Updating...' : 'Update Post'}

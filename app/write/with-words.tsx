@@ -135,7 +135,11 @@ export default function WriteWithWordsScreen() {
                 multiline
                 placeholder="Create a sentence using the three words..."
                 value={sentence}
-                onChangeText={setSentence}
+                onChangeText={(text) => {
+                  if (text.length <= 200) {
+                    setSentence(text);
+                  }
+                }}
                 maxLength={200}
               />
               <Text className="mt-1 text-right text-sm text-gray-500">

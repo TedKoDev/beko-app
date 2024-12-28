@@ -226,11 +226,15 @@ export default function WriteScreen() {
             className=" rounded-lg border border-gray-300 p-3"
             placeholder="✏️ Title (optional)"
             value={title}
-            onChangeText={setTitle}
-            maxLength={20}
+            onChangeText={(text) => {
+              if (text.length <= 200) {
+                setTitle(text);
+              }
+            }}
+            maxLength={200}
           />
           <Text className="mt-1 text-right text-sm text-gray-500">
-            {title.length}/{20}
+            {title.length}/{200}
           </Text>
         </View>
 
@@ -242,7 +246,11 @@ export default function WriteScreen() {
             multiline
             textAlignVertical="top"
             value={content}
-            onChangeText={setContent}
+            onChangeText={(text) => {
+              if (text.length <= 1000) {
+                setContent(text);
+              }
+            }}
           />
           <Text className="mt-1 text-right text-sm text-gray-500">
             {content.length}/{1000}

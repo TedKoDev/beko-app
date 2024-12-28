@@ -11,6 +11,7 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 
 import { useUpdatePost } from '~/queries/hooks/posts/usePosts';
@@ -168,157 +169,178 @@ export default function EditGeneral({ post }) {
   };
 
   return (
-    <ScrollView className="flex-1 bg-white p-4">
-      {/* Post Type Selection */}
-      <View className="mb-4">
-        <Text className="mb-2 text-gray-600">Post Type</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <View className="flex-row gap-2">
-            {getAvailableTypes().map((type) => (
-              <TouchableOpacity
-                key={type}
-                onPress={() => setSelectedType(type)}
-                className={`rounded-full px-4 py-2 ${
-                  selectedType === type ? 'bg-purple-custom' : 'bg-gray-200'
-                }`}>
-                <Text className={selectedType === type ? 'text-white' : 'text-gray-700'}>
-                  {type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
-      </View>
-
-      {/* Title Input - QUESTION 타입이거나 기존에 title이 있었던 경우 표시 */}
-      {(selectedType === 'QUESTION' || post.post_content.title) && (
+    <SafeAreaView className="flex-1 bg-white p-4">
+      <ScrollView className="flex-1 bg-white p-4">
+        {/* Post Type Selection */}
         <View className="mb-4">
-          <Text className="mb-2 text-gray-600">Title</Text>
-          <TextInput
-            className="rounded-lg border border-gray-300 bg-gray-50 p-3"
-            value={title}
-            onChangeText={setTitle}
-            placeholder="Enter title"
-          />
-        </View>
-      )}
-
-      {/* Content Input */}
-      <View className="mb-4">
-        <Text className="mb-2 text-gray-600">Content</Text>
-        <TextInput
-          className="h-32 rounded-lg border border-gray-300 bg-gray-50 p-3"
-          value={content}
-          onChangeText={setContent}
-          placeholder="Enter content"
-          multiline
-          textAlignVertical="top"
-        />
-      </View>
-
-      {/* Topic Selection */}
-      <View className="mb-4">
-        <Text className="mb-2 text-gray-600">Topic</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <View className="flex-row gap-2">
-            {topics.map((topic) => (
-              <TouchableOpacity
-                key={topic.topic_id}
-                onPress={() => {
-                  setSelectedTopic(topic.topic_id);
-                  setSelectedCategory(null);
-                }}
-                className={`rounded-full px-4 py-2 ${
-                  selectedTopic === topic.topic_id ? 'bg-purple-custom' : 'bg-gray-200'
-                }`}>
-                <Text className={selectedTopic === topic.topic_id ? 'text-white' : 'text-gray-700'}>
-                  {topic.title}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
-      </View>
-
-      {/* Category Selection */}
-      {selectedTopic && (
-        <View className="mb-4">
-          <Text className="mb-2 text-gray-600">Category</Text>
+          <Text className="mb-2 text-gray-600">Post Type</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View className="flex-row gap-2">
-              {topics
-                .find((t) => t.topic_id === selectedTopic)
-                ?.category.map((category) => (
-                  <TouchableOpacity
-                    key={category.category_id}
-                    onPress={() => setSelectedCategory(category.category_id)}
-                    className={`rounded-full px-4 py-2 ${
-                      selectedCategory === category.category_id ? 'bg-purple-custom' : 'bg-gray-200'
-                    }`}>
-                    <Text
-                      className={
-                        selectedCategory === category.category_id ? 'text-white' : 'text-gray-700'
-                      }>
-                      {category.category_name}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
+              {getAvailableTypes().map((type) => (
+                <TouchableOpacity
+                  key={type}
+                  onPress={() => setSelectedType(type)}
+                  className={`rounded-full px-4 py-2 ${
+                    selectedType === type ? 'bg-purple-custom' : 'bg-gray-200'
+                  }`}>
+                  <Text className={selectedType === type ? 'text-white' : 'text-gray-700'}>
+                    {type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()}
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
           </ScrollView>
         </View>
-      )}
 
-      {/* Points Input - QUESTION 타입일 때만 표시 */}
-      {selectedType === 'QUESTION' && (
+        {/* Title Input - QUESTION 타입이거나 기존에 title이 있었던 경우 표시 */}
+        {(selectedType === 'QUESTION' || post.post_content.title) && (
+          <View className="mb-4">
+            <Text className="mb-2 text-gray-600">Title</Text>
+            <TextInput
+              className="rounded-lg border border-gray-300 bg-gray-50 p-3"
+              value={title}
+              placeholder="Enter title"
+              maxLength={200}
+              multiline
+              onChangeText={(text) => {
+                if (text.length <= 200) {
+                  setTitle(text);
+                }
+              }}
+            />
+            <Text className="mt-1 text-right text-sm text-gray-500">
+              {title.length}/{200}
+            </Text>
+          </View>
+        )}
+
+        {/* Content Input */}
         <View className="mb-4">
-          <Text className="mb-2 text-gray-600">Points</Text>
+          <Text className="mb-2 text-gray-600">Content</Text>
           <TextInput
-            className="rounded-lg border border-gray-300 bg-gray-50 p-3"
-            value={points}
-            onChangeText={setPoints}
-            keyboardType="numeric"
-            placeholder="Enter points"
+            className="h-32 rounded-lg border border-gray-300 bg-gray-50 p-3"
+            value={content}
+            onChangeText={(text) => {
+              if (text.length <= 1000) {
+                setContent(text);
+              }
+            }}
+            placeholder="Enter content"
+            multiline
+            textAlignVertical="top"
           />
-        </View>
-      )}
-
-      {/* Image Section */}
-      <View className="mb-4">
-        <View className="flex-row items-center justify-between">
-          <TouchableOpacity
-            onPress={pickImages}
-            disabled={isImageLoading || selectedImages.length >= MAX_IMAGES}
-            className="flex-row items-center rounded-lg bg-gray-100 p-3">
-            {isImageLoading ? (
-              <ActivityIndicator size="small" color="#666" />
-            ) : (
-              <Ionicons name="image-outline" size={24} color="#666" />
-            )}
-            <Text className="ml-2">{isImageLoading ? 'Loading images...' : 'Add Images'}</Text>
-          </TouchableOpacity>
-          <Text className="text-sm text-gray-600">
-            {selectedImages.length}/{MAX_IMAGES}
+          <Text className="mt-1 text-right text-sm text-gray-500">
+            {content.length}/{1000}
           </Text>
         </View>
 
-        {/* Image Preview */}
-        <ScrollView horizontal className="mt-2">
-          {selectedImages.map((image, index) => (
-            <View key={index} className="mr-2">
-              <View className="relative">
-                <Image source={{ uri: image.uri }} className="h-20 w-20 rounded-lg" />
+        {/* Topic Selection */}
+        <View className="mb-4">
+          <Text className="mb-2 text-gray-600">Topic</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View className="flex-row gap-2">
+              {topics.map((topic) => (
                 <TouchableOpacity
-                  className="absolute right-1 top-1 rounded-full bg-black/50 p-1"
-                  onPress={() =>
-                    setSelectedImages((images) => images.filter((_, i) => i !== index))
-                  }>
-                  <Ionicons name="close" size={16} color="white" />
+                  key={topic.topic_id}
+                  onPress={() => {
+                    setSelectedTopic(topic.topic_id);
+                    setSelectedCategory(null);
+                  }}
+                  className={`rounded-full px-4 py-2 ${
+                    selectedTopic === topic.topic_id ? 'bg-purple-custom' : 'bg-gray-200'
+                  }`}>
+                  <Text
+                    className={selectedTopic === topic.topic_id ? 'text-white' : 'text-gray-700'}>
+                    {topic.title}
+                  </Text>
                 </TouchableOpacity>
-              </View>
+              ))}
             </View>
-          ))}
-        </ScrollView>
-      </View>
+          </ScrollView>
+        </View>
+
+        {/* Category Selection */}
+        {selectedTopic && (
+          <View className="mb-4">
+            <Text className="mb-2 text-gray-600">Category</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <View className="flex-row gap-2">
+                {topics
+                  .find((t) => t.topic_id === selectedTopic)
+                  ?.category.map((category) => (
+                    <TouchableOpacity
+                      key={category.category_id}
+                      onPress={() => setSelectedCategory(category.category_id)}
+                      className={`rounded-full px-4 py-2 ${
+                        selectedCategory === category.category_id
+                          ? 'bg-purple-custom'
+                          : 'bg-gray-200'
+                      }`}>
+                      <Text
+                        className={
+                          selectedCategory === category.category_id ? 'text-white' : 'text-gray-700'
+                        }>
+                        {category.category_name}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+              </View>
+            </ScrollView>
+          </View>
+        )}
+
+        {/* Points Input - QUESTION 타입일 때만 표시 */}
+        {selectedType === 'QUESTION' && (
+          <View className="mb-4">
+            <Text className="mb-2 text-gray-600">Points</Text>
+            <TextInput
+              className="rounded-lg border border-gray-300 bg-gray-50 p-3"
+              value={points}
+              onChangeText={setPoints}
+              keyboardType="numeric"
+              placeholder="Enter points"
+            />
+          </View>
+        )}
+
+        {/* Image Section */}
+        <View className="mb-4">
+          <View className="flex-row items-center justify-between">
+            <TouchableOpacity
+              onPress={pickImages}
+              disabled={isImageLoading || selectedImages.length >= MAX_IMAGES}
+              className="flex-row items-center rounded-lg bg-gray-100 p-3">
+              {isImageLoading ? (
+                <ActivityIndicator size="small" color="#666" />
+              ) : (
+                <Ionicons name="image-outline" size={24} color="#666" />
+              )}
+              <Text className="ml-2">{isImageLoading ? 'Loading images...' : 'Add Images'}</Text>
+            </TouchableOpacity>
+            <Text className="text-sm text-gray-600">
+              {selectedImages.length}/{MAX_IMAGES}
+            </Text>
+          </View>
+
+          {/* Image Preview */}
+          <ScrollView horizontal className="mt-2">
+            {selectedImages.map((image, index) => (
+              <View key={index} className="mr-2">
+                <View className="relative">
+                  <Image source={{ uri: image.uri }} className="h-20 w-20 rounded-lg" />
+                  <TouchableOpacity
+                    className="absolute right-1 top-1 rounded-full bg-black/50 p-1"
+                    onPress={() =>
+                      setSelectedImages((images) => images.filter((_, i) => i !== index))
+                    }>
+                    <Ionicons name="close" size={16} color="white" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+      </ScrollView>
 
       {/* Submit Button */}
       <TouchableOpacity
@@ -332,6 +354,6 @@ export default function EditGeneral({ post }) {
 
       {/* Bottom Padding */}
       <View className="h-10" />
-    </ScrollView>
+    </SafeAreaView>
   );
 }

@@ -40,16 +40,23 @@ export default function EditCommentModal({
             multiline
             numberOfLines={4}
             value={content}
-            onChangeText={setContent}
+            onChangeText={(text) => {
+              if (text.length <= 200) {
+                setContent(text);
+              }
+            }}
             autoFocus
           />
+          <Text className="mt-1 text-right text-sm text-gray-500">
+            {content.length}/{200}
+          </Text>
           <View className="flex-row justify-end gap-2">
             <TouchableOpacity onPress={onClose} className="rounded-lg bg-gray-200 px-4 py-2">
               <Text>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handleSubmit}
-              className="bg-purple-custom rounded-lg px-4 py-2">
+              className="rounded-lg bg-purple-custom px-4 py-2">
               <Text className="text-white">Save</Text>
             </TouchableOpacity>
           </View>
