@@ -25,6 +25,7 @@ const ThirdScreen = () => {
 
   const handleNext = () => {
     useOnboardingStore.setState({ hasSeenOnboarding: true });
+    router.dismissAll();
     router.push('/login');
   };
 
