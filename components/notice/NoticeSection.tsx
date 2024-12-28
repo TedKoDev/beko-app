@@ -1,13 +1,11 @@
 import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import AdList from '../AdList';
 
 import { usePosts } from '~/queries/hooks/posts/usePosts';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
-import { adUnitId } from '~/src/config/ads';
 import { AdBanner } from '~/src/components/ads/AdBanner';
 interface NoticeSectionProps {
   title: string;

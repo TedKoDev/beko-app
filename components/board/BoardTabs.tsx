@@ -7,8 +7,6 @@ import Notice from './Notice';
 import { BelaPick } from './belapick';
 
 import { useBoardStore } from '~/store/boardStore';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { adUnitId } from '~/src/config/ads';
 const tabs = [
   { id: 'Bera', title: "Bera's Pick", component: BelaPick },
   { id: 'notice', title: 'Notice', component: Notice },

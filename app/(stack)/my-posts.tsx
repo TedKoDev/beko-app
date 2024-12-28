@@ -1,11 +1,10 @@
 import { Stack } from 'expo-router';
 import React from 'react';
 import { View, FlatList, Text } from 'react-native';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import EventListingItem from '~/components/EventListingItem';
 import { usePosts } from '~/queries/hooks/posts/usePosts';
-import { adUnitId } from '~/src/config/ads';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 import { useAuthStore } from '~/store/authStore';
 
 export default function MyPostsScreen() {
@@ -29,13 +28,7 @@ export default function MyPostsScreen() {
   return (
     <View className="flex-1 bg-gray-50">
       <View className="w-full ">
-        <BannerAd
-          unitId={adUnitId ?? ''}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true,
-          }}
-        />
+        <AdBanner />
       </View>
       <Stack.Screen
         options={{

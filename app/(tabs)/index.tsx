@@ -2,7 +2,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, Stack } from 'expo-router';
 import React, { useMemo } from 'react';
 import { View, ScrollView, RefreshControl } from 'react-native';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import { BoardTabs } from '~/components/board/BoardTabs';
 import CustomCarousel from '~/components/customCarousel';
@@ -14,8 +13,6 @@ import { LessonCard } from '~/components/todayvoca/lessoncard';
 import { useAdbanner } from '~/queries/hooks/adbanner/useAdbanner';
 import { useRefreshUserInfo } from '~/queries/hooks/auth/useUserinfo';
 import { AdBanner } from '~/src/components/ads/AdBanner';
-import { adUnitId } from '~/src/config/ads';
-
 export default function Home() {
   const queryClient = useQueryClient();
   const refreshUserInfo = useRefreshUserInfo();
