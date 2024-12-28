@@ -11,7 +11,7 @@ export const useComments = (
 ) => {
   //console.log('postId', postId);
   //console.log('userId in useComments', userId);
-  //console.log('sort', sort);
+  console.log('sort', sort);
   return useInfiniteQuery({
     queryKey: ['comments', postId, sort],
     queryFn: async ({ pageParam = 1 }) => {
@@ -28,6 +28,7 @@ export const useComments = (
           ...queryDto,
           postId: Number(postId),
           userId: Number(userId),
+          sort,
         });
         //console.log('Response:', response);
         return response;

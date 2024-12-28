@@ -11,13 +11,11 @@ import {
   Image,
   Alert,
   ActivityIndicator,
-  Switch,
 } from 'react-native';
 
 import { useUserInfo } from '~/queries/hooks/auth/useUserinfo';
 import { useAddPost } from '~/queries/hooks/posts/usePosts';
 import { useTopics } from '~/queries/hooks/posts/useTopicsAndCategories';
-import { queryClient } from '~/queries/queryClient';
 import { CreateMediaDto, CreatePostDto } from '~/services/postService';
 import { getPresignedUrlApi, uploadFileToS3 } from '~/services/s3Service';
 
@@ -26,7 +24,6 @@ const MAX_IMAGES = 3;
 export default function WriteForConsultationScreen() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [selectedTopic, setSelectedTopic] = useState<number | null>(1);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(2);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [selectedImages, setSelectedImages] = useState<{ uri: string; type: string }[]>([]);
@@ -109,12 +106,12 @@ export default function WriteForConsultationScreen() {
           '상담을 신청하기 위한 포인트가 부족합니다.\n포인트를 충전하시겠습니까?',
           [
             {
-              text: '취소',
+              text: 'Cancel',
               style: 'cancel',
             },
             {
-              text: '충전하기',
-              onPress: () => router.push('/points/charge'),
+              text: 'Charge',
+              onPress: () => router.push('/(tabs)/feed'),
             },
           ]
         );
@@ -199,7 +196,7 @@ export default function WriteForConsultationScreen() {
           <View className="mb-4 rounded-lg bg-gray-100 p-4">
             <View className="mb-2 flex-row items-center justify-between">
               <Text className="text-gray-600">Consultation Cost</Text>
-              <Text className="text-purple-custom text-lg font-bold">
+              <Text className="text-lg font-bold text-purple-custom">
                 {selectedCategoryPrice} P
               </Text>
             </View>
@@ -219,22 +216,33 @@ export default function WriteForConsultationScreen() {
         )}
 
         {/* 제목 입력 */}
-        <TextInput
-          className="mb-4 rounded-lg border border-gray-300 p-3"
-          placeholder="Enter the title"
-          value={title}
-          onChangeText={setTitle}
-        />
+        <View className="mb-4 ">
+          <TextInput
+            className="rounded-lg border border-gray-300 p-3"
+            placeholder="Enter the title"
+            value={title}
+            onChangeText={setTitle}
+            maxLength={20}
+          />
+          <Text className="mt-1 text-right text-sm text-gray-500">
+            {title.length}/{20}
+          </Text>
+        </View>
 
         {/* 내용 입력 */}
-        <TextInput
-          className="mb-4 h-40 rounded-lg border border-gray-300 p-3"
-          placeholder="Enter the content"
-          multiline
-          textAlignVertical="top"
-          value={content}
-          onChangeText={setContent}
-        />
+        <View className="mb-4 ">
+          <TextInput
+            className="h-40 rounded-lg border border-gray-300 p-3"
+            placeholder="Enter the content"
+            multiline
+            textAlignVertical="top"
+            value={content}
+            onChangeText={setContent}
+          />
+          <Text className="mt-1 text-right text-sm text-gray-500">
+            {content.length}/{1000}
+          </Text>
+        </View>
 
         {/* Image attachment */}
         <View className="mb-4">
@@ -282,7 +290,7 @@ export default function WriteForConsultationScreen() {
         {/* Submit button */}
         <TouchableOpacity
           onPress={handleSubmit}
-          className="bg-purple-custom rounded-lg p-4"
+          className="rounded-lg bg-purple-custom p-4"
           disabled={addPost.isPending}>
           <Text className="text-center font-bold text-white">
             {addPost.isPending ? 'Writing...' : 'Write consultation'}

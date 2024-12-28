@@ -198,11 +198,11 @@ export default function WriteScreen() {
           headerShadowVisible: true,
         }}
       />
-      <ScrollView className="flex-1 bg-white p-4">
+      <ScrollView className="flex-1 bg-white">
         {/* Type selection with horizontal scroll */}
         <View className="mb-4">
-          <Text className="mb-2 text-gray-600">Post Type</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <Text className="mb-2 px-4 pt-4  text-gray-600">Post Type</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="px-4">
             <View className="flex-row gap-2">
               {postTypes.map(({ type, label }) => (
                 <TouchableOpacity
@@ -220,28 +220,39 @@ export default function WriteScreen() {
           </ScrollView>
         </View>
 
-        {/* Title input */}
-        <TextInput
-          className="mb-4 rounded-lg border border-gray-300 p-3"
-          placeholder="✏️ Title (optional)"
-          value={title}
-          onChangeText={setTitle}
-        />
+        <View className="mb-4 px-4">
+          {/* Title input */}
+          <TextInput
+            className=" rounded-lg border border-gray-300 p-3"
+            placeholder="✏️ Title (optional)"
+            value={title}
+            onChangeText={setTitle}
+            maxLength={20}
+          />
+          <Text className="mt-1 text-right text-sm text-gray-500">
+            {title.length}/{20}
+          </Text>
+        </View>
 
         {/* Content input */}
-        <TextInput
-          className="mb-4 h-40 rounded-lg border border-gray-300 p-3"
-          placeholder="✍️ Content"
-          multiline
-          textAlignVertical="top"
-          value={content}
-          onChangeText={setContent}
-        />
+        <View className="mb-4 px-4">
+          <TextInput
+            className="h-40 rounded-lg border border-gray-300 p-3"
+            placeholder="✍️ Content"
+            multiline
+            textAlignVertical="top"
+            value={content}
+            onChangeText={setContent}
+          />
+          <Text className="mt-1 text-right text-sm text-gray-500">
+            {content.length}/{1000}
+          </Text>
+        </View>
 
         {/* Topic Selection with horizontal scroll */}
-        <View className="mb-4">
-          <Text className="mb-2 text-gray-600">Topic</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <View className="mb-4 ">
+          <Text className="mb-2 ml-4 text-gray-600">Topic</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="px-4">
             <View className="flex-row gap-2">
               {topics
                 .filter((topic) => topic.topic_id !== 1 && topic.title !== 'Notice')
@@ -267,7 +278,7 @@ export default function WriteScreen() {
 
         {/* Category Selection with horizontal scroll */}
         {selectedTopic && selectedTopic !== 1 && (
-          <View className="mb-4">
+          <View className="mb-4 px-4">
             <Text className="mb-2 text-gray-600">Category</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View className="flex-row gap-2">
@@ -293,7 +304,7 @@ export default function WriteScreen() {
 
         {/* Points input for Question type */}
         {selectedType === 'QUESTION' && (
-          <View className="mb-4">
+          <View className="mb-4 px-4">
             <View className="mb-2 flex-row items-center justify-between">
               <Text className="text-gray-600">Set Points</Text>
               <Text className="text-gray-600">
@@ -323,7 +334,7 @@ export default function WriteScreen() {
         )}
 
         {/* Image attachment */}
-        <View className="mb-4">
+        <View className="mb-4 px-4">
           <View className="flex-row items-center justify-between">
             <TouchableOpacity
               onPress={pickImages}

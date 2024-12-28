@@ -12,6 +12,7 @@ import {
   FlatList,
   ActivityIndicator,
   Alert,
+  ScrollView,
 } from 'react-native';
 
 import { useUpdateProfile } from '~/queries/hooks/auth/useUpdateProfile';
@@ -139,7 +140,7 @@ export default function EditProfile() {
         }}
       />
 
-      <View className="flex-1">
+      <ScrollView className="flex-1">
         {/* 입력 필드들 */}
         <View className="space-y-5 p-4">
           <View className="mb-4">
@@ -276,22 +277,21 @@ export default function EditProfile() {
             </TouchableOpacity>
           </TouchableOpacity>
         </View>
-
-        {/* 수정 완료 버튼 */}
-        <View className="p-4">
-          <TouchableOpacity
-            className={`h-12 items-center justify-center rounded-lg ${
-              !isUpdating ? 'bg-[#7b33ff]' : 'bg-gray-200'
-            }`}
-            onPress={handleSubmit}
-            disabled={isUpdating}>
-            {isUpdating ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text className="text-base text-white">Save</Text>
-            )}
-          </TouchableOpacity>
-        </View>
+      </ScrollView>
+      {/* 수정 완료 버튼 */}
+      <View className="p-4">
+        <TouchableOpacity
+          className={`h-12 items-center justify-center rounded-lg ${
+            !isUpdating ? 'bg-[#7b33ff]' : 'bg-gray-200'
+          }`}
+          onPress={handleSubmit}
+          disabled={isUpdating}>
+          {isUpdating ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text className="text-base text-white">Save</Text>
+          )}
+        </TouchableOpacity>
       </View>
 
       {/* 국가 선택 모달 */}

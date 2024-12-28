@@ -12,6 +12,7 @@ import {
   Modal,
   FlatList,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -120,7 +121,7 @@ export default function EditProfileScreen() {
   };
 
   return (
-    <View className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white">
       <Stack.Screen
         options={{
           title: 'Edit Profile',
@@ -221,6 +222,6 @@ export default function EditProfileScreen() {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }

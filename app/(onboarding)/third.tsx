@@ -1,16 +1,15 @@
+import { ResizeMode, Video } from 'expo-av';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
-import { useRouter } from 'expo-router';
 import {
   HandlerStateChangeEvent,
   PanGestureHandler,
   PanGestureHandlerEventPayload,
   State,
 } from 'react-native-gesture-handler';
-import { GestureHandlerRootViewProps } from 'react-native-gesture-handler/lib/typescript/components/GestureHandlerRootView';
 
 import { useOnboardingStore } from '../../store/onboarding';
-import { ResizeMode, Video } from 'expo-av';
 
 const ThirdScreen = () => {
   const router = useRouter();

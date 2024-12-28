@@ -28,8 +28,12 @@ const AdList: React.FC<AdListProps> = ({ items }) => {
               resizeMode="cover"
             />
             <View className="p-2">
-              <Text className="text-md mb-1 font-bold text-gray-800">{item.company_name}</Text>
-              <Text className="mb-1 text-sm text-gray-600">{item.description}</Text>
+              <Text className="text-md mb-1 font-bold text-gray-800" numberOfLines={1}>
+                {item.company_name}
+              </Text>
+              <Text className="mb-1 text-sm text-gray-600" numberOfLines={2} ellipsizeMode="tail">
+                {item.description}
+              </Text>
               <Text className="text-xs text-gray-400">
                 {new Date(item.created_at).toLocaleDateString()}
               </Text>

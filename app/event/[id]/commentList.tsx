@@ -24,7 +24,11 @@ export default function CommentListPage() {
   const { id } = useLocalSearchParams();
   const [sort, setSort] = useState<'latest' | 'oldest' | 'popular'>('latest');
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useComments(Number(id));
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useComments(
+    Number(id),
+    undefined,
+    sort
+  );
 
   const allComments = data?.pages.flatMap((page) => page.data) ?? [];
   const toggleCommentLikeMutation = useToggleCommentLike();

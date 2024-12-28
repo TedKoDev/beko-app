@@ -136,7 +136,11 @@ export default function WriteWithWordsScreen() {
                 placeholder="Create a sentence using the three words..."
                 value={sentence}
                 onChangeText={setSentence}
+                maxLength={200}
               />
+              <Text className="mt-1 text-right text-sm text-gray-500">
+                {sentence.length}/{200}
+              </Text>
             </View>
 
             {/* 여백을 위한 빈 공간 */}

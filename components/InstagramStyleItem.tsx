@@ -63,7 +63,9 @@ export default function InstagramStyleItem({ event }: any) {
 
         <View className="p-3">
           {event.post_content?.title && (
-            <Text className="mb-2 text-base font-bold">{event.post_content.title}</Text>
+            <Text className="mb-2 text-base font-bold" numberOfLines={2}>
+              {event.post_content.title}
+            </Text>
           )}
           {event.post_content?.content && (
             <Text className="text-sm text-gray-600" numberOfLines={3}>
