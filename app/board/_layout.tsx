@@ -20,7 +20,7 @@ export default function BoardLayout() {
           },
           headerTitleAlign: 'center',
           headerShadowVisible: true,
-          headerBackVisible: true,
+          headerBackVisible: false,
           headerLeft: ({ canGoBack }) =>
             canGoBack ? (
               <TouchableOpacity onPress={() => router.back()}>

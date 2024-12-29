@@ -39,14 +39,16 @@ export default function MyCommentsScreen() {
   };
 
   const renderItem = ({ item }: any) => (
-    <CommentItem
-      comment={item}
-      onToggleLike={handleToggleLike}
-      onDelete={handleDelete}
-      onEdit={handleEdit}
-      isQuestionAuthor={false}
-      post_type="NORMAL"
-    />
+    <View className="flex-1 bg-white p-4">
+      <CommentItem
+        comment={item}
+        onToggleLike={handleToggleLike}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+        isQuestionAuthor={false}
+        post_type="NORMAL"
+      />
+    </View>
   );
 
   if (isLoading) {
