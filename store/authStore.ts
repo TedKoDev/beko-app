@@ -3,7 +3,13 @@ import { router } from 'expo-router';
 import { create } from 'zustand';
 
 // import { tokenManager } from '../services/api';
-import { getUserInfoApi, loginApi, registerApi, authService } from '../services/authService';
+import {
+  getUserInfoApi,
+  loginApi,
+  registerApi,
+  authService,
+  logoutApi,
+} from '../services/authService';
 
 interface UserInfo {
   account_status: string;
@@ -112,6 +118,12 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   logout: async () => {
+    const token = await AsyncStorage.getItem('userToken');
+    if (token) {
+      console.log('logout', token);
+      await logoutApi(token);
+    }
+
     await AsyncStorage.removeItem('userToken');
     await AsyncStorage.removeItem('userInfo');
     // tokenManager.setToken(null);

@@ -154,6 +154,12 @@ export const resendVerificationEmailApi = async (email: string) => {
   return response.data;
 };
 
+export const logoutApi = async (token: string) => {
+  console.log('logoutApi2', token);
+  const response = await api.post('/users/logout');
+  return response.data;
+};
+
 export const getUserInfoApi = async (token: string) => {
   try {
     if (!token) {
