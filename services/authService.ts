@@ -144,6 +144,16 @@ export const checkName = async (name: string): Promise<boolean> => {
   return response.available;
 };
 
+export const forgotPasswordApi = async (email: string) => {
+  const response = await api.post('/auth/forgot-password', { email });
+  return response.data;
+};
+
+export const resendVerificationEmailApi = async (email: string) => {
+  const response = await api.post('/auth/resend-verification', { email });
+  return response.data;
+};
+
 export const getUserInfoApi = async (token: string) => {
   try {
     if (!token) {

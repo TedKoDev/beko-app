@@ -186,6 +186,10 @@ export default function LoginScreen() {
           <Pressable style={styles.registerLink} onPress={() => router.push('/agreement')}>
             <Text style={styles.registerLinkText}>Don't have an account? Register</Text>
           </Pressable>
+          {/* 비밀번호 찾기 */}
+          <Pressable style={styles.registerLink} onPress={() => router.push('/forgot-password')}>
+            <Text style={styles.registerLinkText}>Forgot password? / Email Verification Again</Text>
+          </Pressable>
 
           {/* <Pressable className="mt-10" onPress={() => resetOnboarding()}>
             <Text className="text-white">onboding reset </Text>
@@ -254,7 +258,7 @@ const styles = StyleSheet.create({
   dividerText: {
     color: '#fff',
     paddingHorizontal: 10,
-    fontSize: 14,
+    fontSize: 18,
   },
   socialButton: {
     flexDirection: 'row',
@@ -280,7 +284,7 @@ const styles = StyleSheet.create({
   },
   registerLinkText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     textDecorationLine: 'underline',
   },
 });
