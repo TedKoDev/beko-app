@@ -118,12 +118,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   logout: async () => {
-    const token = await AsyncStorage.getItem('userToken');
-    if (token) {
-      console.log('logout', token);
-      await logoutApi(token);
-    }
-
     await AsyncStorage.removeItem('userToken');
     await AsyncStorage.removeItem('userInfo');
     // tokenManager.setToken(null);

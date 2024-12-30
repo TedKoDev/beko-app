@@ -1,8 +1,10 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack, router } from 'expo-router';
 import React from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import GrayLine from '~/components/grayline';
+import { logoutApi } from '~/services/authService';
 
 import { useAuthStore } from '~/store/authStore';
 
@@ -10,7 +12,13 @@ export default function Settings() {
   const { logout } = useAuthStore();
 
   const handleLogout = async () => {
-    await logout();
+    const token = await AsyncStorage.getItem('userToken');
+    if (token) {
+      console.log('logout', token);
+      await logoutApi(token);
+    }
+    logout();
+
     router.push('/(auth)/login');
   };
 
