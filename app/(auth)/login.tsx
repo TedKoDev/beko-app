@@ -45,7 +45,7 @@ export default function LoginScreen() {
           case 404:
             alert('User not found. Please sign up first.');
             break;
-          case 401:
+          case 406:
             alert('Incorrect password. Please try again.');
             break;
           case 403:
