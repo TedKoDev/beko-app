@@ -40,6 +40,8 @@ export default function LoginScreen() {
         const axiosError = error as { response?: { status?: number; data?: { message?: string } } };
         const statusCode = axiosError.response?.status;
         const errorMessage = axiosError.response?.data?.message;
+        console.log('statusCode', statusCode);
+        console.log('errorMessage', errorMessage);
 
         switch (statusCode) {
           case 404:

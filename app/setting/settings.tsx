@@ -17,9 +17,12 @@ export default function Settings() {
       console.log('logout', token);
       await logoutApi(token);
     }
+    console.log('logout333');
     logout();
-
-    router.push('/(auth)/login');
+    console.log('logout444');
+    router.dismissAll();
+    router.replace('/(auth)/login');
+    console.log('logout555');
   };
 
   return (
