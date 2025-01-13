@@ -191,7 +191,7 @@ export default function AdPage() {
                 <Text className="mb-4 text-xl font-bold text-purple-custom">
                   {links[language].cta}
                 </Text>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() =>
                     Linking.openURL(
                       'https://cafetalk.com/tutor/profile/?c=eJzLrwp09s7R9tNPCSqrTM7KdkwuSE1Kt7UFAGnjCHY.&lang=en'
@@ -199,7 +199,7 @@ export default function AdPage() {
                   }
                   className="mb-3 rounded-full bg-purple-custom px-6 py-3">
                   <Text className="text-center text-white">{links[language].cafetalk}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   onPress={() => Linking.openURL('https://www.youtube.com/@berakorean')}
                   className="mb-4 rounded-full bg-red-600 px-6 py-3">

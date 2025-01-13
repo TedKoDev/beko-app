@@ -10,7 +10,7 @@ export default function UserWordListPage() {
   const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage, refetch, isRefetching } =
     useGetUserWordList();
 
-  //console.log('data', JSON.stringify(data, null, 2));
+  console.log('data', JSON.stringify(data, null, 2));
   const loadMore = () => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -19,19 +19,16 @@ export default function UserWordListPage() {
 
   const allWords =
     data?.pages.flatMap((page) => {
-      return Object.values(page)
-        .filter(
-          (item): item is { word: any } =>
-            typeof item === 'object' && item !== null && 'word' in item
-        )
-        .map((item) => ({
-          word_id: item.word.word_id,
-          word: item.word.word,
-          notes: item.word.userNotes,
-          part_of_speech: item.word.part_of_speech,
-          meaning_en: item.word.meaning_en,
-          example_sentence: item.word.example_sentence,
-          example_translation: item.word.example_translation,
+      return Object.entries(page)
+        .filter(([key]) => key !== 'page')
+        .map(([_, item]: [string, any]) => ({
+          word_id: item.word_id,
+          word: item.word,
+          notes: item.notes,
+          part_of_speech: item.part_of_speech,
+          meaning_en: item.meaning_en,
+          example_sentence: item.example_sentence,
+          example_translation: item.example_translation,
           isInUserWordList: true,
         }));
     }) || [];
@@ -63,7 +60,7 @@ export default function UserWordListPage() {
         <FlatList
           data={allWords}
           renderItem={({ item }) => <WordItem item={item} />}
-          keyExtractor={(item) => item.word_id.toString()}
+          keyExtractor={(item) => item.word_id}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
           refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}

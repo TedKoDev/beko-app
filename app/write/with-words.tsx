@@ -148,7 +148,7 @@ export default function WriteWithWordsScreen() {
             </View>
 
             {/* 여백을 위한 빈 공간 */}
-            <View style={{ height: Platform.OS === 'android' ? 100 : 80 }} />
+            {/* <View style={{ height: Platform.OS === 'android' ? 100 : 80 }} /> */}
           </ScrollView>
 
           {/* Submit Button - ScrollView 밖에 고정 */}
@@ -160,11 +160,11 @@ export default function WriteWithWordsScreen() {
               right: 0,
               backgroundColor: 'white',
               padding: 16,
-              paddingBottom: Platform.OS === 'android' ? 26 : 16,
+              // paddingBottom: Platform.OS === 'android' ? 26 : 16,
               borderTopWidth: 1,
               borderTopColor: '#f0f0f0',
               elevation: 5,
-              marginBottom: Platform.OS === 'android' ? 36 : 0,
+              // marginBottom: Platform.OS === 'android' ? 36 : 0,
             }}>
             <TouchableOpacity
               style={{

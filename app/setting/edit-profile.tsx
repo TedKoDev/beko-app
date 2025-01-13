@@ -214,9 +214,7 @@ export default function EditProfile() {
             className="flex-row items-center justify-between py-3"
             onPress={() => {
               if (agreements.terms) {
-                Alert.alert('Required', 'BeraKorean Terms is required.', [
-                  // { text: '확인' },
-                ]);
+                Alert.alert('Required', 'BeraKorean Terms is required.', [{ text: '확인' }]);
               } else {
                 toggleAgreement('terms');
               }
@@ -238,9 +236,7 @@ export default function EditProfile() {
             className="flex-row items-center justify-between py-3"
             onPress={() => {
               if (agreements.privacy) {
-                Alert.alert('Required', 'Privacy Policy is required.', [
-                  // { text: '확인' },
-                ]);
+                Alert.alert('Required', 'Privacy Policy is required.', [{ text: '확인' }]);
               } else {
                 // toggleAgreement('privacy');
               }
