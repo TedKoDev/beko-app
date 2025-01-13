@@ -61,7 +61,7 @@
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "We need access to your photos to let you share images in posts and update your profile picture. You can select and share photos from your library.",
         "NSCameraUsageDescription": "We need camera access to let you take photos for sharing in posts and updating your profile picture. You can capture new photos directly in the app.",
-        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
+
         "NSNotificationsUsageDescription": "Enable notifications to receive updates about new messages, comments, and other important activities in the app."
       },
       "googleServicesFile": "./GoogleService-Info.plist",
