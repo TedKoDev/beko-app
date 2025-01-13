@@ -49,6 +49,9 @@ expo-image와 같은 특수 컴포넌트들은 네이티브 구현에 더 가깝
 expo install expo-notifications
 알림을 보내는 함수 예시:
 
+eas build --platform android --profile production --local
+eas build --platform ios --profile production --local
+
  <!-- 
 async function sendNotification() {
   await Notifications.scheduleNotificationAsync({
