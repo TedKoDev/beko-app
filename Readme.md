@@ -52,6 +52,25 @@ expo install expo-notifications
 eas build --platform android --profile production --local
 eas build --platform ios --profile production --local
 
+광고 비개인화
+<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3099985704584658~7990797006" tools:replace="android:value"/>
+<meta-data
+    android:name="com.google.android.gms.ads.NON_PERSONALIZED_ADS"
+    android:value="true" />
+
+변경 사항 요약
+Google Mobile Ads SDK 추가:
+
+objc
+코드 복사
+#import <GoogleMobileAds/GoogleMobileAds.h>
+비개인화 광고 활성화:
+
+objc
+코드 복사
+[GADMobileAds.sharedInstance startWithCompletionHandler:nil];
+[GADMobileAds.sharedInstance.requestConfiguration tagForUnderAgeOfConsent:YES];
+
  <!-- 
 async function sendNotification() {
   await Notifications.scheduleNotificationAsync({
