@@ -30,8 +30,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "사진을 선택하기 위해 접근 권한이 필요합니다.",
-          "cameraPermission": "사진을 찍기 위해 카메라 접근 권한이 필요합니다."
+          "photosPermission": "We need access to your photos to let you share images in posts and update your profile picture.",
+          "cameraPermission": "We need camera access to let you take photos for sharing in posts and updating your profile picture."
         }
       ],
       [
@@ -59,8 +59,10 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "사진을 선택하기 위해 접근 권한이 필요합니다.",
-        "NSCameraUsageDescription": "사진을 찍기 위해 카메라 접근 권한이 필요합니다."
+        "NSPhotoLibraryUsageDescription": "We need access to your photos to let you share images in posts and update your profile picture. You can select and share photos from your library.",
+        "NSCameraUsageDescription": "We need camera access to let you take photos for sharing in posts and updating your profile picture. You can capture new photos directly in the app.",
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
+        "NSNotificationsUsageDescription": "Enable notifications to receive updates about new messages, comments, and other important activities in the app."
       },
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
@@ -69,7 +71,7 @@
       "buildNumber": "11"
     },
     "android": {
-      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
+      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "NOTIFICATIONS"],
       "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
