@@ -47,7 +47,7 @@ export default function Modal() {
       {/* 본문 콘텐츠 */}
       <View className="items-center space-y-6 p-4">
         {/* Buy Me a Coffee */}
-        <View className="items-center space-y-4">
+        {/* <View className="items-center space-y-4">
           <Text className="text-center text-lg font-bold text-purple-900">
             Buy Me a Coffee for Developer
           </Text>
@@ -61,7 +61,7 @@ export default function Modal() {
               style={{ width: 217, height: 60 }}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         {/* Standard Banner Ad */}
         <View className="items-center space-y-4">
