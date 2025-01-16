@@ -7,9 +7,9 @@ export default function WordDetailPage() {
   const params = useLocalSearchParams();
   const word = JSON.parse(params.word as string);
 
-  //console.log('word', JSON.stringify(word, null, 2));
   const [wordId] = useState(word.word_id);
   const [notes, setNotes] = useState(word.userNotes || word.notes || '');
+
   const [isInList, setIsInList] = useState(word.isInUserWordList);
   const updateUserWordNotes = useUpdateUserWordNotes(wordId, notes);
 
