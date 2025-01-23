@@ -149,25 +149,6 @@ export default function RootLayout() {
     checkAuthentication();
   }, [isAuthenticated, loading]);
 
-  // // expo-notifications 설정 -----------------------------
-  // useEffect(() => {
-  //   // 알림 수신 리스너 설정
-  //   const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
-  //     //console.log('Notification received:', notification);
-  //   });
-
-  //   // 알림 응답 리스너 설정 (사용자가 알림을 탭했을 때)
-  //   const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
-  //     //console.log('Notification response:', response);
-  //   });
-
-  //   return () => {
-  //     Notifications.removeNotificationSubscription(notificationListener);
-  //     Notifications.removeNotificationSubscription(responseListener);
-  //   };
-  // }, []);
-  // // -----------------------------
-
   if (loading || isAuthenticated === null) {
     return (
       <GestureHandlerRootView style={{ flex: 1 }}>
