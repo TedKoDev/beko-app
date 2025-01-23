@@ -6,6 +6,7 @@ import { Text, Surface, ActivityIndicator } from 'react-native-paper';
 import { GameCard } from '~/components/game/GameCard';
 import { UserLevelProgressBar } from '~/components/level/UserLevelProgressBar';
 import { useAllGameProgress, useGameTypes } from '~/queries/hooks/games/useGameService';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 
 export default function GameHome() {
   const { data: gameTypes, isLoading: gameTypesLoading } = useGameTypes();
@@ -99,6 +100,7 @@ export default function GameHome() {
           </View>
         </View>
       </ScrollView>
+      <AdBanner />
     </View>
   );
 }

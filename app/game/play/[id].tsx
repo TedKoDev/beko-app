@@ -22,6 +22,7 @@ import Animated, {
 import uuid from 'react-native-uuid';
 
 import { useGameQuestions, useSubmitAnswer } from '~/queries/hooks/games/useGameService';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 
 const TIMER_DURATION = 15;
 
@@ -285,16 +286,28 @@ export default function GamePlay() {
                     justifyContent: 'center',
                     elevation: 2,
                     opacity: canAnswer ? 1 : 0.7,
+                    height: 120,
+                    width: '100%',
                   }}
                   disabled={!canAnswer}
                   onPress={() => handleAnswer(option, index)}>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{option}</Text>
+                  <Text
+                    style={{
+                      fontSize: 50,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                    }}
+                    adjustsFontSizeToFit
+                    numberOfLines={1}>
+                    {option}
+                  </Text>
                 </Pressable>
               </Animated.View>
             ))}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      <AdBanner />
     </SafeAreaView>
   );
 }

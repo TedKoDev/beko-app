@@ -11,6 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { useGameLevelInfo, useGameProgress } from '~/queries/hooks/games/useGameService';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 
 interface LevelCardProps {
   level: number;
@@ -128,6 +129,7 @@ export default function GameDetail() {
           />
         ))}
       </ScrollView>
+      <AdBanner />
     </View>
   );
 }

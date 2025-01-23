@@ -6,6 +6,7 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 import { Link } from 'expo-router';
 
 import { LevelProgressBar } from '~/components/level/LevelProgressBar';
+import { AdBanner } from '~/src/components/ads/AdBanner';
 
 export default function GameResult() {
   const router = useRouter();
@@ -93,6 +94,7 @@ export default function GameResult() {
           </TouchableOpacity>
         </View>
       </View>
+      <AdBanner />
     </SafeAreaView>
   );
 }
