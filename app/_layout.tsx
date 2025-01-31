@@ -1,9 +1,18 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as Notifications from 'expo-notifications';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, Animated, KeyboardAvoidingView, Alert, Linking } from 'react-native';
+import {
+  View,
+  Animated,
+  KeyboardAvoidingView,
+  Alert,
+  Linking,
+  Platform,
+  BackHandler,
+} from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   useSharedValue,
@@ -12,6 +21,7 @@ import {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 
+import { unauthorizedEventEmitter } from '../services/api';
 import { useAuthStore } from '../store/authStore';
 import { useOnboardingStore } from '../store/onboarding';
 
@@ -35,7 +45,7 @@ configureReanimatedLogger({
 // });
 // -----------------------------
 export default function RootLayout() {
-  const { isAuthenticated, checkAuth } = useAuthStore();
+  const { isAuthenticated, checkAuth, logout } = useAuthStore();
   const router = useRouter();
   const logoScale = useSharedValue(0);
   const [loading, setLoading] = useState(true); // 로딩 상태
@@ -44,56 +54,54 @@ export default function RootLayout() {
   useEffect(() => {
     const checkVersion = async () => {
       try {
-        const { needsUpdate, storeUrl } = await checkAppVersion().catch(() => ({
-          needsUpdate: false,
-          storeUrl: '',
-        }));
+        const response = await checkAppVersion();
+        console.log('[Layout] Version check response:', response);
 
-        if (needsUpdate && storeUrl) {
+        if (response.needsUpdate) {
           Alert.alert(
             'Update Required',
-            'There is a new version available. Please update from the store.',
+            response.message || '새로운 버전이 있습니다. 계속 사용하시려면 업데이트가 필요합니다.',
             [
               {
                 text: 'Update',
                 onPress: () => {
-                  try {
-                    Linking.openURL(storeUrl).catch((error) => {
+                  if (response.storeUrl) {
+                    Linking.openURL(response.storeUrl).catch((error) => {
                       console.log('Failed to open store URL:', error);
-                      // 스토어 열기 실패시 대체 메시지
                       Alert.alert(
                         'Store Error',
                         'Could not open the store. Please update the app manually.',
-                        [{ text: 'OK' }]
+                        [
+                          {
+                            text: Platform.OS === 'ios' ? 'Close' : 'Exit App',
+                            onPress: () => {
+                              if (Platform.OS === 'android') {
+                                BackHandler.exitApp();
+                              }
+                              // iOS에서는 사용자가 직접 앱을 종료하도록 함
+                            },
+                          },
+                        ]
                       );
                     });
-                  } catch (error) {
-                    console.log('Failed to handle store link:', error);
                   }
                 },
               },
-              {
-                text: 'Later',
-                style: 'cancel',
-                // 개발 환경이나 테스트 환경에서는 업데이트를 건너뛸 수 있도록
-                onPress: () => console.log('Update postponed'),
-              },
             ],
             {
-              cancelable: __DEV__, // 개발 환경에서만 취소 가능
+              cancelable: false, // 사용자가 alert를 취소할 수 없음
             }
           );
         }
       } catch (error) {
-        console.log('Version check failed:', error);
-        // 버전 체크 실패시 조용히 처리
+        console.log('[Layout] Version check failed:', error);
       }
     };
 
-    if (!__DEV__) {
-      // 개발 환경에서는 버전 체크 스킵
-      checkVersion();
-    }
+    // 개발 환경이 아닐 때만 버전 체크 실행
+    // if (!__DEV__) {
+    checkVersion();
+    // }
   }, []); // 앱 시작시 한번만 실행
 
   const queryClient = new QueryClient({
@@ -148,6 +156,37 @@ export default function RootLayout() {
 
     checkAuthentication();
   }, [isAuthenticated, loading]);
+
+  // Add unauthorized event listener
+  useEffect(() => {
+    console.log('[Auth] Setting up unauthorized event listener');
+
+    const unsubscribe = unauthorizedEventEmitter.subscribe(async () => {
+      console.log('[Auth] Unauthorized event triggered');
+      try {
+        console.log('[Auth] Removing userToken from AsyncStorage');
+        await AsyncStorage.removeItem('userToken');
+
+        console.log('[Auth] Removing userInfo from AsyncStorage');
+        await AsyncStorage.removeItem('userInfo');
+
+        console.log('[Auth] Calling logout function');
+        await logout();
+
+        console.log('[Auth] Redirecting to login screen');
+        router.replace('/login');
+
+        console.log('[Auth] Unauthorized flow completed');
+      } catch (error) {
+        console.error('[Auth] Error during unauthorized flow:', error);
+      }
+    });
+
+    return () => {
+      console.log('[Auth] Cleaning up unauthorized event listener');
+      unsubscribe();
+    };
+  }, [router]);
 
   if (loading || isAuthenticated === null) {
     return (

@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosError } from 'axios';
 
 // const API_BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
-// const API_BASE_URL = 'http://192.168.219.191:3000/api/v1/';
+const API_BASE_URL = 'http://192.168.219.133:3000/api/v1/';
 // const API_BASE_URL = 'http://localhost:3000/api/v1/';
-const API_BASE_URL = 'https://api.berakorean.com/api/v1/';
+// const API_BASE_URL = 'https://api.berakorean.com/api/v1/';
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
@@ -35,33 +35,30 @@ api.interceptors.response.use(
 
     // 토큰이 만료된 경우
     if (error.response?.status === 401 && originalRequest && !(originalRequest as any)._retry) {
-      if (isRefreshing) {
-        console.log('API - isRefreshing', isRefreshing);
-        // 이미 토큰 리프레시가 진행 중인 경우
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        })
-          .then((token) => {
-            if (originalRequest.headers) {
-              originalRequest.headers['Authorization'] = 'Bearer ' + token;
-            }
-            return api(originalRequest);
-          })
-          .catch((err) => Promise.reject(err));
+      console.log('[API] Token expired, checking refresh status');
+
+      // 이미 리프레시 시도를 했거나 진행 중인 경우 바로 로그아웃
+      if ((originalRequest as any)._retry || isRefreshing) {
+        console.log('[API] Already tried refresh or refreshing in progress, logging out');
+        isRefreshing = false;
+        failedQueue = [];
+        await AsyncStorage.removeItem('userToken');
+        unauthorizedEventEmitter.emit();
+        return Promise.reject(error);
       }
 
-      (originalRequest as any)._retry = true;
-      isRefreshing = true;
-
       try {
-        console.log('API - try');
-        console.log('API - originalRequest', originalRequest);
+        console.log('[API] Starting token refresh');
+        isRefreshing = true;
+        (originalRequest as any)._retry = true;
+
         const response = await api.post('/auth/refresh');
         const { access_token } = response.data;
-        console.log('API - access_token', access_token);
-        await AsyncStorage.setItem('userToken', access_token);
 
+        console.log('[API] Got new access token');
+        await AsyncStorage.setItem('userToken', access_token);
         api.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
+
         if (originalRequest.headers) {
           originalRequest.headers['Authorization'] = 'Bearer ' + access_token;
         }
@@ -69,11 +66,15 @@ api.interceptors.response.use(
         processQueue(null, access_token);
         return api(originalRequest);
       } catch (refreshError) {
+        console.log('[API] Refresh failed, cleaning up');
         processQueue(refreshError, null);
+        await AsyncStorage.removeItem('userToken');
         unauthorizedEventEmitter.emit();
         return Promise.reject(refreshError);
       } finally {
+        console.log('[API] Refresh process completed');
         isRefreshing = false;
+        failedQueue = [];
       }
     }
 

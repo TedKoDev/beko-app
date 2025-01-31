@@ -47,21 +47,24 @@ export default function Modal() {
       {/* 본문 콘텐츠 */}
       <View className="items-center space-y-6 p-4">
         {/* Buy Me a Coffee */}
-        {/* <View className="items-center space-y-4">
-          <Text className="text-center text-lg font-bold text-purple-900">
-            Buy Me a Coffee for Developer
-          </Text>
-          <TouchableOpacity
-            onPress={openBuyMeACoffee}
-            style={{ alignItems: 'center', marginBottom: 10 }}>
-            <Image
-              source={{
-                uri: 'https://cdn.buymeacoffee.com/buttons/v2/default-violet.png',
-              }}
-              style={{ width: 217, height: 60 }}
-            />
-          </TouchableOpacity>
-        </View> */}
+
+        {Platform.OS === 'android' && (
+          <View className="items-center space-y-4">
+            <Text className="text-center text-lg font-bold text-purple-900">
+              Buy Me a Coffee for Developer
+            </Text>
+            <TouchableOpacity
+              onPress={openBuyMeACoffee}
+              style={{ alignItems: 'center', marginBottom: 10 }}>
+              <Image
+                source={{
+                  uri: 'https://cdn.buymeacoffee.com/buttons/v2/default-violet.png',
+                }}
+                style={{ width: 217, height: 60 }}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
 
         {/* Standard Banner Ad */}
         <View className="items-center space-y-4">
