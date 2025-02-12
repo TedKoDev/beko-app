@@ -76,7 +76,13 @@ const MainMenu = () => {
     },
     { color: '#FFCCFF', label: 'SCHOOL', route: '/(stack)/koreanschools', icon: SchoolIcon },
     { color: '#FFEB3B', label: 'JOB', route: '/ad', type: 'ads', icon: JobIcon },
-    { color: '#00FFCC', label: 'AGENCY', route: '/ad', type: 'ads', icon: TravelIcon },
+    {
+      color: '#00FFCC',
+      label: 'CHATBOT',
+      route: '/(stack)/chatbot',
+      type: 'chatbot',
+      icon: TravelIcon,
+    },
   ];
 
   return (

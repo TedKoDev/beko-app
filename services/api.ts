@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosError } from 'axios';
 
 // const API_BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
-// const API_BASE_URL = 'http://192.168.219.133:3000/api/v1/';
+// const API_BASE_URL = 'http://192.168.219.198:3000/api/v1/';
 // const API_BASE_URL = 'http://localhost:3000/api/v1/';
 const API_BASE_URL = 'https://api.berakorean.com/api/v1/';
 
